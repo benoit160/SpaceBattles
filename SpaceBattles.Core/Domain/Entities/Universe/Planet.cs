@@ -1,5 +1,7 @@
 ﻿using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Enums;
+using SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
@@ -137,6 +139,17 @@ public sealed class Planet
         Resource.Helium => Convert.ToInt32(11 * Buildings.First(x => x.BuildingId == 5).Level * Math.Pow(1.1, Buildings.First(x => x.BuildingId == 5).Level)),
         _ => default
     };
+    
+    public bool HasEnoughResource(IRequirements requirements)
+        => requirements.Costs.All(cost => this[cost.Resource] >= cost.RequiredQuantity);
+    
+    public void ConsumeResources(IRequirements requirements)
+    {
+        foreach (ResourceCost cost in requirements.Costs)
+        {
+            this[cost.Resource] -= cost.RequiredQuantity;
+        }
+    }
     
     // stores fractional leftover value of resources
     private readonly double[] _decimalResourcesLeft = new double[3]; 
