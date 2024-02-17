@@ -7,6 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.Server", "Spac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.Client", "SpaceBattles.Client\SpaceBattles.Client.csproj", "{B7B7150E-89EB-4D35-BE3E-A95E1F27073A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4C6FC478-4273-4025-BDA2-26857346AC85}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{FB909D14-789B-4151-8265-B9D173BDE316}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\SpaceBattles.yml = .github\workflows\SpaceBattles.yml
+		.github\workflows\Unit-testing.yml = .github\workflows\Unit-testing.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5997EB4-5B6F-44BF-809B-508C1BF440BD}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FB909D14-789B-4151-8265-B9D173BDE316} = {4C6FC478-4273-4025-BDA2-26857346AC85}
 	EndGlobalSection
 EndGlobal
