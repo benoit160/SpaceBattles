@@ -33,6 +33,7 @@
     private NavigationManager Navigation { get; init; } = default!;
 
     private CurrentPage _page;
+    private EventHandler<LocationChangedEventArgs>? _locationEvent;
 
     private enum CurrentPage
     {
@@ -44,7 +45,7 @@
     {
         _page = CurrentPage.Overview;
 
-        Navigation.LocationChanged += (_, e) =>
+        _locationEvent = (_, e) =>
         {
             switch (e.Location.Split('/').Last())
             {
@@ -59,10 +60,13 @@
 
             StateHasChanged();
         };
+
+        Navigation.LocationChanged += _locationEvent;
     }
 
     private void Logout()
     {
+        Navigation.LocationChanged -= _locationEvent;
         Navigation.NavigateTo("/");
     }
 }
