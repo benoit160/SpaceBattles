@@ -2,6 +2,7 @@ namespace SpaceBattles.Core.Domain.Enums;
 
 public enum PlanetType
 {
+    Undefined = 0,
     Chthonian_planet = 1,
     Carbon_planet = 2,
     Coreless_planet = 3,

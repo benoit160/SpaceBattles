@@ -14,7 +14,7 @@ public sealed class Planet
         PlanetType = values[Random.Shared.Next(values.Length)];
         
         OrbitalPeriod = Convert.ToInt16(Random.Shared.Next(50, 2000));
-        AverageSurfaceTemp = Convert.ToInt16(Random.Shared.Next(-10, 50));
+        AverageSurfaceTemp = Convert.ToInt16(Random.Shared.Next(1, 50));
         Gravity = Random.Shared.NextSingle() * 5;
         
         LastUpdated = DateTime.Now;
