@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.Server", "SpaceBattles.Server\SpaceBattles.Server.csproj", "{D614713E-D3CE-4355-BEB5-732756F2B799}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.Client", "SpaceBattles.Client\SpaceBattles.Client.csproj", "{B7B7150E-89EB-4D35-BE3E-A95E1F27073A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D614713E-D3CE-4355-BEB5-732756F2B799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D614713E-D3CE-4355-BEB5-732756F2B799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D614713E-D3CE-4355-BEB5-732756F2B799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D614713E-D3CE-4355-BEB5-732756F2B799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B7150E-89EB-4D35-BE3E-A95E1F27073A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B7150E-89EB-4D35-BE3E-A95E1F27073A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B7150E-89EB-4D35-BE3E-A95E1F27073A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B7150E-89EB-4D35-BE3E-A95E1F27073A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5997EB4-5B6F-44BF-809B-508C1BF440BD}
+	EndGlobalSection
+EndGlobal
