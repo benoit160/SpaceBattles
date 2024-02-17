@@ -1,6 +1,7 @@
 {
-  "name": "SpaceBattles.Client",
-  "short_name": "SpaceBattles.Client",
+  "name": "SpaceBattles",
+  "short_name": "SpaceBattles",
+  "description": "A space themed strategy game, made with .Net",
   "id": "./",
   "start_url": "./",
   "display": "standalone",
@@ -9,13 +10,13 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon-512.png",
-      "type": "image/png",
+      "src": "icon-512.webp",
+      "type": "image/webp",
       "sizes": "512x512"
     },
     {
-      "src": "icon-192.png",
-      "type": "image/png",
+      "src": "icon-192.webp",
+      "type": "image/webp",
       "sizes": "192x192"
     }
   ]
