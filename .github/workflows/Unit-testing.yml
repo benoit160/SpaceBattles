@@ -1,0 +1,24 @@
+name: Build and test
+run-name: "Unit testing branch '${{ github.ref_name }}'"
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+env:
+  DOTNET_CORE_VERSION: 8.0.x
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+      - name: Restore
+        run: dotnet restore
+      - name: Test
+        run: dotnet test
