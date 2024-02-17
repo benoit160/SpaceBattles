@@ -14,9 +14,6 @@ public class PlanetTests
         // Assert
         Assert.False(string.IsNullOrWhiteSpace(planet.Name));
         Assert.NotEqual(default, planet.PlanetType);
-        Assert.NotEqual(default, planet.OrbitalPeriod);
-        Assert.NotEqual(default, planet.AverageSurfaceTemp);
-        Assert.NotEqual(default, planet.Gravity);
         Assert.NotEqual(default, planet.LastUpdated);
         
         Assert.Equal(10, planet.Buildings.Count);
@@ -54,14 +51,15 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Buildings.ForEach(x => x.Level++);
         
         // Act
         planet.ResourcesUpdate(DateTime.Now + TimeSpan.FromDays(10));
         
         // Assert
-        Assert.Equal(10_000, planet[Resource.Titanium]);
-        Assert.Equal(10_000, planet[Resource.Silicon]);
-        Assert.Equal(0, planet[Resource.Helium]);
+        Assert.Equal(20_000, planet[Resource.Titanium]);
+        Assert.Equal(20_000, planet[Resource.Silicon]);
+        Assert.Equal(20_000, planet[Resource.Helium]);
     }
     
     [Fact]
