@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace SpaceBattles.Server
 {
@@ -19,16 +20,26 @@ namespace SpaceBattles.Server
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseWebAssemblyDebugging();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
+            app.UseBlazorFrameworkFiles();
+
+            FileExtensionContentTypeProvider provider = new FileExtensionContentTypeProvider();
+            provider.Mappings.Add(".avif", "image/avif");
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                ContentTypeProvider = provider,
+            });
+            
             app.UseAuthorization();
-
-
+            
             app.MapControllers();
+            app.MapFallbackToFile("index.html");
 
             app.Run();
         }
