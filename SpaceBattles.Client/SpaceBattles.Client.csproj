@@ -18,17 +18,4 @@
     <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\helium.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\helium_storage.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\nanite_factory.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\research_lab.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\robotic_factory.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\shipyard.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\silicon.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\silicon_storage.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\titanium.webp" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\buildings\titanium_storage.webp" />
-  </ItemGroup>
-
 </Project>
