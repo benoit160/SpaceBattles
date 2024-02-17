@@ -1,0 +1,111 @@
+﻿using SpaceBattles.Core.Domain.Entities.Universe;
+
+namespace SpaceBattles.Tests.Domain.Upgrade;
+
+public class BuildingUpgradeTests
+{
+    [Theory]
+    [InlineData(1, true)]
+    [InlineData(2, false)]
+    [InlineData(3, true)]
+    [InlineData(4, false)]
+    public void CanUpgradeBuilding(short buildingId, bool expectedResult)
+    {
+        // Arrange
+        Planet planet = new Planet();
+        
+        // Act
+        bool succeeded = planet.CanUpgradeBuilding(buildingId);
+        
+        // Assert
+        Assert.Equal(expectedResult, succeeded);
+    }
+    
+    [Fact]
+    public void CanUpgradeBuilding_InvalidId()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        const short invalidId = 17;
+        
+        // Act
+        bool succeeded = planet.CanUpgradeBuilding(invalidId);
+        
+        // Assert
+        Assert.False(succeeded);
+    }
+    
+    [Fact]
+    public void TryUpgradeBuilding()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        
+        // Act
+        bool succeeded = planet.TryUpgradeBuilding(1);
+        
+        // Assert
+        Assert.True(succeeded);
+        Assert.Single(planet.Upgrades);
+        Assert.Equal(108, planet.Upgrades.First().DurationSeconds);
+    }
+    
+    [Fact]
+    public void TryUpgradeBuilding_Fail_InvalidId()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        const short invalidId = 17;
+        
+        // Act
+        bool succeeded = planet.TryUpgradeBuilding(invalidId);
+        
+        // Assert
+        Assert.False(succeeded);
+        Assert.Empty(planet.Upgrades);
+    }
+    
+    [Fact]
+    public void TryUpgradeBuilding_Fail_NotEnoughResources()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        
+        // Act
+        bool succeeded = planet.TryUpgradeBuilding(2);
+        
+        // Assert
+        Assert.False(succeeded);
+        Assert.Empty(planet.Upgrades);
+    }
+
+    [Fact]
+    public void ProcessUpgrade()
+    {
+        // Arrange
+        Planet planet = new Planet();
+
+        // Act
+        planet.TryUpgradeBuilding(1);
+        planet.ProcessUpgrades(DateTime.Now + TimeSpan.FromSeconds(120));
+        
+        // Assert
+        Assert.Empty(planet.Upgrades);
+        Assert.Equal(1, planet.Buildings.First().Level);
+    }
+    
+    [Fact]
+    public void ProcessUpgradeNotFinished()
+    {
+        // Arrange
+        Planet planet = new Planet();
+
+        // Act
+        planet.TryUpgradeBuilding(1);
+        planet.ProcessUpgrades(DateTime.Now + TimeSpan.FromSeconds(60));
+        
+        // Assert
+        Assert.Single(planet.Upgrades);
+        Assert.Equal(0, planet.Buildings.First().Level);
+    }
+}
