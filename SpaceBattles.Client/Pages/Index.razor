@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using SpaceBattles.Core.Application.Services
 @layout MainLayout
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
@@ -8,3 +9,15 @@
 
     <MudButton  Href="/overview" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
 </MudStack>
+
+@code {
+    
+    [Inject]
+    public GameState GameState { get; init; } = default!;
+
+    protected override void OnInitialized()
+    {
+        GameState.Initialize();
+    }
+
+}
