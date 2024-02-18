@@ -1,6 +1,4 @@
-using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
-using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Building;
 
