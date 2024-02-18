@@ -1,0 +1,20 @@
+﻿<MudContainer MaxWidth="MaxWidth.Small">
+    <MudPaper Class="pa-4 rounded-xl">
+        <MudText Typo="Typo.h6" Align="Align.Center">@_waitingText</MudText>
+        <MudProgressLinear Size="Size.Large" Rounded Color="Color.Info" Indeterminate Class="my-7" />
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string _waitingText = "Creating universe..";
+
+    public async Task ShowWaitingScreen()
+    {
+        await Task.Delay(2000);
+
+        _waitingText = "Choosing the best starting planet for you..";
+        StateHasChanged();
+
+        await Task.Delay(2000);
+    }
+}

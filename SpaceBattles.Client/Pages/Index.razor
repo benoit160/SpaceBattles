@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using SpaceBattles.Core.Application.Services
 @layout MainLayout
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
@@ -7,17 +6,5 @@
 <MudStack AlignItems="AlignItems.Center">
     <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
 
-    <MudButton  Href="/overview" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+    <MudButton  Href="/UniverseCreator" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
 </MudStack>
-
-@code {
-    
-    [Inject]
-    public GameState GameState { get; init; } = default!;
-
-    protected override void OnInitialized()
-    {
-        GameState.Initialize();
-    }
-
-}
