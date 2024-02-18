@@ -1,0 +1,77 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Upgrade
+@implements IDisposable
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="pt-3">
+    <MudPaper Class="pa-2 rounded-lg">
+        <MudStack Row>
+            <MudImage Src="@Image" Width="96" Alt="a visual representation of the building being upgraded" Class="rounded-lg" />
+            <MudStack Class="flex-grow-1" Spacing="1">
+                <MudText>@Display</MudText>
+                <MudSpacer />
+                <MudText>@DisplaySecondary</MudText>
+                <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="Process.PercentFinished" />
+                <MudText>@Process.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string Display { get; init; } = string.Empty;
+
+    [Parameter]
+    public string DisplaySecondary { get; init; } = string.Empty;
+
+    [Parameter]
+    public string Image { get; init; } = string.Empty;
+
+    [Parameter]
+    public Upgrade Process { get; init; } = default!;
+
+    private CancellationTokenSource _source = new CancellationTokenSource();
+
+    public event Action? OnFinished;
+
+    protected override void OnInitialized()
+    {
+        // if (Process is BuildingUpgradeProcess)
+        // {
+        //     _ = Task.Run(async () =>
+        //     {
+        //         await Task.Delay(Process.RemainingTime, source.Token);
+        //         OnFinished?.Invoke();
+        //     });
+        //
+        //     return;
+        // }
+        
+        _ = Task.Run(async () =>
+        {
+            PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+        
+            while (await timer.WaitForNextTickAsync(_source.Token))
+            {
+                StateHasChanged();
+        
+                if (Process.IsFinished)
+                {
+                    OnFinished?.Invoke();
+                    break;                    
+                }
+            }
+        });
+    }
+
+    /// <summary>
+    /// Checks if the OnFinishedEvent is already subscribed to
+    /// </summary>
+    /// <returns></returns>
+    public bool EventHasSubscribers() => OnFinished is not null;
+    
+    public void Dispose()
+    {
+        _source.Cancel();
+        _source.Dispose();
+    }
+}

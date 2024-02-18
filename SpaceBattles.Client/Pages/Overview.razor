@@ -81,7 +81,8 @@
         _ = Task.Run(async () =>
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
-            {
+            {                
+                Planet.ProcessUpgrades(DateTime.Now);
                 Planet.ResourcesUpdate(DateTime.Now);
                 StateHasChanged();
             }

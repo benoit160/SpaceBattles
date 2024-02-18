@@ -1,0 +1,20 @@
+﻿@using SpaceBattles.Core.Domain.Interfaces
+@using SpaceBattles.Core.Domain.Entities.Universe
+@using SpaceBattles.Core.Domain.Records
+
+<MudStack Row Justify="Justify.SpaceAround">
+    @foreach(ResourceCost requirement in Upgrade.Costs.Where(cost => cost.RequiredQuantity > 0))
+    {
+        <RessourceDisplay 
+            Cost="requirement"
+            CurrentQuantity = "Planet[requirement.Resource]"/>
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public IRequirements Upgrade { get; init; } = default!;
+
+    [Inject]
+    private Planet Planet { get; init; } = default!;
+}
