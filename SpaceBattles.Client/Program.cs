@@ -15,9 +15,12 @@ namespace SpaceBattles.Client
 
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<Planet>();
+            builder.Services.AddScoped<Universe>();
             builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();
         }
+        
+        
     }
 }

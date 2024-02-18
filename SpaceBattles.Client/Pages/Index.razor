@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using SpaceBattles.Core.Domain.Entities.Universe
+@using SpaceBattles.Core.Domain.Models
 @layout MainLayout
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
@@ -8,3 +10,18 @@
 
     <MudButton  Href="/overview" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
 </MudStack>
+
+@code{
+
+    [Inject] public Universe? Universe { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var model = new UniverseCreationModel
+        {
+            NumberOfPlanets = 10,
+        };
+        Universe = Universe.CreateUniverse(model);
+    }
+
+}
