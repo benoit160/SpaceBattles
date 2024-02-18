@@ -35,6 +35,8 @@ public sealed class Planet
     
     public string Name { get; set; }
 
+    public bool IsComputer { get; set; }
+
     public byte ImageIndex { get; init; }
 
     public string ImagePath => $"/images/planets/planet{ImageIndex}.avif";

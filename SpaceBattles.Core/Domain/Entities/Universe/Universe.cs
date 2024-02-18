@@ -31,6 +31,12 @@ public sealed class Universe
         newUniverse.Planets.AddRange(Enumerable
             .Range(0, model.NumberOfPlanets)
             .Select(_ => new Planet()));
+        
+        foreach (Planet planet in newUniverse.Planets.Skip(1))
+        {
+            if (Random.Shared.NextSingle() > 0.5)
+                planet.IsComputer = true;
+        }
 
         return newUniverse;
     }

@@ -41,6 +41,9 @@
 
     [Inject]
     private GameState GameState { get; init; } = default!;
+    
+    [Inject]
+    private BotService BotService { get; init; } = default!;
 
     private UniverseCreationModel _model = new();
 
@@ -54,6 +57,7 @@
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
         
         GameState.Initialize(_model);
+        BotService.StartService();
 
         await waitingScreen;
 

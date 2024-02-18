@@ -13,8 +13,9 @@ public class UniverseCreationModel
     public float UniverseSpeed { get; set; }
 
     public bool IsPeacefulMode { get; set; }
-    
+
     public bool IncludeBots { get; set; }
+        = true;
 
     [Range(1, 10)]
     public int NumberOfPlanets { get; set; }
