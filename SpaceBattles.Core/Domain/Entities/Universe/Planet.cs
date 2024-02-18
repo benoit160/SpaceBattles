@@ -1,4 +1,5 @@
 ﻿using SpaceBattles.Core.Domain.Entities.Building;
+using SpaceBattles.Core.Domain.Entities.Upgrade;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
@@ -83,7 +84,9 @@ public sealed class Planet
     public long Helium { get; private set; }
     
     public List<BuildingLevel> Buildings { get; }
-    
+
+    public BuildingUpgrade? BuildingUpgrade { get; private set; }
+
     public DateTime LastUpdated { get; private set; }
 
     /// <summary>
@@ -149,6 +152,51 @@ public sealed class Planet
         {
             this[cost.Resource] -= cost.RequiredQuantity;
         }
+    }
+    
+    public void ProcessUpgrades(DateTime now)
+    {
+        if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
+        {
+            Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId).Level++;
+            BuildingUpgrade = null;
+        }
+    }
+    
+    public bool CanUpgradeBuilding(short buildingId)
+    {
+        if (BuildingUpgrade is not null) return false;
+
+        BuildingLevel? level = Buildings.Find(bl => bl.BuildingId == buildingId);
+
+        if (level is null) return false;
+
+        return HasEnoughResource(level);
+    }
+    
+    public bool TryUpgradeBuilding(short buildingId)
+    {
+        BuildingLevel? level = Buildings.Find(bl => bl.BuildingId == buildingId);
+
+        if (level is null) return false;
+
+        if (!HasEnoughResource(level)) return false;
+
+        if (BuildingUpgrade is not null) return false;
+
+        double durationHours = (level.TitaniumCost + level.SiliconCost) / 2500d;
+        ConsumeResources(level);
+
+        BuildingUpgrade upgrade = new BuildingUpgrade()
+        {
+            BuildingId = buildingId,
+            Start = DateTime.Now,
+            DurationSeconds = (int)TimeSpan.FromHours(durationHours).TotalSeconds,
+        };
+
+        BuildingUpgrade = upgrade;
+        
+        return true;
     }
     
     // stores fractional leftover value of resources
