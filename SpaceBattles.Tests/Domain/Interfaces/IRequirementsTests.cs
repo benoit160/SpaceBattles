@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Entities.Universe;
+﻿using SpaceBattles.Core.Domain.Entities.Building;
+using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 
@@ -48,5 +49,20 @@ public class RequirementsTests
         Assert.Equal(StartingTitanium - building.TitaniumCost, planet[Resource.Titanium]);
         Assert.Equal(StartingSilicon - building.SiliconCost, planet[Resource.Silicon]);
         Assert.Equal(StartingHelium - building.HeliumCost, planet[Resource.Helium]);
+    }
+
+    [Theory]
+    [InlineData(0, 1e6, 5e5, 1e5)]
+    [InlineData(1, 2e6, 1e6, 2e5)]
+    [InlineData(2, 4e6, 2e6, 4e5)]
+    public void CostScaling(short level, int titanium, int silicon, int helium)
+    {
+        Planet planet = new Planet();
+        BuildingLevel building = planet.Buildings.First(b => b.BuildingId == 10);
+        building.Level = level;
+        
+        Assert.Equal(titanium, building.TitaniumCost);
+        Assert.Equal(silicon, building.SiliconCost);
+        Assert.Equal(helium, building.HeliumCost);
     }
 }

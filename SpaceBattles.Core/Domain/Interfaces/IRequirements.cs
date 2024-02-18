@@ -10,7 +10,7 @@ public interface IRequirements
     public long SiliconCost { get; }
     
     public long HeliumCost { get; }
-
+    
     IEnumerable<ResourceCost> Costs
     {
         get
