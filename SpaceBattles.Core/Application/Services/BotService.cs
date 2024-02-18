@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using SpaceBattles.Core.Application.Helpers;
+using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
 namespace SpaceBattles.Core.Application.Services;
@@ -6,7 +7,7 @@ namespace SpaceBattles.Core.Application.Services;
 public sealed class BotService : IAsyncDisposable
 {
     private readonly GameState _gameState;
-    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(10));
+    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(20));
     private readonly CancellationTokenSource _source = new();
     private readonly List<Planet> _planets = new();
 
@@ -22,12 +23,12 @@ public sealed class BotService : IAsyncDisposable
         // no bots
         if (_planets.Count == 0) return;
 
-        Debug.WriteLine("bot service started");
-        _ = Task.Run(async () =>
+        BlazorDebug.WriteLine("Bot service started");
+        var a = Task.Run(async () =>
         {
             while (await _timer.WaitForNextTickAsync(_source.Token))
             {
-                Debug.WriteLine("Updating bots");
+                BlazorDebug.WriteLine("Updating bots");
                 foreach (Planet planet in _planets)
                 {
                     DoAction(planet);
@@ -38,15 +39,17 @@ public sealed class BotService : IAsyncDisposable
 
     public void DoAction(Planet planet)
     {
-        // can't do anything
-        if(planet.BuildingUpgrade is null) return;
+        planet.ProcessUpgrades(DateTime.Now);
+        planet.ResourcesUpdate(DateTime.Now);
 
-        Span<short> updatableBuildingIds = stackalloc short[10];
+        planet.TryUpgradeBuilding(5);
+        planet.TryUpgradeBuilding(3);
+        planet.TryUpgradeBuilding(1);
     }
-
+    
     public async ValueTask DisposeAsync()
     {
-        Debug.WriteLine("bot service disposing");
+        BlazorDebug.WriteLine("Bot service disposing");
         await _source.CancelAsync();
         _source.Dispose();
     }
