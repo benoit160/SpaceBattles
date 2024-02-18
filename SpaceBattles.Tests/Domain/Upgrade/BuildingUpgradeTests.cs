@@ -46,8 +46,8 @@ public class BuildingUpgradeTests
         
         // Assert
         Assert.True(succeeded);
-        Assert.Single(planet.Upgrades);
-        Assert.Equal(108, planet.Upgrades.First().DurationSeconds);
+        Assert.NotNull(planet.BuildingUpgrade);
+        Assert.Equal(108, planet.BuildingUpgrade.DurationSeconds);
     }
     
     [Fact]
@@ -62,7 +62,7 @@ public class BuildingUpgradeTests
         
         // Assert
         Assert.False(succeeded);
-        Assert.Empty(planet.Upgrades);
+        Assert.Null(planet.BuildingUpgrade);
     }
     
     [Fact]
@@ -76,7 +76,7 @@ public class BuildingUpgradeTests
         
         // Assert
         Assert.False(succeeded);
-        Assert.Empty(planet.Upgrades);
+        Assert.Null(planet.BuildingUpgrade);
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class BuildingUpgradeTests
         planet.ProcessUpgrades(DateTime.Now + TimeSpan.FromSeconds(120));
         
         // Assert
-        Assert.Empty(planet.Upgrades);
+        Assert.Null(planet.BuildingUpgrade);
         Assert.Equal(1, planet.Buildings.First().Level);
     }
     
@@ -105,7 +105,7 @@ public class BuildingUpgradeTests
         planet.ProcessUpgrades(DateTime.Now + TimeSpan.FromSeconds(60));
         
         // Assert
-        Assert.Single(planet.Upgrades);
+        Assert.NotNull(planet.BuildingUpgrade);
         Assert.Equal(0, planet.Buildings.First().Level);
     }
 }
