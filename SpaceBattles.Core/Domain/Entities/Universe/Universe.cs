@@ -4,9 +4,9 @@ namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class Universe
 {
-    public string Name { get; private init; }
+    public required string Name { get; init; }
 
-    public DateTime CreationDate { get; private init; }
+    public DateTime CreationDate { get; init; }
         = DateTime.Now;
 
     public List<Planet> Planets { get; }

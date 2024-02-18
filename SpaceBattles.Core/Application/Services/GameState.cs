@@ -27,6 +27,6 @@ public sealed class GameState
         };
         
         CurrentUniverse = Universe.CreateUniverse(model);
-        CurrentPlanet = CurrentUniverse.Planets.First();
+        CurrentPlanet = CurrentUniverse.Planets[0];
     }
 }
