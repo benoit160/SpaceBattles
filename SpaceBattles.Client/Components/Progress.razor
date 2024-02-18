@@ -1,5 +1,4 @@
 ﻿@using SpaceBattles.Core.Domain.Entities.Upgrade
-@implements IDisposable
 
 <MudContainer MaxWidth="MaxWidth.Small" Class="pt-3">
     <MudPaper Class="pa-2 rounded-lg">
@@ -28,50 +27,4 @@
 
     [Parameter]
     public Upgrade Process { get; init; } = default!;
-
-    private CancellationTokenSource _source = new CancellationTokenSource();
-
-    public event Action? OnFinished;
-
-    protected override void OnInitialized()
-    {
-        // if (Process is BuildingUpgradeProcess)
-        // {
-        //     _ = Task.Run(async () =>
-        //     {
-        //         await Task.Delay(Process.RemainingTime, source.Token);
-        //         OnFinished?.Invoke();
-        //     });
-        //
-        //     return;
-        // }
-        
-        _ = Task.Run(async () =>
-        {
-            PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-        
-            while (await timer.WaitForNextTickAsync(_source.Token))
-            {
-                StateHasChanged();
-        
-                if (Process.IsFinished)
-                {
-                    OnFinished?.Invoke();
-                    break;                    
-                }
-            }
-        });
-    }
-
-    /// <summary>
-    /// Checks if the OnFinishedEvent is already subscribed to
-    /// </summary>
-    /// <returns></returns>
-    public bool EventHasSubscribers() => OnFinished is not null;
-    
-    public void Dispose()
-    {
-        _source.Cancel();
-        _source.Dispose();
-    }
 }
