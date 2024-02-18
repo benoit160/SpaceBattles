@@ -1,0 +1,57 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Building
+@using SpaceBattles.Core.Domain.Entities.Universe
+
+<MudContainer Style="max-width: 760px;">
+    <MudPaper Class="pa-4 rounded-xl" >
+            <MudStack AlignItems="AlignItems.Stretch">
+                <MudStack Row>
+                    <MudImage Src="@Building.Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="256" Height="256"/>
+                    <MudStack AlignItems="AlignItems.Stretch">
+                        <MudStack Row Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.h5">@Building.Building.Name</MudText>
+                            <MudText Color="Color.Info" Typo="Typo.h6">Level : @Building.Level</MudText>
+                        </MudStack>
+    
+                        <MudDivider DividerType="DividerType.Middle"/>
+    
+                        <MudText Typo="Typo.body1">@Building.Building.Description</MudText>
+    
+                    </MudStack>
+                </MudStack>
+                
+                <MudStack Row Spacing="0" Class="pt-2">
+                    <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+                    <MudText Typo="Typo.body1">@(Building.Level == 0 ? "Construction" : "Upgrade") costs</MudText>
+                    <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+                </MudStack>
+                
+                <TotalCostDisplay Planet="Planet" Upgrade="Building"/>
+    
+                @if (Planet.BuildingUpgrade is not null)
+                {
+                    <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Warning">Another construction is already in progress..</MudAlert>
+                }
+                else if (Planet.HasEnoughResource(Building))
+                {
+                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="() => Upgrade()">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
+                }
+                else
+                {
+                    <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Error">Not enough resources</MudAlert>
+                }
+            </MudStack>
+        </MudPaper>
+</MudContainer>
+
+@code {
+    [Parameter]
+    public BuildingLevel Building { get; init; } = default!;
+    
+    [Parameter]
+    public Planet Planet { get; init; } = default!;
+    
+    private void Upgrade()
+    {
+        Planet.TryUpgradeBuilding(Building.BuildingId);
+    }
+}
