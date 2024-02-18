@@ -8,7 +8,9 @@
         <MudPaper Class="pa-4 rounded-xl">
             <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
-                <MudStack>
+                <MudStack>         
+                    
+                    <MudText Color="Color.Info" Align="Align.Center" Typo="Typo.h6" Style="font-family:TitleFont;">New game settings</MudText>
 
                     <MudTextField Class="pb-4" Label="Save name" @bind-Value="_model.UniverseName" Required For="@(() => _model.UniverseName)" Immediate />
 
@@ -16,13 +18,13 @@
                     <MudSlider Class="pb-4" @bind-Value="_model.UniverseSpeed" Color="Color.Info" Variant="Variant.Filled" TickMarks Min="1" Max="10" Step="1" ValueLabel >Universe speed</MudSlider>
                     -->
                     
-                    <MudSlider Value="_model.NumberOfPlanets" ValueLabel Min="1" Max="25" Step="1" TickMarks>Number of planets</MudSlider>
+                    <MudSlider Color="Color.Info" @bind-Value="_model.NumberOfPlanets" ValueLabel Min="1" Max="10" Step="1" TickMarks>Number of planets</MudSlider>
 
-                    <MudSwitch @bind-Value="_model.IsPeacefulMode" Label="Peaceful mode" Color="Color.Primary" Class="py-4"/>
+                    <MudSwitch Color="Color.Info" @bind-Value="_model.IsPeacefulMode" Label="Peaceful mode" Class="py-4"/>
 
                     <MudButton ButtonType="ButtonType.Submit" Class="align-self-center" Variant="Variant.Filled" Color="Color.Info">Start new game</MudButton>
 
-                </MudStack>            
+                </MudStack>
 
             </EditForm>
         </MudPaper>

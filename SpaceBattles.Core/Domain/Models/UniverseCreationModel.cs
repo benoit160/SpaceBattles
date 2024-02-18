@@ -16,7 +16,7 @@ public class UniverseCreationModel
     
     public bool IncludeBots { get; set; }
 
-    [Range(1,25)]
+    [Range(1, 10)]
     public int NumberOfPlanets { get; set; }
 
     public UniverseCreationModel()
