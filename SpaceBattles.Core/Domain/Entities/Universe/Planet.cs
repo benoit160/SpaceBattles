@@ -184,14 +184,13 @@ public sealed class Planet
 
         if (BuildingUpgrade is not null) return false;
 
-        double durationHours = (level.TitaniumCost + level.SiliconCost) / 2500d;
         ConsumeResources(level);
 
         BuildingUpgrade upgrade = new BuildingUpgrade()
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            DurationSeconds = (int)TimeSpan.FromHours(durationHours).TotalSeconds,
+            Duration = level.Duration,
         };
 
         BuildingUpgrade = upgrade;

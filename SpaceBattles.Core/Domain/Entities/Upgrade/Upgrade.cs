@@ -4,9 +4,9 @@ public abstract class Upgrade
 {
     public DateTime Start { get; set; }
 
-    public int DurationSeconds { get; set; }
-
-    public DateTime End => Start + TimeSpan.FromSeconds(DurationSeconds);
+    public TimeSpan Duration { get; set; }
+    
+    public DateTime End => Start + Duration;
 
     public TimeSpan RemainingTime => End - DateTime.Now;
 
@@ -16,5 +16,5 @@ public abstract class Upgrade
     
     public double EllapsedSeconds => (DateTime.Now - Start).TotalSeconds;
     
-    public double PercentFinished => 100 * EllapsedSeconds / (double)DurationSeconds;
+    public double PercentFinished => 100 * EllapsedSeconds / Duration.TotalSeconds;
 }

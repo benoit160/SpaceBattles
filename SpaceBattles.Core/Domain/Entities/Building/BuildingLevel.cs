@@ -28,4 +28,13 @@ public sealed class BuildingLevel : IRequirements
             yield return new ResourceCost(Resource.Helium, HeliumCost);
         }
     }
+
+    public TimeSpan Duration
+    {
+        get
+        {
+            double durationHours = (TitaniumCost + SiliconCost) / 2500d;
+            return TimeSpan.FromHours(durationHours);
+        }
+    }
 }
