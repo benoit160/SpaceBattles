@@ -9,6 +9,10 @@ public sealed class Universe
     public DateTime CreationDate { get; init; }
         = DateTime.Now;
 
+    public bool IsPeacefulUniverse { get; init; }
+
+    public float UniverseSpeed { get; init; }
+
     public List<Planet> Planets { get; }
         = new();
 
@@ -20,6 +24,8 @@ public sealed class Universe
         Universe newUniverse = new Universe()
         {
             Name = model.UniverseName,
+            IsPeacefulUniverse = model.IsPeacefulMode,
+            UniverseSpeed = model.UniverseSpeed,
         };
 
         newUniverse.Planets.AddRange(Enumerable
