@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using SpaceBattles.Core.Application.Services
+@inherits LayoutComponentBase
 
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
 
@@ -31,6 +32,9 @@
 @code {
     [Inject]
     private NavigationManager Navigation { get; init; } = default!;
+    
+    [Inject]
+    private BotService BotService { get; init; } = default!;
 
     private CurrentPage _page;
     private EventHandler<LocationChangedEventArgs>? _locationEvent;
@@ -66,6 +70,7 @@
 
     private void Logout()
     {
+        BotService.Dispose();
         Navigation.LocationChanged -= _locationEvent;
         Navigation.NavigateTo("/");
     }

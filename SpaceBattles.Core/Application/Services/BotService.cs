@@ -1,13 +1,12 @@
 ﻿using SpaceBattles.Core.Application.Helpers;
-using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
 namespace SpaceBattles.Core.Application.Services;
 
-public sealed class BotService : IAsyncDisposable
+public sealed class BotService : IDisposable
 {
     private readonly GameState _gameState;
-    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(20));
+    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(3));
     private readonly CancellationTokenSource _source = new();
     private readonly List<Planet> _planets = new();
 
@@ -24,7 +23,7 @@ public sealed class BotService : IAsyncDisposable
         if (_planets.Count == 0) return;
 
         BlazorDebug.WriteLine("Bot service started");
-        var a = Task.Run(async () =>
+        Task.Run(async () =>
         {
             while (await _timer.WaitForNextTickAsync(_source.Token))
             {
@@ -47,10 +46,10 @@ public sealed class BotService : IAsyncDisposable
         planet.TryUpgradeBuilding(1);
     }
     
-    public async ValueTask DisposeAsync()
+    public void Dispose()
     {
         BlazorDebug.WriteLine("Bot service disposing");
-        await _source.CancelAsync();
+        _source.Cancel();
         _source.Dispose();
     }
 }
