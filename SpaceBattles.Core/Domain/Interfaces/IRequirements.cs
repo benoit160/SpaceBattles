@@ -11,4 +11,6 @@ public interface IRequirements
     public long HeliumCost { get; }
 
     public IEnumerable<ResourceCost> Costs { get; }
+    
+    public TimeSpan
 }

@@ -191,7 +191,7 @@ public sealed class Planet
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            DurationSeconds = (int)TimeSpan.FromHours(durationHours).TotalSeconds,
+            Duration = TimeSpan.FromHours(durationHours),
         };
 
         BuildingUpgrade = upgrade;
