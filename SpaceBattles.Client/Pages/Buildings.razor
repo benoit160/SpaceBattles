@@ -1,40 +1,39 @@
 ﻿@page "/Buildings"
 @using SpaceBattles.Core.Domain.Enums
 @using SpaceBattles.Core.Domain.Entities.Universe
-@inject Planet Planet
+@using SpaceBattles.Core.Application.Services
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
     
-    @if (Planet.BuildingUpgrade is not null)
+    @if (_planet.BuildingUpgrade is not null)
     {
         <Progress
-            @ref="ProgressComponent"
-            Display="@Planet.Buildings.Single(x => x.BuildingId == Planet.BuildingUpgrade.BuildingId).Building.Name"
-            DisplaySecondary="@("Upgrading to level " + (Planet.Buildings.Single(x => x.BuildingId == Planet.BuildingUpgrade.BuildingId).Level + 1))"
-            Image="@Planet.Buildings.Single(x => x.BuildingId == Planet.BuildingUpgrade.BuildingId).Building.ImagePath"
-            Process="Planet.BuildingUpgrade" />
+            Display="@_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.Name"
+            DisplaySecondary="@("Upgrading to level " + (_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Level + 1))"
+            Image="@_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.ImagePath"
+            Process="_planet.BuildingUpgrade" />
     }
     
     <MudGrid Class="py-3" Spacing="0">
 
-        @for (int index = 0; index < Planet.Buildings.Count; index++)
+        @for (int index = 0; index < _planet.Buildings.Count; index++)
         {
             int i = index;
             <MudItem xs="12" lg="6">
                 <MudPaper Class="pa-2 ma-1">
                     <MudStack Row>
-                        <MudImage Src="@Planet.Buildings[i].Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
+                        <MudImage Src="@_planet.Buildings[i].Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
                         <MudStack Style="width:100%">
                             <MudStack Row Justify="Justify.SpaceBetween">
-                                <MudText Typo="Typo.h5">@Planet.Buildings[i].Building.Name</MudText>
-                                <MudText Color="Color.Info" Typo="Typo.h6">Level : @Planet.Buildings[i].Level</MudText>
+                                <MudText Typo="Typo.h5">@_planet.Buildings[i].Building.Name</MudText>
+                                <MudText Color="Color.Info" Typo="Typo.h6">Level : @_planet.Buildings[i].Level</MudText>
                             </MudStack>
                             <MudDivider/>
-                            @GetBuildingStatus(Planet.Buildings[i].BuildingId)
+                            @GetBuildingStatus(_planet.Buildings[i].BuildingId)
 
                             <MudSpacer/>
 
-                            <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(Planet.Buildings[i].BuildingId)">Details</MudButton>
+                            <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(_planet.Buildings[i].BuildingId)">Details</MudButton>
                         </MudStack>
                     </MudStack>
                 </MudPaper>
@@ -44,24 +43,28 @@
 </MudContainer>
 
 <MudOverlay @bind-Visible="_overlayVisible" DarkBackground AutoClose>
-    <BuildingDetails Building="Planet.Buildings[_selectedIndex]" />
+    <BuildingDetails Planet="_planet" Building="_planet.Buildings[_selectedIndex]" />
 </MudOverlay>
 
 @code {
+    [Inject]
+    private GameState GameState { get; init; } = default!;
+
+    private Planet _planet = default!;
     private readonly CancellationTokenSource _source = new();
     private int _selectedIndex;
     private bool _overlayVisible;
-    private Progress? ProgressComponent;
 
     protected override void OnInitialized()
     {
+        _planet = GameState.CurrentPlanet;
         PeriodicTimer timer = new(TimeSpan.FromSeconds(1));
         _ = Task.Run(async () =>
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {
-                Planet.ProcessUpgrades(DateTime.Now);
-                Planet.ResourcesUpdate(DateTime.Now);
+                _planet.ProcessUpgrades(DateTime.Now);
+                _planet.ResourcesUpdate(DateTime.Now);
                 StateHasChanged();
             }
         });
@@ -82,50 +85,50 @@
         switch (buildingId)
         {
             case 1:
-                return @<MudText Typo="Typo.body1">Mining titanium ore at @Planet.ResourceProduction(Resource.Titanium).ToString("#,##0") units per minute</MudText>;
+                return @<MudText Typo="Typo.body1">Mining titanium ore at @_planet.ResourceProduction(Resource.Titanium).ToString("#,##0") units per minute</MudText>;
 
             case 2:
-                current = Planet[Resource.Titanium];
-                max = Planet.ResourceCapacity(Resource.Titanium);
+                current = _planet[Resource.Titanium];
+                max = _planet.ResourceCapacity(Resource.Titanium);
                 percentage = 100 * Convert.ToSingle(current) / max;
 
                 color = percentage < 70 ? Color.Success : (percentage > 95 ? Color.Error : Color.Warning);
 
                 return @<div>
                             <MudText Typo="Typo.body1" Color="color">
-                                Storage capacity : @current.ToString("#,##0") / @Planet.ResourceCapacity(Resource.Titanium).ToString("#,##0")
+                                Storage capacity : @current.ToString("#,##0") / @_planet.ResourceCapacity(Resource.Titanium).ToString("#,##0")
                             </MudText><MudProgressLinear Color="color" Size="Size.Large" Rounded Value="current" Max="max" />
                         </div>;
 
             case 3:
-                return @<MudText Typo="Typo.body1">Refining silicon crystals at @Planet.ResourceProduction(Resource.Silicon).ToString("#,##0") units per minute</MudText>;
+                return @<MudText Typo="Typo.body1">Refining silicon crystals at @_planet.ResourceProduction(Resource.Silicon).ToString("#,##0") units per minute</MudText>;
 
             case 4:
-                current = Planet[Resource.Silicon];
-                max = Planet.ResourceCapacity(Resource.Silicon);
+                current = _planet[Resource.Silicon];
+                max = _planet.ResourceCapacity(Resource.Silicon);
                 percentage = 100 * Convert.ToSingle(current) / max;
 
                 color = percentage < 70 ? Color.Success : (percentage > 95 ? Color.Error : Color.Warning);
 
                 return @<div>
                             <MudText Typo="Typo.body1" Color="color">
-                                Storage capacity : @current.ToString("#,##0") / @Planet.ResourceCapacity(Resource.Silicon).ToString("#,##0")
+                                Storage capacity : @current.ToString("#,##0") / @_planet.ResourceCapacity(Resource.Silicon).ToString("#,##0")
                             </MudText><MudProgressLinear Color="color" Size="Size.Large" Rounded Value="current" Max="max" />
                         </div>;
 
             case 5:
-                return @<MudText Typo="Typo.body1">Extracting ³helium at @Planet.ResourceProduction(Resource.Helium).ToString("#,##0") units per minute</MudText>;
+                return @<MudText Typo="Typo.body1">Extracting ³helium at @_planet.ResourceProduction(Resource.Helium).ToString("#,##0") units per minute</MudText>;
 
             case 6:
-                current = Planet[Resource.Helium];
-                max = Planet.ResourceCapacity(Resource.Helium);
+                current = _planet[Resource.Helium];
+                max = _planet.ResourceCapacity(Resource.Helium);
                 percentage = 100 * Convert.ToSingle(current) / max;
 
                 color = percentage < 70 ? Color.Success : (percentage > 95 ? Color.Error : Color.Warning);
 
                 return @<div>
                             <MudText Typo="Typo.body1" Color="color">
-                                Storage capacity : @current.ToString("#,##0") / @Planet.ResourceCapacity(Resource.Helium).ToString("#,##0")
+                                Storage capacity : @current.ToString("#,##0") / @_planet.ResourceCapacity(Resource.Helium).ToString("#,##0")
                             </MudText><MudProgressLinear Color="color" Size="Size.Large" Rounded Value="current" Max="max" />
                         </div>;
 

@@ -25,7 +25,7 @@
                     <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
                 </MudStack>
                 
-                <TotalCostDisplay Upgrade="Building"/>
+                <TotalCostDisplay Planet="Planet" Upgrade="Building"/>
     
                 @if (Planet.BuildingUpgrade is not null)
                 {
@@ -47,7 +47,7 @@
     [Parameter]
     public BuildingLevel Building { get; init; } = default!;
     
-    [Inject]
+    [Parameter]
     public Planet Planet { get; init; } = default!;
     
     private void Upgrade()
