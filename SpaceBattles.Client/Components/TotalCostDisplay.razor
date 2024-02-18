@@ -19,30 +19,28 @@
     [Parameter]
     public IRequirements Upgrade { get; init; } = default!;
 
-    [Inject]
-    private Planet Planet { get; init; } = default!;
+    [Parameter]
+    public Planet Planet { get; init; } = default!;
     
-    private string GetDurationText(TimeSpan span) 
+    private string GetDurationText(TimeSpan span)
     {
         if (span.TotalDays > 1)
         {
             int days = (int)span.TotalDays;
             return $"~ {days} day{(days >= 2 ? 's' : string.Empty)}";
         }
-        else if (span.TotalHours > 1)
+        if (span.TotalHours > 1)
         {
             int hours = (int)span.TotalHours;
             return $"~ {hours} hour{(hours >= 2 ? 's' : string.Empty)}";
         }
-        else if (span.TotalMinutes > 1)
+        if (span.TotalMinutes > 1)
         {
             int minutes = (int)span.TotalMinutes;
             return $"~ {minutes} minute{(minutes >= 2 ? 's' : string.Empty)}";
         }
-        else 
-        {
-            int seconds = (int)span.TotalSeconds;
-            return $"{seconds} second{(seconds >= 2 ? 's' : string.Empty)}";
-        }
+
+        int seconds = (int)span.TotalSeconds;
+        return $"{seconds} second{(seconds >= 2 ? 's' : string.Empty)}";
     }
 }

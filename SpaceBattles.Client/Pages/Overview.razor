@@ -1,22 +1,23 @@
 ﻿@page "/Overview"
 @using SpaceBattles.Core.Domain.Entities.Universe
 @using SpaceBattles.Core.Domain.Records
+@using SpaceBattles.Core.Application.Services
 @implements IDisposable
 
 <MudContainer MaxWidth="MaxWidth.Small">
     <MudPaper Class="pa-4 rounded-xl align-self-center">
         <MudStack>
-            <MudText Typo="Typo.h4" Class="align-self-center" Style="font-family:TitleFont;">@Planet.Name</MudText>
+            <MudText Typo="Typo.h4" Class="align-self-center" Style="font-family:TitleFont;">@_planet.Name</MudText>
             <MudStack Row Justify="Justify.SpaceAround">
-                <MudImage Src="@Planet.ImagePath" Alt="an image of your current planet" Width="200" Height="200" ObjectFit="ObjectFit.Contain"/>
+                <MudImage Src="@_planet.ImagePath" Alt="an image of your current planet" Width="200" Height="200" ObjectFit="ObjectFit.Contain"/>
 
                 <MudDivider Vertical FlexItem/>
 
                 <MudStack Justify="Justify.SpaceAround">
-                    <MudText>Planet type : @Planet.PlanetType.ToString().Replace("_"," ")</MudText>
-                    <MudText>Orbital period : @Planet.OrbitalPeriod days</MudText>
-                    <MudText>Average surface temperature : @Planet.AverageSurfaceTemp C°</MudText>
-                    <MudText>Gravity : @Planet.Gravity.ToString("0.##") G</MudText>
+                    <MudText>Planet type : @_planet.PlanetType.ToString().Replace("_"," ")</MudText>
+                    <MudText>Orbital period : @_planet.OrbitalPeriod days</MudText>
+                    <MudText>Average surface temperature : @_planet.AverageSurfaceTemp C°</MudText>
+                    <MudText>Gravity : @_planet.Gravity.ToString("0.##") G</MudText>
                 </MudStack>
         </MudStack>
 
@@ -34,7 +35,7 @@
                         <MudTooltip Text="@display.Name" Color="Color.Info">
                             <MudImage Src="@display.ImagePath" Width="128" Height="128"/>
                         </MudTooltip>
-                        <MudText Class="align-self-center" Typo="Typo.body1">@Planet[@display.Resource].ToString("#,##0")</MudText>
+                        <MudText Class="align-self-center" Typo="Typo.body1">@_planet[@display.Resource].ToString("#,##0")</MudText>
                     </MudStack>
                 }
             </MudStack>
@@ -57,9 +58,9 @@
                 {
                     <tr>
                         <td>@display.Name</td>
-                        <td>@Planet.ResourceProduction(display.Resource).ToString("#,##0")</td>
-                        <td>@((Planet.ResourceProduction(display.Resource) * 60).ToString("#,##0"))</td>
-                        <td>@((Planet.ResourceProduction(display.Resource) * 60 * 24).ToString("#,##0"))</td>
+                        <td>@_planet.ResourceProduction(display.Resource).ToString("#,##0")</td>
+                        <td>@((_planet.ResourceProduction(display.Resource) * 60).ToString("#,##0"))</td>
+                        <td>@((_planet.ResourceProduction(display.Resource) * 60 * 24).ToString("#,##0"))</td>
                     </tr>
                 }
             </table>
@@ -71,19 +72,23 @@
 
 @code {
     [Inject]
-    private Planet Planet { get; init; } = default!;
+    private GameState GameState { get; init; } = default!;
+
+    private Planet _planet = default!;
     
     private readonly CancellationTokenSource _source = new();
 
     protected override void OnInitialized()
     {
+        _planet = GameState.CurrentPlanet;
+        
         PeriodicTimer timer = new(TimeSpan.FromSeconds(1));
         _ = Task.Run(async () =>
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {                
-                Planet.ProcessUpgrades(DateTime.Now);
-                Planet.ResourcesUpdate(DateTime.Now);
+                _planet.ProcessUpgrades(DateTime.Now);
+                _planet.ResourcesUpdate(DateTime.Now);
                 StateHasChanged();
             }
         });
