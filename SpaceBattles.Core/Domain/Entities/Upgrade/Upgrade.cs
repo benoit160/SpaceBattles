@@ -2,9 +2,9 @@
 
 public abstract class Upgrade
 {
-    public DateTime Start { get; set; }
+    public DateTime Start { get; init; }
 
-    public TimeSpan Duration { get; set; }
+    public TimeSpan Duration { get; init; }
     
     public DateTime End => Start + Duration;
 

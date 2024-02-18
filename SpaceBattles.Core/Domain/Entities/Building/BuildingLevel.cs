@@ -18,23 +18,4 @@ public sealed class BuildingLevel : IRequirements
     public long SiliconCost  => (long)(Building.SiliconCost * Math.Pow(Building.ScalingFactor, Level));
     
     public long HeliumCost  => (long)(Building.HeliumCost * Math.Pow(Building.ScalingFactor, Level));
-    
-    IEnumerable<ResourceCost> IRequirements.Costs
-    {
-        get
-        {
-            yield return new ResourceCost(Resource.Titanium, TitaniumCost);
-            yield return new ResourceCost(Resource.Silicon, SiliconCost);
-            yield return new ResourceCost(Resource.Helium, HeliumCost);
-        }
-    }
-
-    public TimeSpan Duration
-    {
-        get
-        {
-            double durationHours = (TitaniumCost + SiliconCost) / 2500d;
-            return TimeSpan.FromHours(durationHours);
-        }
-    }
 }
