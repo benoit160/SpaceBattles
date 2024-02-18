@@ -13,7 +13,7 @@ public class UpgradeTests
         BuildingUpgrade upgrade = new BuildingUpgrade
         {
             Start = TestDate,
-            DurationSeconds = 120,
+            Duration = TimeSpan.FromMinutes(2),
         };
 
         // Assert
@@ -27,7 +27,7 @@ public class UpgradeTests
         BuildingUpgrade upgrade = new BuildingUpgrade
         {
             Start = TestDate,
-            DurationSeconds = 120,
+            Duration = TimeSpan.FromMinutes(2),
         };
 
         // Assert
@@ -41,7 +41,7 @@ public class UpgradeTests
         BuildingUpgrade upgrade = new BuildingUpgrade
         {
             Start = DateTime.Now + TimeSpan.FromMinutes(2),
-            DurationSeconds = 120,
+            Duration = TimeSpan.FromMinutes(2),
         };
 
         // Assert
@@ -55,7 +55,7 @@ public class UpgradeTests
         BuildingUpgrade upgrade = new BuildingUpgrade
         {
             Start = TestDate,
-            DurationSeconds = 120,
+            Duration = TimeSpan.FromMinutes(2),
         };
 
         // Assert
@@ -69,7 +69,7 @@ public class UpgradeTests
         BuildingUpgrade  upgrade = new BuildingUpgrade
         {
             Start = DateTime.Now,
-            DurationSeconds = 120,
+            Duration = TimeSpan.FromMinutes(2),
         };
 
         // Assert
