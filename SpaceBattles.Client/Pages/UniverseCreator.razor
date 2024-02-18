@@ -3,22 +3,22 @@
 @using SpaceBattles.Core.Application.Services
 @using SpaceBattles.Core.Domain.Models
 
-<div class=@(showCreationScreen? "d-none" : "")>
+<div class=@(_showCreationScreen? "d-none" : "")>
     <MudContainer MaxWidth="MaxWidth.ExtraSmall">
         <MudPaper Class="pa-4 rounded-xl">
-            <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+            <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
                 <MudStack>
 
-                    <MudTextField Class="pb-4" Label="Save name" @bind-Value="model.UniverseName" Required For="@(() => model.UniverseName)" Immediate />
-
-                    <MudSlider Class="pb-4" @bind-Value="model.UniverseSpeed" Color="Color.Info" Variant="Variant.Filled" TickMarks Min="1" Max="10" Step="1" ValueLabel >Universe speed</MudSlider>
+                    <MudTextField Class="pb-4" Label="Save name" @bind-Value="_model.UniverseName" Required For="@(() => _model.UniverseName)" Immediate />
 
                     <!--
-                    <MudSlider Value="model.NumberOfPlanets" ValueLabel Min="1" Max="100" Step="1" TickMarks>Number of planets</MudSlider>
-
-                    <MudSwitch T="bool" Label="Peacefull mode" Color="Color.Primary" Class="py-4"/>                
+                    <MudSlider Class="pb-4" @bind-Value="_model.UniverseSpeed" Color="Color.Info" Variant="Variant.Filled" TickMarks Min="1" Max="10" Step="1" ValueLabel >Universe speed</MudSlider>
                     -->
+                    
+                    <MudSlider Value="_model.NumberOfPlanets" ValueLabel Min="1" Max="25" Step="1" TickMarks>Number of planets</MudSlider>
+
+                    <MudSwitch @bind-Value="_model.IsPeacefulMode" Label="Peaceful mode" Color="Color.Primary" Class="py-4"/>
 
                     <MudButton ButtonType="ButtonType.Submit" Class="align-self-center" Variant="Variant.Filled" Color="Color.Info">Start new game</MudButton>
 
@@ -29,8 +29,8 @@
     </MudContainer>
 </div>
 
-<div class=@(showCreationScreen? "" : "d-none")>
-    <UniverseCreationWaiter @ref="universeCreationWaiter"/>
+<div class=@(_showCreationScreen? "" : "d-none")>
+    <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
 </div>
 
 @code {
@@ -40,18 +40,18 @@
     [Inject]
     private GameState GameState { get; init; } = default!;
 
-    private UniverseCreationModel model = new UniverseCreationModel();
+    private UniverseCreationModel _model = new();
 
-    private UniverseCreationWaiter? universeCreationWaiter;
+    private UniverseCreationWaiter? _universeCreationWaiter;
 
-    private bool showCreationScreen = false;
+    private bool _showCreationScreen;
 
     private async Task OnValidSubmit()
     {
-        showCreationScreen = true;
-        Task waitingScreen = universeCreationWaiter!.ShowWaitingScreen();
+        _showCreationScreen = true;
+        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
         
-        GameState.Initialize();
+        GameState.Initialize(_model);
 
         await waitingScreen;
 

@@ -15,17 +15,8 @@ public sealed class GameState
         CurrentUniverse = default!;
     }
 
-    public void Initialize()
+    public void Initialize(UniverseCreationModel model)
     {
-        UniverseCreationModel model = new UniverseCreationModel
-        {
-            NumberOfPlanets = 10,
-            IncludeBots = true,
-            IsPeacefulMode = true,
-            UniverseSpeed = 1f,
-            UniverseName = "Ben"
-        };
-        
         CurrentUniverse = Universe.CreateUniverse(model);
         CurrentPlanet = CurrentUniverse.Planets[0];
     }
