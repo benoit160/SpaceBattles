@@ -47,7 +47,7 @@ public class BuildingUpgradeTests
         // Assert
         Assert.True(succeeded);
         Assert.NotNull(planet.BuildingUpgrade);
-        Assert.Equal(108, planet.BuildingUpgrade.DurationSeconds);
+        Assert.Equal(108, planet.BuildingUpgrade.Duration.TotalSeconds);
     }
     
     [Fact]

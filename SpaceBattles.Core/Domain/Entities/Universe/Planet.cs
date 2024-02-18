@@ -14,7 +14,7 @@ public sealed class Planet
         ImageIndex = Convert.ToByte(Random.Shared.Next(0, 10));
         
         PlanetType[] values = Enum.GetValues<PlanetType>();
-        PlanetType = values[Random.Shared.Next(values.Length)];
+        PlanetType = values[Random.Shared.Next(1, values.Length - 1)];
         
         OrbitalPeriod = Convert.ToInt16(Random.Shared.Next(50, 2000));
         AverageSurfaceTemp = Convert.ToInt16(Random.Shared.Next(1, 50));
@@ -176,7 +176,7 @@ public sealed class Planet
     
     public bool TryUpgradeBuilding(short buildingId)
     {
-        BuildingLevel? level = Buildings.Find(bl => bl.BuildingId == buildingId);
+        IRequirements? level = Buildings.Find(bl => bl.BuildingId == buildingId);
 
         if (level is null) return false;
 
@@ -184,14 +184,13 @@ public sealed class Planet
 
         if (BuildingUpgrade is not null) return false;
 
-        double durationHours = (level.TitaniumCost + level.SiliconCost) / 2500d;
         ConsumeResources(level);
 
         BuildingUpgrade upgrade = new BuildingUpgrade()
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            DurationSeconds = (int)TimeSpan.FromHours(durationHours).TotalSeconds,
+            Duration = level.Duration,
         };
 
         BuildingUpgrade = upgrade;
