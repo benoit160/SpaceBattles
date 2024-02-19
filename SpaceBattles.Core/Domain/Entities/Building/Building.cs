@@ -1,6 +1,8 @@
-﻿namespace SpaceBattles.Core.Domain.Entities.Building;
+﻿using SpaceBattles.Core.Domain.Interfaces;
 
-public sealed class Building
+namespace SpaceBattles.Core.Domain.Entities.Building;
+
+public sealed class Building : IBuildingRequirements
 {
     public short Id { get; init; }
 
@@ -22,6 +24,9 @@ public sealed class Building
     public int HeliumCost { get; init; }
 
     public float ScalingFactor { get; init; }
+
+    public List<BuildingRequirement> BuildingRequirements { get; init; }
+        = new();
 
     /// <summary>
     /// Contains the initial buildings list.
@@ -126,6 +131,11 @@ public sealed class Building
                 TitaniumCost = 400,
                 SiliconCost = 200,
                 HeliumCost = 100,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(7, 2),
+                ],
             },
             new()
             {
@@ -152,6 +162,11 @@ public sealed class Building
                 TitaniumCost = 1_000_000,
                 SiliconCost = 500_000,
                 HeliumCost = 100_000,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(7, 10),
+                ],
             }
         ];
     }

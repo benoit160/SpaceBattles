@@ -30,3 +30,10 @@ public interface IRequirements
         }
     }
 }
+
+public interface IBuildingRequirements
+{
+    List<BuildingRequirement> BuildingRequirements { get; }
+}
+
+public record BuildingRequirement(short BuildingId, short RequiredLevel);
