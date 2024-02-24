@@ -1,4 +1,5 @@
 ﻿using SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Building;
 
@@ -25,8 +26,8 @@ public sealed class Building : IBuildingRequirements
 
     public float ScalingFactor { get; init; }
 
-    public List<BuildingRequirement> BuildingRequirements { get; init; }
-        = new();
+    public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
+        = Enumerable.Empty<BuildingRequirement>();
 
     /// <summary>
     /// Contains the initial buildings list.

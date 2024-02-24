@@ -31,6 +31,10 @@
                 {
                     <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Warning">Another construction is already in progress..</MudAlert>
                 }
+                else if (!Planet.MeetsBuildingRequirements(Building.Building))
+                {
+                    <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Warning">Requirements not met</MudAlert>
+                }
                 else if (Planet.HasEnoughResource(Building))
                 {
                     <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="() => Upgrade()">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>

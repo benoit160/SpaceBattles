@@ -142,6 +142,9 @@ public sealed class Planet
         Resource.Helium => Convert.ToInt32(11 * Buildings.First(x => x.BuildingId == 5).Level * Math.Pow(1.1, Buildings.First(x => x.BuildingId == 5).Level)),
         _ => default
     };
+
+    public bool MeetsBuildingRequirements(IBuildingRequirements requirements)
+        => requirements.BuildingRequirements.All(x => Buildings.Single(b => b.BuildingId == x.BuildingId).Level >= x.RequiredLevel);
     
     public bool HasEnoughResource(IRequirements requirements)
         => requirements.Costs.All(cost => this[cost.Resource] >= cost.RequiredQuantity);
