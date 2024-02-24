@@ -168,6 +168,24 @@ public sealed class Building : IBuildingRequirements
                 [
                     new BuildingRequirement(7, 10),
                 ],
+            },
+            new()
+            {
+                Id = 11,
+                ImageName = "missile_silo.webp",
+
+                Name = "Missile silo",
+                Description = "The missile silo is a building that launches and stores missiles.\n\nAnti-Ballistic Missiles are launched automatically whenever an approaching Interplanetary Missile is detected. Otherwise they do not take part in any attacks, thus they can not be sent on missions or destroyed by an attacking fleet.\n\nInterplanetary Missiles are your offensive weapon to destroy the defenses of your target. Using state of the art tracking technology, each missile targets a certain number of defenses for destruction. Tipped with an anti-matter bomb, they deliver a destructive force so severe that destroyed shields and defenses cannot be repaired.",
+
+                ScalingFactor = 2f,
+                TitaniumCost = 20_000,
+                SiliconCost = 20_000,
+                HeliumCost = 1_000,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(8, 1),
+                ],
             }
         ];
     }
