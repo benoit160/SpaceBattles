@@ -19,10 +19,11 @@
         @for (int index = 0; index < _planet.Buildings.Count; index++)
         {
             int i = index;
+            string style = _planet.MeetsBuildingRequirements(_planet.Buildings[i].Building) ? string.Empty : "filter: grayscale(1)";
             <MudItem xs="12" lg="6">
                 <MudPaper Class="pa-2 ma-1">
                     <MudStack Row>
-                        <MudImage Src="@_planet.Buildings[i].Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
+                        <MudImage Src="@_planet.Buildings[i].Building.ImagePath" Style="@style" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
                         <MudStack Style="width:100%">
                             <MudStack Row Justify="Justify.SpaceBetween">
                                 <MudText Typo="Typo.h5">@_planet.Buildings[i].Building.Name</MudText>

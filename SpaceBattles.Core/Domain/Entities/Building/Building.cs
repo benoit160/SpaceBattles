@@ -1,6 +1,9 @@
-﻿namespace SpaceBattles.Core.Domain.Entities.Building;
+﻿using SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
-public sealed class Building
+namespace SpaceBattles.Core.Domain.Entities.Building;
+
+public sealed class Building : IBuildingRequirements
 {
     public short Id { get; init; }
 
@@ -22,6 +25,9 @@ public sealed class Building
     public int HeliumCost { get; init; }
 
     public float ScalingFactor { get; init; }
+
+    public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
+        = Enumerable.Empty<BuildingRequirement>();
 
     /// <summary>
     /// Contains the initial buildings list.
@@ -126,6 +132,11 @@ public sealed class Building
                 TitaniumCost = 400,
                 SiliconCost = 200,
                 HeliumCost = 100,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(7, 2),
+                ],
             },
             new()
             {
@@ -152,6 +163,29 @@ public sealed class Building
                 TitaniumCost = 1_000_000,
                 SiliconCost = 500_000,
                 HeliumCost = 100_000,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(7, 10),
+                ],
+            },
+            new()
+            {
+                Id = 11,
+                ImageName = "missile_silo.webp",
+
+                Name = "Missile silo",
+                Description = "The missile silo is a building that launches and stores missiles.\n\nAnti-Ballistic Missiles are launched automatically whenever an approaching Interplanetary Missile is detected. Otherwise they do not take part in any attacks, thus they can not be sent on missions or destroyed by an attacking fleet.\n\nInterplanetary Missiles are your offensive weapon to destroy the defenses of your target. Using state of the art tracking technology, each missile targets a certain number of defenses for destruction. Tipped with an anti-matter bomb, they deliver a destructive force so severe that destroyed shields and defenses cannot be repaired.",
+
+                ScalingFactor = 2f,
+                TitaniumCost = 20_000,
+                SiliconCost = 20_000,
+                HeliumCost = 1_000,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(8, 1),
+                ],
             }
         ];
     }
