@@ -65,7 +65,7 @@ public sealed class Building : IBuildingRequirements
                 ImageName = "silicon.webp",
 
                 Name = "Silicon refinery",
-                Description = "Silicon refineries supply the main resource used to produce electronic circuits and form certain alloy compounds.\nMining silicon crystals consumes some one and half times more energy than a mining titanium, making crystals more valuable. Almost all ships and all buildings require silicon. Most silicon crystals required to build spaceships, however, are very rare, and like titanium can only be found at a certain depth. Therefore, building mines in deeper strata will increase the amount of silicon produced.",
+                Description = "Silicon refineries supply the main resource used to produce electronic circuits and form certain alloy compounds.\nMining silicon crystals consumes some one and half times more energy than a mining titanium, making crystals more valuable.\nAlmost all ships and all buildings require silicon. Most silicon crystals required to build spaceships, however, are very rare, and like titanium can only be found at a certain depth. Therefore, building mines in deeper strata will increase the amount of silicon produced.",
 
                 ScalingFactor = 1.6f,
                 TitaniumCost = 48,
@@ -89,7 +89,7 @@ public sealed class Building : IBuildingRequirements
                 ImageName = "helium.webp",
 
                 Name = "³Helium synthesizer",
-                Description = "³Helium is a stable isotope of helium with a natural abundance in the oceans of colonies of approximately one atom in 6500 of helium (~154 PPM). Helium³ thus accounts for approximately 0.015% (on a weight basis, 0.030%) of all water.\nHelium³ is processed by special synthesizers which can separate the water from the Helium³ using specially designed centrifuges. The upgrade of the synthesizer allows for increasing the amount of Helium³ deposits processed. Helium³ is used when carrying out sensor phalanx scans, viewing galaxies, as fuel for ships, and performing specialized research upgrades.",
+                Description = "³Helium is a stable isotope of helium with a natural abundance in the oceans of colonies of approximately one atom in 6500 of helium (~154 PPM). Helium³ thus accounts for approximately 0.015% (on a weight basis, 0.030%) of all water.\nHelium³ is processed by special synthesizers which can separate the water from the Helium³ using specially designed centrifuges. The upgrade of the synthesizer allows for increasing the amount of Helium³ deposits processed.\nHelium³ is used when carrying out sensor phalanx scans, viewing galaxies, as fuel for ships, and performing specialized research upgrades.",
                 
                 ScalingFactor = 1.5f,
                 TitaniumCost = 225,
