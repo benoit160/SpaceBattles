@@ -68,11 +68,14 @@
 
     private static RenderFragment ParagraphDisplay(string text)
     {
+        string[] paragraphs = text.Split(Environment.NewLine);
+
         return
-            @<div style="overflow-y: auto; max-height: 256px">
-                @foreach(string paragraph in text.Split(Environment.NewLine))
+            @<div  style="overflow-y: auto; max-height: 256px">
+                @for(int i = 0; i < paragraphs.Length; i++)
                 {
-                    <MudText Typo="Typo.body1" Style="margin-bottom: 0.5em">@paragraph</MudText>
+                    int localI = i;
+                    <MudText Typo="Typo.body1" Style="@(localI == paragraphs.Length - 1 ? string.Empty : "margin-bottom: 0.5em")">@paragraphs[localI]</MudText>
                 }
             </div>;
     }

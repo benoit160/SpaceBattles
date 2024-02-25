@@ -1,10 +1,41 @@
 ﻿@page "/"
+@using SpaceBattles.Core.Domain.Models
 @layout MainLayout
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
-<MudStack AlignItems="AlignItems.Center">
-    <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
+<div class=@(_showCreationScreen? "d-none" : "")>
+    <MudStack AlignItems="AlignItems.Center">
+        <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
 
-    <MudButton  Href="/UniverseCreator" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
-</MudStack>
+        <MudButton OnClick="StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+    </MudStack>
+</div>
+
+<div class=@(_showCreationScreen? "" : "d-none")>
+    <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
+</div>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; init; } = default!;
+
+    [Inject]
+    private Core.Application.Services.GameState GameState { get; init; } = default!;
+
+    private UniverseCreationWaiter? _universeCreationWaiter;
+
+    private bool _showCreationScreen;
+
+    private async Task StartGame()
+    {
+        _showCreationScreen = true;
+        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
+        
+        GameState.Initialize(new UniverseCreationModel());
+
+        await waitingScreen;
+
+        NavigationManager.NavigateTo("/Overview");
+    }
+}
