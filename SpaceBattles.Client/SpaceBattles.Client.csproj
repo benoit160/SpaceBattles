@@ -18,4 +18,11 @@
     <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- Those remove some unused framework feature to reduce transfered payload -->
+    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
+  </PropertyGroup>
+
 </Project>
