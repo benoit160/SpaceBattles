@@ -47,7 +47,7 @@ public class BuildingRequirements
     {
         // Arrange
         Planet planet = new Planet();
-        Building building = new  Building
+        Building building = new Building
         {
             BuildingRequirements = 
             [
@@ -69,7 +69,7 @@ public class BuildingRequirements
         Planet planet = new Planet();
         planet.Buildings.ForEach(x => x.Level++);
         
-        Building building = new  Building
+        Building building = new Building
         {
             BuildingRequirements = 
             [

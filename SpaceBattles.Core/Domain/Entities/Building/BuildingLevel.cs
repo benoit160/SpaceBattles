@@ -19,5 +19,5 @@ public sealed class BuildingLevel : IRequirements
     
     public short OperatingLevel { get; set; }
 
-    public int Energy => (int)(Building.BaseEnergy * Level * Math.Pow(1.1f, Level)) * (int)Building.EnergyStatus;
+    public int Energy => Convert.ToInt32(Building.BaseEnergy * Level * Math.Pow(1.1f, Level)) * (int)Building.EnergyStatus;
 }
