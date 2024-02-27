@@ -30,6 +30,7 @@ public sealed class Planet
             {
                 BuildingId = building.Id,
                 Building = building,
+                OperatingLevel = 100,
             }).ToList();
     }
     

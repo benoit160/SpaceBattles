@@ -10,10 +10,14 @@ public sealed class BuildingLevel : IRequirements
     public short BuildingId { get; init; }
 
     public short Level { get; set; }
-    
+
     public long TitaniumCost => (long)(Building.TitaniumCost * Math.Pow(Building.ScalingFactor, Level));
-    
+
     public long SiliconCost  => (long)(Building.SiliconCost * Math.Pow(Building.ScalingFactor, Level));
-    
+
     public long HeliumCost  => (long)(Building.HeliumCost * Math.Pow(Building.ScalingFactor, Level));
+    
+    public short OperatingLevel { get; set; }
+
+    public int Energy => (int)(Building.BaseEnergy * Level * Math.Pow(1.1f, Level)) * (int)Building.EnergyStatus;
 }

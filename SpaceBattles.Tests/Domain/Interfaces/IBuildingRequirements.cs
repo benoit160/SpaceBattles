@@ -25,7 +25,7 @@ public class BuildingRequirements
     {
         // Arrange
         Planet planet = new Planet();
-        Building building = new  Building
+        Building building = new Building
         {
             BuildingRequirements = 
             [
