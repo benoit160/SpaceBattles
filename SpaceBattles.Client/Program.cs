@@ -16,6 +16,8 @@ namespace SpaceBattles.Client
 
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<GameState>();
+            builder.Services.AddScoped<PlanetService>();
+            builder.Services.AddScoped<StatisticService>();
             builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();

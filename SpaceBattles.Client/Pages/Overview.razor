@@ -3,6 +3,7 @@
 @using SpaceBattles.Core.Domain.Records
 @using SpaceBattles.Core.Application.Services
 @implements IDisposable
+@inject PlanetService PlanetService
 
 <MudContainer MaxWidth="MaxWidth.Small">
     <MudPaper Class="pa-4 rounded-xl align-self-center">
@@ -88,7 +89,8 @@
             while (await timer.WaitForNextTickAsync(_source.Token))
             {                
                 _planet.ProcessUpgrades(DateTime.Now);
-                _planet.ResourcesUpdate(DateTime.Now);
+                PlanetService.UpdateCurrentPlanet();
+                // _planet.ResourcesUpdate(DateTime.Now);
                 StateHasChanged();
             }
         });

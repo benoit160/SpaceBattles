@@ -52,9 +52,10 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Buildings.ForEach(x => x.Level++);
+        Span<long> totals = [0, 0, 0];
         
         // Act
-        planet.ResourcesUpdate(DateTime.Now + TimeSpan.FromDays(10));
+        planet.ResourcesUpdate(DateTime.Now + TimeSpan.FromDays(10), totals);
         
         // Assert
         Assert.Equal(20_000, planet[Resource.Titanium]);
@@ -122,9 +123,10 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         DateTime advancedTime = DateTime.Now + TimeSpan.FromSeconds(5);
-        
+        Span<long> totals = [0, 0, 0];
+
         // Act
-        planet.ResourcesUpdate(advancedTime);
+        planet.ResourcesUpdate(advancedTime, totals);
         
         // Assert
         Assert.Equal(152, planet[Resource.Titanium]);
@@ -133,6 +135,6 @@ public class PlanetTests
         
         advancedTime += TimeSpan.FromSeconds(5);
         
-        planet.ResourcesUpdate(advancedTime);
+        planet.ResourcesUpdate(advancedTime, totals);
     }
 }
