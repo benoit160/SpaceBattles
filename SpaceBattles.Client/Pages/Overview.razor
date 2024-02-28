@@ -90,7 +90,6 @@
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {                
-                _planet.ProcessUpgrades(DateTime.Now);
                 PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
 
