@@ -1,7 +1,8 @@
-﻿@layout MainLayout
-@page "/UniverseCreator"
-@using SpaceBattles.Core.Application.Services
-@using SpaceBattles.Core.Domain.Models
+﻿@page "/UniverseCreator"
+@layout MainLayout
+
+@inject NavigationManager NavigationManager
+@inject GameState GameState
 
 <div class=@(_showCreationScreen? "d-none" : "")>
     <MudContainer MaxWidth="MaxWidth.ExtraSmall">
@@ -36,11 +37,6 @@
 </div>
 
 @code {
-    [Inject]
-    private NavigationManager NavigationManager { get; init; } = default!;
-
-    [Inject]
-    private GameState GameState { get; init; } = default!;
 
     private UniverseCreationModel _model = new();
 

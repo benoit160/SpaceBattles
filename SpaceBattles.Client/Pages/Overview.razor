@@ -1,9 +1,11 @@
 ﻿@page "/Overview"
+
+@inject GameState GameState
+
+@implements IDisposable
+
 @using SpaceBattles.Core.Domain.Entities.Universe
 @using SpaceBattles.Core.Domain.Records
-@using SpaceBattles.Core.Application.Services
-@implements IDisposable
-@inject PlanetService PlanetService
 
 <MudContainer MaxWidth="MaxWidth.Small">
     <MudPaper Class="pa-4 rounded-xl align-self-center">
@@ -72,9 +74,7 @@
 </MudContainer>
 
 @code {
-    [Inject]
-    private GameState GameState { get; init; } = default!;
-
+    
     private Planet _planet = default!;
     
     private readonly CancellationTokenSource _source = new();
@@ -90,7 +90,6 @@
             {                
                 _planet.ProcessUpgrades(DateTime.Now);
                 PlanetService.UpdateCurrentPlanet();
-                // _planet.ResourcesUpdate(DateTime.Now);
                 StateHasChanged();
             }
         });
