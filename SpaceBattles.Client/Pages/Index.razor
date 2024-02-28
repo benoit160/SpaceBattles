@@ -1,6 +1,8 @@
 ﻿@page "/"
-@using SpaceBattles.Core.Domain.Models
 @layout MainLayout
+
+@inject NavigationManager NavigationManager
+@inject GameState GameState
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -17,12 +19,6 @@
 </div>
 
 @code {
-    [Inject]
-    private NavigationManager NavigationManager { get; init; } = default!;
-
-    [Inject]
-    private Core.Application.Services.GameState GameState { get; init; } = default!;
-
     private UniverseCreationWaiter? _universeCreationWaiter;
 
     private bool _showCreationScreen;
