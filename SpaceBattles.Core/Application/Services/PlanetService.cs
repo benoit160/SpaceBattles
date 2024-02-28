@@ -38,6 +38,10 @@ public sealed class PlanetService
         {
             _notificationService.NotifyInfo($"The following building upgrade is finished : {result}");
         }
+        else
+        {
+            Console.WriteLine("result was null");
+        }
 
         stat.TotalTitaniumProduced += totals[0];
         stat.TotalSiliconProduced += totals[1];
