@@ -199,8 +199,7 @@ public sealed class Planet
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            // Duration = level.Duration,
-            Duration = TimeSpan.FromSeconds(20),
+            Duration = level.Duration,
         };
 
         BuildingUpgrade = upgrade;
