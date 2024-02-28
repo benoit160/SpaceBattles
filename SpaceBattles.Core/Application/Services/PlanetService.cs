@@ -1,4 +1,6 @@
-﻿namespace SpaceBattles.Core.Application.Services;
+﻿using SpaceBattles.Core.Domain.Entities.Building;
+
+namespace SpaceBattles.Core.Application.Services;
 
 public sealed class PlanetService
 {
@@ -28,11 +30,11 @@ public sealed class PlanetService
         
         _gameState.CurrentPlanet.ResourcesUpdate(DateTime.Now, totals);
         _gameState.CurrentPlanet.ProcessUpgrades(DateTime.Now);
-        var result = _gameState.CurrentPlanet.ProcessUpgrades(DateTime.Now);
+        BuildingLevel? result = _gameState.CurrentPlanet.ProcessUpgrades(DateTime.Now);
 
         if (result is not null)
         {
-            _notificationService.NotifyInfo($"The following building upgrade is finished : {result}");
+            _notificationService.NotifyInfo($"The following building upgrade is finished : {result.Building.Name}");
         }
 
         stat.TotalTitaniumProduced += totals[0];
