@@ -1,14 +1,21 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
+public interface INotificationService
+{
+    public void NotifyInfo(string text);
+}
+
 public sealed class PlanetService
 {
     private readonly GameState _gameState;
     private readonly StatisticService _statisticService;
+    private readonly INotificationService _notificationService;
 
-    public PlanetService(GameState gameState, StatisticService statisticService)
+    public PlanetService(GameState gameState, StatisticService statisticService, INotificationService notificationService)
     {
         _gameState = gameState;
         _statisticService = statisticService;
+        _notificationService = notificationService;
     }
     
     public void UpdateUniverse()
@@ -25,6 +32,12 @@ public sealed class PlanetService
         PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet];
         
         _gameState.CurrentPlanet.ResourcesUpdate(DateTime.Now, totals);
+        var result = _gameState.CurrentPlanet.ProcessUpgrades(DateTime.Now);
+
+        if (result is not null)
+        {
+            _notificationService.NotifyInfo($"The following building upgrade is finished : {result}");
+        }
 
         stat.TotalTitaniumProduced += totals[0];
         stat.TotalSiliconProduced += totals[1];
