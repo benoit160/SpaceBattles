@@ -1,6 +1,8 @@
 ﻿@page "/Overview"
 
 @inject GameState GameState
+@inject PlanetService PlanetService
+@inject StatisticService StatisticService
 
 @implements IDisposable
 
@@ -88,9 +90,10 @@
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {                
-                _planet.ProcessUpgrades(DateTime.Now);
-                _planet.ResourcesUpdate(DateTime.Now);
+                PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
+
+                StatisticService[_planet].PrintStats();
             }
         });
     }
