@@ -38,6 +38,7 @@ public sealed class PlanetService
         PlanetStatistics stat = _statisticService[planet];
         
         planet.ResourcesUpdate(DateTime.Now, totals);
+        planet.ProcessUpgrades(DateTime.Now);
 
         stat.TotalTitaniumProduced += totals[0];
         stat.TotalSiliconProduced += totals[1];
