@@ -1,6 +1,8 @@
 ﻿@page "/Overview"
 
 @inject GameState GameState
+@inject PlanetService PlanetService
+@inject StatisticService StatisticService
 
 @implements IDisposable
 
@@ -91,6 +93,11 @@
                 _planet.ProcessUpgrades(DateTime.Now);
                 PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
+
+                PlanetStatistics statistics = StatisticService[_planet];
+                Console.WriteLine($"Total titanium produced : {statistics.TotalTitaniumProduced}");
+                Console.WriteLine($"Total silicon produced : {statistics.TotalSiliconProduced}");
+                Console.WriteLine($"Total helium produced : {statistics.TotalHeliumProduced}");
             }
         });
     }
