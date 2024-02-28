@@ -32,15 +32,12 @@ public sealed class PlanetService
         PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet];
         
         _gameState.CurrentPlanet.ResourcesUpdate(DateTime.Now, totals);
+        _gameState.CurrentPlanet.ProcessUpgrades(DateTime.Now);
         var result = _gameState.CurrentPlanet.ProcessUpgrades(DateTime.Now);
 
         if (result is not null)
         {
             _notificationService.NotifyInfo($"The following building upgrade is finished : {result}");
-        }
-        else
-        {
-            Console.WriteLine("result was null");
         }
 
         stat.TotalTitaniumProduced += totals[0];
@@ -54,6 +51,7 @@ public sealed class PlanetService
         PlanetStatistics stat = _statisticService[planet];
         
         planet.ResourcesUpdate(DateTime.Now, totals);
+        planet.ProcessUpgrades(DateTime.Now);
 
         stat.TotalTitaniumProduced += totals[0];
         stat.TotalSiliconProduced += totals[1];

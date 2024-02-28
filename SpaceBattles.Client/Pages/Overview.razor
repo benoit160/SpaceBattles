@@ -3,7 +3,6 @@
 @inject GameState GameState
 @inject PlanetService PlanetService
 @inject StatisticService StatisticService
-@inject ISnackbar Snackbar
 
 @implements IDisposable
 
@@ -93,8 +92,6 @@
             {                
                 PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
-
-                // StatisticService[_planet].PrintStats();
             }
         });
     }
