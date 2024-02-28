@@ -11,4 +11,12 @@ public sealed class PlanetStatistics
     public int NumberOfAttackLaunched { get; set; }
     
     public int NumberOfAttackReceived { get; set; }
+
+    public void PrintStats()
+    {
+        Console.Clear();
+        Console.WriteLine($"Total titanium produced : {TotalTitaniumProduced}");
+        Console.WriteLine($"Total silicon produced : {TotalSiliconProduced}");
+        Console.WriteLine($"Total helium produced : {TotalHeliumProduced}");
+    }
 }

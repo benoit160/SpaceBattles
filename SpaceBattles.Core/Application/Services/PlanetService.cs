@@ -10,6 +10,14 @@ public sealed class PlanetService
         _gameState = gameState;
         _statisticService = statisticService;
     }
+    
+    public void UpdateUniverse()
+    {
+        foreach (var planet in _gameState.CurrentUniverse.Planets)
+        {
+            UpdatePlanet(planet);
+        }
+    }
 
     public void UpdateCurrentPlanet()
     {
@@ -17,6 +25,18 @@ public sealed class PlanetService
         PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet];
         
         _gameState.CurrentPlanet.ResourcesUpdate(DateTime.Now, totals);
+
+        stat.TotalTitaniumProduced += totals[0];
+        stat.TotalSiliconProduced += totals[1];
+        stat.TotalHeliumProduced += totals[2];
+    }
+
+    private void UpdatePlanet(Domain.Entities.Universe.Planet planet)
+    {
+        Span<long> totals = stackalloc long[3];
+        PlanetStatistics stat = _statisticService[planet];
+        
+        planet.ResourcesUpdate(DateTime.Now, totals);
 
         stat.TotalTitaniumProduced += totals[0];
         stat.TotalSiliconProduced += totals[1];
