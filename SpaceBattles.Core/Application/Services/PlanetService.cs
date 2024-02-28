@@ -1,6 +1,6 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
-public class PlanetService
+public sealed class PlanetService
 {
     private readonly GameState _gameState;
     private readonly StatisticService _statisticService;

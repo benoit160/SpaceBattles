@@ -3,7 +3,7 @@ using SpaceBattles.Core.Domain.Entities.Universe;
 
 namespace SpaceBattles.Core.Application.Services;
 
-public class StatisticService
+public sealed class StatisticService
 {
     private readonly FrozenDictionary<Planet, PlanetStatistics> _statistics;
 
