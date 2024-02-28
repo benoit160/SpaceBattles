@@ -1,10 +1,5 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
-public interface INotificationService
-{
-    public void NotifyInfo(string text);
-}
-
 public sealed class PlanetService
 {
     private readonly GameState _gameState;
