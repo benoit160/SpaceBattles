@@ -1,7 +1,7 @@
 ﻿@page "/Buildings"
-@using SpaceBattles.Core.Domain.Enums
 @using SpaceBattles.Core.Domain.Entities.Universe
-@using SpaceBattles.Core.Application.Services
+
+@inject GameState GameState
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
     
@@ -48,8 +48,6 @@
 </MudOverlay>
 
 @code {
-    [Inject]
-    private GameState GameState { get; init; } = default!;
 
     private Planet _planet = default!;
     private readonly CancellationTokenSource _source = new();
