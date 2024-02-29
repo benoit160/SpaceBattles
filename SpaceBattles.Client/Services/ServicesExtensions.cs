@@ -9,5 +9,6 @@ public static class ServicesExtensions
         serviceCollection.AddScoped<GameState>();
         serviceCollection.AddScoped<PlanetService>();
         serviceCollection.AddScoped<StatisticService>();
+        serviceCollection.AddScoped<INotificationService, NotificationService>();
     }
 }

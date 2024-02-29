@@ -1,10 +1,11 @@
 ﻿@page "/Buildings"
 
 @inject GameState GameState
+@inject PlanetService PlanetService
+
+@implements IDisposable
 
 @using SpaceBattles.Core.Domain.Entities.Universe
-
-@inject PlanetService PlanetService
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
     
@@ -75,6 +76,12 @@
     {
         _selectedIndex = buildingId - 1;
         _overlayVisible = true;
+    }
+    
+    public void Dispose()
+    {
+        _source.Cancel();
+        _source.Dispose();
     }
 
     private RenderFragment GetBuildingStatus(short buildingId)

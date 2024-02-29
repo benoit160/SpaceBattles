@@ -24,7 +24,7 @@
                     <MudText>Average surface temperature : @_planet.AverageSurfaceTemp C°</MudText>
                     <MudText>Gravity : @_planet.Gravity.ToString("0.##") G</MudText>
                 </MudStack>
-        </MudStack>
+            </MudStack>
 
             <MudStack Row Spacing="0">
                 <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
@@ -92,8 +92,6 @@
             {                
                 PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
-
-                StatisticService[_planet].PrintStats();
             }
         });
     }

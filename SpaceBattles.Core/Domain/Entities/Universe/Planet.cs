@@ -159,13 +159,17 @@ public sealed class Planet
         }
     }
     
-    public void ProcessUpgrades(DateTime now)
+    public BuildingLevel? ProcessUpgrades(DateTime now)
     {
         if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
         {
-            Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId).Level++;
+            BuildingLevel upgradedBuilding = Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId);
+            upgradedBuilding.Level++;
             BuildingUpgrade = null;
+            return upgradedBuilding;
         }
+
+        return null;
     }
     
     public bool CanUpgradeBuilding(short buildingId)
