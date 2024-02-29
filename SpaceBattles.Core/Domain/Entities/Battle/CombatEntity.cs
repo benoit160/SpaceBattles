@@ -4,13 +4,13 @@ public abstract class CombatEntity
 {
     public short Id { get; init; }
 
-    public string ImageName { get; init; }
+    public required string ImageName { get; init; }
 
     public string ImagePath => $"/images/combat/{ImageName}";
     
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public string Description { get; set; }
+    public required string Description { get; set; }
 
     public short RequiredShipyardLevel { get; set; }
 
