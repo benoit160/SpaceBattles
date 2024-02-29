@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Entities.Building;
+﻿using SpaceBattles.Core.Domain.Entities.Battle;
+using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
@@ -31,6 +32,14 @@ public sealed class Planet
                 BuildingId = building.Id,
                 Building = building,
             }).ToList();
+        
+        Spaceships = Spaceship.Spaceships()
+            .Select(entity => new CombatEntityInventory
+            {
+                CombatEntity = entity,
+                CombatEntityId = entity.Id,
+            })
+            .ToList();
     }
     
     public string Name { get; set; }
@@ -84,6 +93,8 @@ public sealed class Planet
     public long Helium { get; private set; }
     
     public List<BuildingLevel> Buildings { get; }
+    
+    public List<CombatEntityInventory> Spaceships { get; }
 
     public BuildingUpgrade? BuildingUpgrade { get; private set; }
 
