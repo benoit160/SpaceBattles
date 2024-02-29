@@ -272,95 +272,80 @@ public sealed class Spaceship : CombatEntity
                     new BuildingRequirement(8, 12),
                 ],
             },
-            // new Spaceship
-            // {
-            //     Id = 21,
-            //     Name = "Recycler",
-            //     Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
-            //
-            //     Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
-            //
-            //     BaseSpeed = 2_000,
-            //     FuelUsage = 300,
-            //     CargoCapacity = 20_000,
-            //
-            //     BaseArmor = 1_600,
-            //     BaseShield = 10,
-            //     BaseWeaponPower = 1,
-            //
-            //     RequiredShipyardLevel = 4,
-            //
-            //     Requirements =
-            //     {
-            //         new ItemCostForCombatEntity(1, 10_000),
-            //         new ItemCostForCombatEntity(2, 6_000),
-            //         new ItemCostForCombatEntity(3, 2_000)
-            //     },
-            //
-            //     RequiredTechnologies =
-            //     {
-            //         new RequiredTechForCombatEntity(3, 6),  // combustion drive
-            //         new RequiredTechForCombatEntity(12, 2),  // shield
-            //     }
-            // },
-            // new Spaceship
-            // {
-            //     Id = 22,
-            //     Name = "Espionage probe",
-            //     Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
-            //
-            //     Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
-            //
-            //     BaseSpeed = 100_000_000,
-            //     FuelUsage = 1,
-            //     CargoCapacity = 5,
-            //
-            //     BaseArmor = 100,
-            //     BaseShield = 0,
-            //     BaseWeaponPower = 0,
-            //
-            //     RequiredShipyardLevel = 3,
-            //
-            //     Requirements =
-            //     {
-            //         new ItemCostForCombatEntity(2, 1_000),
-            //     },
-            //
-            //     RequiredTechnologies =
-            //     {
-            //         new RequiredTechForCombatEntity(3, 3),  // combustion drive
-            //         new RequiredTechForCombatEntity(13, 2),  // espionnage
-            //     }
-            // },
-            // new Spaceship
-            // {
-            //     Id = 23,
-            //     Name = "Solar satellite",
-            //     Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
-            //
-            //     Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
-            //
-            //     BaseSpeed = 100_000_000,
-            //     FuelUsage = 1,
-            //     CargoCapacity = 5,
-            //
-            //     BaseArmor = 100,
-            //     BaseShield = 0,
-            //     BaseWeaponPower = 0,
-            //
-            //     RequiredShipyardLevel = 3,
-            //
-            //     Requirements =
-            //     {
-            //         new ItemCostForCombatEntity(2, 1_000),
-            //     },
-            //
-            //     RequiredTechnologies =
-            //     {
-            //         new RequiredTechForCombatEntity(3, 3),  // combustion drive
-            //         new RequiredTechForCombatEntity(13, 2),  // espionnage
-            //     }
-            // },
+            new Spaceship
+            {
+                Id = 21,
+                Name = "Recycler",
+                ImageName = "recycler.webp",
+                Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
+            
+                Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
+            
+                BaseSpeed = 2_000,
+                FuelUsage = 300,
+                CargoCapacity = 20_000,
+            
+                BaseArmor = 1_600,
+                BaseShield = 10,
+                BaseWeaponPower = 1,
+                
+                TitaniumCost = 10_000,
+                SiliconCost = 6_000,
+                HeliumCost = 2_000,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(8, 4),
+                ],
+            },
+            new Spaceship
+            {
+                Id = 22,
+                Name = "Espionage probe",
+                ImageName = "espionnage_probe.webp",
+                Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
+            
+                Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
+            
+                BaseSpeed = 100_000_000,
+                FuelUsage = 1,
+                CargoCapacity = 5,
+            
+                BaseArmor = 100,
+                BaseShield = 0,
+                BaseWeaponPower = 0,
+                
+                SiliconCost = 1_000,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(8, 3),
+                ],
+            },
+            new Spaceship
+            {
+                Id = 23,
+                Name = "Solar satellite",
+                Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
+            
+                Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
+            
+                BaseSpeed = 0,
+                FuelUsage = 0,
+                CargoCapacity = 0,
+            
+                BaseArmor = 200,
+                BaseShield = 1,
+                BaseWeaponPower = 1,
+                
+                SiliconCost = 2_000,
+                HeliumCost = 500,
+                
+                BuildingRequirements = 
+                [
+                    new BuildingRequirement(8, 1),
+                ],
+            },
         ];
     }
 }
