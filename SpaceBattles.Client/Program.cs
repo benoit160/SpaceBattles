@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor;
 using MudBlazor.Services;
-using SpaceBattles.Core.Application.Services;
-using SpaceBattles.Core.Domain.Entities.Universe;
+using SpaceBattles.Client.Services;
 
 namespace SpaceBattles.Client
 {
@@ -15,9 +15,21 @@ namespace SpaceBattles.Client
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddScoped<GameState>();
-            builder.Services.AddMudServices();
+            
+            builder.Services.AddSpaceBattlesServices();
+            
+            builder.Services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
 
+                config.SnackbarConfiguration.PreventDuplicates = true;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 100;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Outlined;
+            });
             await builder.Build().RunAsync();
         }
     }

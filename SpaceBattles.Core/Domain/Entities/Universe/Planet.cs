@@ -103,7 +103,7 @@ public sealed class Planet
     /// <summary>
     /// Adds resource to the planet inventory depending on production levels and storage capacity 
     /// </summary>
-    public void ResourcesUpdate(DateTime now)
+    public void ResourcesUpdate(DateTime now, Span<long> totalResources)
     {
         TimeSpan elapsedTime = now - LastUpdated;
         int elapsedSeconds = (int)elapsedTime.TotalSeconds;
@@ -119,16 +119,18 @@ public sealed class Planet
             double resourceLeftover = resourceProduced - resourceProducedRounded;
 
             this[loopResource] += resourceProducedRounded;
+            totalResources[i] += resourceProducedRounded;
 
             _decimalResourcesLeft[i] += resourceLeftover;
 
             if (_decimalResourcesLeft[i] >= 1)
             {
                 this[loopResource] += 1;
+                totalResources[i] += 1;
                 _decimalResourcesLeft[i] -= 1;
             }
         }
-
+        
         LastUpdated += TimeSpan.FromSeconds(elapsedSeconds);
     }
     
@@ -168,13 +170,17 @@ public sealed class Planet
         }
     }
     
-    public void ProcessUpgrades(DateTime now)
+    public BuildingLevel? ProcessUpgrades(DateTime now)
     {
         if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
         {
-            Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId).Level++;
+            BuildingLevel upgradedBuilding = Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId);
+            upgradedBuilding.Level++;
             BuildingUpgrade = null;
+            return upgradedBuilding;
         }
+
+        return null;
     }
     
     public bool CanUpgradeBuilding(short buildingId)

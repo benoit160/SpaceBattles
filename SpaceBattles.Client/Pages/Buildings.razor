@@ -1,8 +1,11 @@
 ﻿@page "/Buildings"
 
-@using SpaceBattles.Core.Domain.Enums
+@inject GameState GameState
+@inject PlanetService PlanetService
+
+@implements IDisposable
+
 @using SpaceBattles.Core.Domain.Entities.Universe
-@using SpaceBattles.Core.Application.Services
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
     
@@ -49,8 +52,6 @@
 </MudOverlay>
 
 @code {
-    [Inject]
-    private GameState GameState { get; init; } = default!;
 
     private Planet _planet = default!;
     private readonly CancellationTokenSource _source = new();
@@ -65,8 +66,7 @@
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {
-                _planet.ProcessUpgrades(DateTime.Now);
-                _planet.ResourcesUpdate(DateTime.Now);
+                PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
             }
         });
@@ -76,6 +76,12 @@
     {
         _selectedIndex = buildingId - 1;
         _overlayVisible = true;
+    }
+    
+    public void Dispose()
+    {
+        _source.Cancel();
+        _source.Dispose();
     }
 
     private RenderFragment GetBuildingStatus(short buildingId)
