@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+@inject NavigationManager NavigationManager
+
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
 
 <MudLayout>
@@ -9,7 +11,6 @@
 
         <MudButton Size="Size.Small" Href="/Overview" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" DisableRipple>Overview</MudButton>
         <MudButton Size="Size.Small" Href="/Buildings" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
-        @* <MudButton Size="Size.Small" Href="/Shipyard" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton> *@
         
         <MudSpacer />
 
@@ -30,9 +31,6 @@
 </style>
 
 @code {
-    [Inject]
-    private NavigationManager Navigation { get; init; } = default!;
-
     private CurrentPage _page;
     private EventHandler<LocationChangedEventArgs>? _locationEvent;
 
@@ -40,7 +38,6 @@
     {
         Overview, 
         Buildings,
-        Shipyard,
     }
 
     protected override void OnInitialized()
@@ -58,21 +55,17 @@
                 case "Buildings":
                     _page = CurrentPage.Buildings;
                     break;
-                
-                case "Shipyard":
-                    _page = CurrentPage.Shipyard;
-                    break;
             }
 
             StateHasChanged();
         };
 
-        Navigation.LocationChanged += _locationEvent;
+        NavigationManager.LocationChanged += _locationEvent;
     }
 
     private void Logout()
     {
-        Navigation.LocationChanged -= _locationEvent;
-        Navigation.NavigateTo("/");
+        NavigationManager.LocationChanged -= _locationEvent;
+        NavigationManager.NavigateTo("/");
     }
 }

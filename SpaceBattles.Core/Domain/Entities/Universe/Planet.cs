@@ -33,14 +33,6 @@ public sealed class Planet
                 Building = building,
             }).ToList();
         
-        Defenses = Defense.Defenses()
-            .Select(entity => new CombatEntityInventory
-            {
-                CombatEntity = entity,
-                CombatEntityId = entity.Id,
-            })
-            .ToList();
-        
         Spaceships = Spaceship.Spaceships()
             .Select(entity => new CombatEntityInventory
             {
@@ -101,8 +93,6 @@ public sealed class Planet
     public long Helium { get; private set; }
     
     public List<BuildingLevel> Buildings { get; }
-
-    public List<CombatEntityInventory> Defenses { get; }
     
     public List<CombatEntityInventory> Spaceships { get; }
 
