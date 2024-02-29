@@ -4,7 +4,7 @@ using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Tests.Domain.Interfaces;
 
-public class BuildingRequirements
+public class BuildingRequirementsTests
 {
     [Fact]
     public void NoRequirements()

@@ -1,6 +1,9 @@
-﻿namespace SpaceBattles.Core.Domain.Entities.Battle;
+﻿using SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
-public abstract class CombatEntity
+namespace SpaceBattles.Core.Domain.Entities.Battle;
+
+public abstract class CombatEntity : IBuildingRequirements, IRequirements
 {
     public short Id { get; init; }
 
@@ -8,37 +11,21 @@ public abstract class CombatEntity
 
     public string ImagePath => $"/images/combat/{ImageName}";
     
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
-    public required string Description { get; set; }
-
-    public short RequiredShipyardLevel { get; set; }
-
-    public int BaseArmor { get; set; }
-    public int BaseShield { get; set; }
-    public int BaseWeaponPower { get; set; }
+    public required string Description { get; init; }
+    
+    public int BaseArmor { get; init; }
+    public int BaseShield { get; init; }
+    public int BaseWeaponPower { get; init; }
 
     public RapidFireAgainst[] RapidFires { get; init; }
-}
-
-public record struct RapidFireAgainst(short CombatEntityId, short RapidFireValue);
-
-public sealed class Spaceship : CombatEntity
-{
-    public int BaseSpeed { get; set; }
-
-    public int CargoCapacity { get; set; }
-
-    public int FuelUsage { get; set; }
-}
-
-public sealed class Defense : CombatEntity;
-
-public class CombatEntityInventory
-{
-    public required CombatEntity CombatEntity { get; init; }
+        = Array.Empty<RapidFireAgainst>();
     
-    public short CombatEntityId { get; init; }
+    public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
+        = Enumerable.Empty<BuildingRequirement>();
 
-    public int Quantity { get; set; }
+    public long TitaniumCost { get; init; }
+    public long SiliconCost { get; init; }
+    public long HeliumCost { get; init; }
 }
