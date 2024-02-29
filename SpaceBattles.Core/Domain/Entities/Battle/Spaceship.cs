@@ -302,7 +302,7 @@ public sealed class Spaceship : CombatEntity
             {
                 Id = 22,
                 Name = "Espionage probe",
-                ImageName = "espionnage_probe.webp",
+                ImageName = "espionage_probe.webp",
                 Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
             
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
@@ -326,6 +326,7 @@ public sealed class Spaceship : CombatEntity
             {
                 Id = 23,
                 Name = "Solar satellite",
+                ImageName = "solar_satellite.webp",
                 Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
             
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
