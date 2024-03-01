@@ -33,7 +33,7 @@ public sealed class Planet
                 Building = building,
             }).ToList();
         
-        Defenses = Defense.Defenses()
+        Spaceships = Spaceship.Spaceships()
             .Select(entity => new CombatEntityInventory
             {
                 CombatEntity = entity,
@@ -41,7 +41,7 @@ public sealed class Planet
             })
             .ToList();
         
-        Spaceships = Spaceship.Spaceships()
+        Defenses = Defense.Defenses()
             .Select(entity => new CombatEntityInventory
             {
                 CombatEntity = entity,
@@ -101,11 +101,11 @@ public sealed class Planet
     public long Helium { get; private set; }
     
     public List<BuildingLevel> Buildings { get; }
-
-    public List<CombatEntityInventory> Defenses { get; }
     
     public List<CombatEntityInventory> Spaceships { get; }
 
+    public List<CombatEntityInventory> Defenses { get; }
+    
     public BuildingUpgrade? BuildingUpgrade { get; private set; }
 
     public DateTime LastUpdated { get; private set; }
@@ -113,7 +113,7 @@ public sealed class Planet
     /// <summary>
     /// Adds resource to the planet inventory depending on production levels and storage capacity 
     /// </summary>
-    public void ResourcesUpdate(DateTime now)
+    public void ResourcesUpdate(DateTime now, Span<long> totalResources)
     {
         TimeSpan elapsedTime = now - LastUpdated;
         int elapsedSeconds = (int)elapsedTime.TotalSeconds;
@@ -129,16 +129,18 @@ public sealed class Planet
             double resourceLeftover = resourceProduced - resourceProducedRounded;
 
             this[loopResource] += resourceProducedRounded;
+            totalResources[i] += resourceProducedRounded;
 
             _decimalResourcesLeft[i] += resourceLeftover;
 
             if (_decimalResourcesLeft[i] >= 1)
             {
                 this[loopResource] += 1;
+                totalResources[i] += 1;
                 _decimalResourcesLeft[i] -= 1;
             }
         }
-
+        
         LastUpdated += TimeSpan.FromSeconds(elapsedSeconds);
     }
     
@@ -178,13 +180,17 @@ public sealed class Planet
         }
     }
     
-    public void ProcessUpgrades(DateTime now)
+    public BuildingLevel? ProcessUpgrades(DateTime now)
     {
         if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
         {
-            Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId).Level++;
+            BuildingLevel upgradedBuilding = Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId);
+            upgradedBuilding.Level++;
             BuildingUpgrade = null;
+            return upgradedBuilding;
         }
+
+        return null;
     }
     
     public bool CanUpgradeBuilding(short buildingId)
