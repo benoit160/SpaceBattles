@@ -40,6 +40,14 @@ public sealed class Planet
                 CombatEntityId = entity.Id,
             })
             .ToList();
+        
+        Defenses = Defense.Defenses()
+            .Select(entity => new CombatEntityInventory
+            {
+                CombatEntity = entity,
+                CombatEntityId = entity.Id,
+            })
+            .ToList();
     }
     
     public string Name { get; set; }
@@ -96,6 +104,8 @@ public sealed class Planet
     
     public List<CombatEntityInventory> Spaceships { get; }
 
+    public List<CombatEntityInventory> Defenses { get; }
+    
     public BuildingUpgrade? BuildingUpgrade { get; private set; }
 
     public DateTime LastUpdated { get; private set; }
