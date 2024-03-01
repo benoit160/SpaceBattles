@@ -10,5 +10,6 @@ public static class ServicesExtensions
         serviceCollection.AddScoped<PlanetService>();
         serviceCollection.AddScoped<StatisticService>();
         serviceCollection.AddScoped<INotificationService, NotificationService>();
+        serviceCollection.AddScoped<IBrowserService, BrowserService>();
     }
 }
