@@ -4,16 +4,16 @@ namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class Universe
 {
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
-    public DateTime CreationDate { get; init; }
+    public DateTime CreationDate { get; set; }
         = DateTime.Now;
 
-    public bool IsPeacefulUniverse { get; init; }
+    public bool IsPeacefulUniverse { get; set; }
 
-    public float UniverseSpeed { get; init; }
+    public float UniverseSpeed { get; set; }
 
-    public List<Planet> Planets { get; }
+    public List<Planet> Planets { get; set; }
         = new();
 
     public Planet this[int index]

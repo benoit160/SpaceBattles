@@ -52,14 +52,14 @@ public sealed class Planet
     
     public string Name { get; set; }
 
-    public byte ImageIndex { get; init; }
+    public byte ImageIndex { get; set; }
 
     public string ImagePath => $"/images/planets/planet{ImageIndex}.avif";
 
-    public PlanetType PlanetType { get; init; }
-    public short OrbitalPeriod { get; init; }
-    public short AverageSurfaceTemp { get; init; }
-    public float Gravity { get; init; }
+    public PlanetType PlanetType { get; set; }
+    public short OrbitalPeriod { get; set; }
+    public short AverageSurfaceTemp { get; set; }
+    public float Gravity { get; set; }
 
     public long this[Resource resource]
     {
@@ -94,21 +94,21 @@ public sealed class Planet
         }
     }
 
-    public long Titanium { get; private set; }
+    public long Titanium { get; set; }
     
-    public long Silicon { get; private set; }
+    public long Silicon { get; set; }
     
-    public long Helium { get; private set; }
+    public long Helium { get; set; }
     
-    public List<BuildingLevel> Buildings { get; }
+    public List<BuildingLevel> Buildings { get; set; }
     
-    public List<CombatEntityInventory> Spaceships { get; }
+    public List<CombatEntityInventory> Spaceships { get; set; }
 
-    public List<CombatEntityInventory> Defenses { get; }
+    public List<CombatEntityInventory> Defenses { get; set; }
     
-    public BuildingUpgrade? BuildingUpgrade { get; private set; }
+    public BuildingUpgrade? BuildingUpgrade { get; set; }
 
-    public DateTime LastUpdated { get; private set; }
+    public DateTime LastUpdated { get; set; }
 
     /// <summary>
     /// Adds resource to the planet inventory depending on production levels and storage capacity 

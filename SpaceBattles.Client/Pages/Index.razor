@@ -3,6 +3,7 @@
 
 @inject NavigationManager NavigationManager
 @inject GameState GameState
+@inject SaveService SaveService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -27,8 +28,16 @@
     {
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
-        
-        GameState.Initialize(new UniverseCreationModel());
+
+        if (!await SaveService.LoadFromStorage())
+        {
+            Console.WriteLine("Starting new game");
+            GameState.Initialize(new UniverseCreationModel());
+        }
+        else
+        {
+            Console.WriteLine("Game was restored");
+        }
 
         await waitingScreen;
 
