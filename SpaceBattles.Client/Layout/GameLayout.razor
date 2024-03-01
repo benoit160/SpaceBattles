@@ -12,7 +12,8 @@
 
         <MudButton Size="Size.Small" Href="/Overview" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" DisableRipple>Overview</MudButton>
         <MudButton Size="Size.Small" Href="/Buildings" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
-        
+        <MudButton Size="Size.Small" Href="/Shipyard" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
+
         <MudSpacer />
 
         <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Error" OnClick="Logout">Log out</MudButton>
@@ -39,6 +40,7 @@
     {
         Overview, 
         Buildings,
+        Shipyard,
     }
 
     protected override void OnInitialized()
@@ -55,6 +57,10 @@
 
                 case "Buildings":
                     _page = CurrentPage.Buildings;
+                    break;
+                    
+                case "Shipyard":
+                    _page = CurrentPage.Shipyard;
                     break;
             }
 

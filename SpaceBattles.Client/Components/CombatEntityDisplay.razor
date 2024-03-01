@@ -1,0 +1,29 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Battle
+<MudStack Class="py-3">
+    <MudStack Row Justify="Justify.SpaceEvenly">
+   
+        <MudText Typo="Typo.subtitle1" Style="font-family:TitleFont;">Firepower : @Entity.BaseWeaponPower</MudText>
+
+        <MudText Typo="Typo.subtitle1" Style="font-family:TitleFont;">Shield : @Entity.BaseShield</MudText>
+
+        <MudText Typo="Typo.subtitle1" Style="font-family:TitleFont;">Armor : @Entity.BaseArmor</MudText>
+
+    </MudStack>
+    <MudStack Row Justify="Justify.SpaceEvenly" Class="pt-3">
+        @{
+            if (Entity is Spaceship ship) 
+            {
+                <MudTooltip Text="@((ship.Characteristics & SpaceshipsCharacteristics.PropulsionType) + " drive")" Placement="Placement.Top">
+                    <MudText Typo="Typo.subtitle1" Style="font-family:TitleFont;">Speed : @ship.BaseSpeed</MudText>
+                </MudTooltip>
+                <MudText Typo="Typo.subtitle1" Style="font-family:TitleFont;">Fuel usage : @ship.FuelUsage</MudText>
+                <MudText Typo="Typo.subtitle1" Style="font-family:TitleFont;">Cargo : @ship.CargoCapacity</MudText>
+            }
+        }
+    </MudStack>
+</MudStack>
+
+@code {
+    [Parameter]
+    public CombatEntity Entity { get; init; } = default!;
+}
