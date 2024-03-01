@@ -42,7 +42,7 @@ public sealed class Building : IBuildingRequirements
                 ImageName = "titanium.webp",
 
                 Name = "Titanium Mine",
-                Description = "Titanium is the primary resource used in the foundation of your Empire. At greater depths, the mines can produce more titanium ore.\nYou can use the available metal for use in the construction of buildings, ships, defense systems, and research.\nAs the mines drill deeper, more energy is required for maximum production. As titanium is the most abundant of all resources available, its value is considered to be the lowest of all resources for trading.",
+                Description = "The basis of your civilization’s growth and might is titanium ore, which is produced in the titanium mine. Titanium ore can be converted into titanium metal, which is the primary material for constructing and enhancing various structures and technologies.\nThe titanium mine has a flexible production, depending on its level and the depth of the drilling. The deeper the mine digs, the more ore it can produce, but also the more energy it needs. Titanium ore is copious and low-cost, but it is also essential for advancing your civilization and competing with other empires.\nThe titanium mine is the first building you should build and upgrade, as it will provide you with the foundation of your empire.",
 
                 ScalingFactor = 1.5f,
                 TitaniumCost = 60,
