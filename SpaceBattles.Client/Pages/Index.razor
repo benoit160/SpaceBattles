@@ -31,12 +31,7 @@
 
         if (!await SaveService.LoadFromStorage())
         {
-            Console.WriteLine("Starting new game");
             GameState.Initialize(new UniverseCreationModel());
-        }
-        else
-        {
-            Console.WriteLine("Game was restored");
         }
 
         await waitingScreen;

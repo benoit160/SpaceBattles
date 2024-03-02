@@ -27,8 +27,6 @@ public sealed class SaveService
             IgnoreReadOnlyFields = true,
         };
         string json = JsonSerializer.Serialize(_gameState.CurrentUniverse, options);
-        // var plainTextBytes = Encoding.UTF8.GetBytes(json);
-        // string b64 = Convert.ToBase64String(plainTextBytes);
         await _browserService.WriteToLocalStorage(Key, json);
     }
 

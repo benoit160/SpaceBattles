@@ -13,12 +13,9 @@ public sealed class BuildingLevel : IRequirements
 
     public short Level { get; set; }
     
-    [JsonIgnore]
     public long TitaniumCost => (long)(Building.TitaniumCost * Math.Pow(Building.ScalingFactor, Level));
     
-    [JsonIgnore]
     public long SiliconCost  => (long)(Building.SiliconCost * Math.Pow(Building.ScalingFactor, Level));
     
-    [JsonIgnore]
     public long HeliumCost  => (long)(Building.HeliumCost * Math.Pow(Building.ScalingFactor, Level));
 }
