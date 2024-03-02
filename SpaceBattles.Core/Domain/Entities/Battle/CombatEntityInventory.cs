@@ -6,7 +6,7 @@ namespace SpaceBattles.Core.Domain.Entities.Battle;
 public class CombatEntityInventory
 {
     [JsonIgnore]
-    public CombatEntity CombatEntity { get; set; }
+    public CombatEntity CombatEntity { get; init; }
     
     public short CombatEntityId { get; init; }
     

@@ -7,7 +7,7 @@ namespace SpaceBattles.Core.Domain.Entities.Building;
 public sealed class BuildingLevel : IRequirements
 {
     [JsonIgnore]
-    public Building Building { get; set; }
+    public Building Building { get; init; }
     
     public short BuildingId { get; init; }
 
