@@ -94,21 +94,21 @@ public sealed class Planet
         }
     }
 
-    public long Titanium { get; private set; }
+    public long Titanium { get; set; }
     
-    public long Silicon { get; private set; }
+    public long Silicon { get; set; }
     
-    public long Helium { get; private set; }
+    public long Helium { get; set; }
     
-    public List<BuildingLevel> Buildings { get; }
+    public List<BuildingLevel> Buildings { get; init; }
     
-    public List<CombatEntityInventory> Spaceships { get; }
+    public List<CombatEntityInventory> Spaceships { get; init; }
 
-    public List<CombatEntityInventory> Defenses { get; }
+    public List<CombatEntityInventory> Defenses { get; init; }
     
-    public BuildingUpgrade? BuildingUpgrade { get; private set; }
+    public BuildingUpgrade? BuildingUpgrade { get; set; }
 
-    public DateTime LastUpdated { get; private set; }
+    public DateTime LastUpdated { get; set; }
 
     /// <summary>
     /// Adds resource to the planet inventory depending on production levels and storage capacity 

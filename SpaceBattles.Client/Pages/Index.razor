@@ -3,6 +3,7 @@
 
 @inject NavigationManager NavigationManager
 @inject GameState GameState
+@inject SaveService SaveService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -27,8 +28,11 @@
     {
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
-        
-        GameState.Initialize(new UniverseCreationModel());
+
+        if (!await SaveService.LoadFromStorage())
+        {
+            GameState.Initialize(new UniverseCreationModel());
+        }
 
         await waitingScreen;
 

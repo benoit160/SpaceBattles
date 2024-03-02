@@ -10,11 +10,11 @@
 
     public async Task ShowWaitingScreen()
     {
-        await Task.Delay(2000);
+        await Task.Delay(1500);
 
         _waitingText = "Choosing the best starting planet for you..";
         StateHasChanged();
 
-        await Task.Delay(2000);
+        await Task.Delay(1500);
     }
 }
