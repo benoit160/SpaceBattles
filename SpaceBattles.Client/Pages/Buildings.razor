@@ -7,46 +7,108 @@
 
 @using SpaceBattles.Core.Domain.Entities.Universe
 
-<MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
-    <MudGrid Class="py-3" Spacing="0">
+@* <MudContainer MaxWidth="MaxWidth.Small"> *@
+@*     <MudTabs Rounded Centered ApplyEffectsToContainer PanelClass="pa-6" @bind-ActivePanelIndex="_panelIndex" SliderColor="Color.Info"> *@
+@*         <MudTabPanel> *@
+@*             <TabContent> *@
+@*                 <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Resources</MudText> *@
+@*             </TabContent> *@
+@*         </MudTabPanel> *@
+@*         <MudTabPanel> *@
+@*             <TabContent> *@
+@*                 <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Facilities</MudText> *@
+@*             </TabContent> *@
+@*         </MudTabPanel> *@
+@*     </MudTabs> *@
+@* </MudContainer> *@
 
-        @for (int index = 0; index < _planet.Buildings.Count; index++)
-        {
-            int i = index;
-            string style = _planet.MeetsBuildingRequirements(_planet.Buildings[i].Building) ? string.Empty : "filter: grayscale(1)";
-            <MudItem xs="12" lg="6">
-                <MudPaper Class="pa-2 ma-1">
-                    <MudStack Row>
-                        <MudImage Src="@_planet.Buildings[i].Building.ImagePath" Style="@style" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
-                        <MudStack Spacing="2" Style="width:100%">
-                            <MudStack Row Justify="Justify.SpaceBetween">
-                                <MudText Typo="Typo.h5">@_planet.Buildings[i].Building.Name</MudText>
-                                <MudText Color="Color.Info" Typo="Typo.h6">Level : @_planet.Buildings[i].Level</MudText>
-                            </MudStack>
-                            <MudDivider/>
-                            
-                            @if (_planet.BuildingUpgrade is not null && _planet.BuildingUpgrade.BuildingId == _planet.Buildings[i].BuildingId)
-                            {
-                                <MudPaper Class="py-1 px-3 mx-3 border-solid border-2 mud-border-info">
-                                    <MudStack Justify="Justify.SpaceEvenly">
-                                        <MudText>@("Upgrading to level " + (_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Level + 1))</MudText>
-                                        <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="@_planet.BuildingUpgrade.PercentFinished"/>
-                                        <MudText>@_planet.BuildingUpgrade.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
-                                    </MudStack>
-                                </MudPaper>
-                            }
-                            else
-                            {
-                                @GetBuildingStatus(_planet.Buildings[i].BuildingId)
-                                <MudSpacer/>
-                                <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(_planet.Buildings[i].BuildingId)">Details</MudButton>
-                            }
-                        </MudStack>
-                    </MudStack>
-                </MudPaper>
-            </MudItem>
-        }
-    </MudGrid>
+<MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
+    
+    <MudStack>
+        <MudTabs Class="align-self-center" Rounded Centered ApplyEffectsToContainer PanelClass="pa-6" @bind-ActivePanelIndex="_panelIndex" SliderColor="Color.Info">
+            <MudTabPanel Class="ma-1">
+                <TabContent>
+                    <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Resources</MudText>
+                </TabContent>
+            </MudTabPanel>
+            <MudTabPanel Class="ma-1">
+                <TabContent>
+                    <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Facilities</MudText>
+                </TabContent>
+            </MudTabPanel>
+        </MudTabs>
+        <br/>
+        <MudTabs Rounded Centered ApplyEffectsToContainer PanelClass="pa-6" @bind-ActivePanelIndex="_panelIndex" SliderColor="Color.Info">
+            <MudTabPanel>
+                <TabContent>
+                    <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Resources</MudText>
+                </TabContent>
+            </MudTabPanel>
+            <MudTabPanel>
+                <TabContent>
+                    <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Facilities</MudText>
+                </TabContent>
+            </MudTabPanel>
+        </MudTabs>
+        
+    @if (_panelIndex == 0)
+    {
+        <MudGrid Class="py-3" Spacing="0">
+            @for (short index = 0; index < 6; index++)
+            {
+                short i = index;
+                @BuildingDisplay(i);
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MudGrid Class="py-3" Spacing="0">
+            @for (short index = 6; index < 11; index++)
+            {
+                short i = index;
+                @BuildingDisplay(i);
+            }
+        </MudGrid>
+    }
+        
+    </MudStack>
+    
+    @* <MudTabs Rounded Centered ApplyEffectsToContainer PanelClass="pa-6" @bind-ActivePanelIndex="_panelIndex" SliderColor="Color.Info"> *@
+    @*     <MudTabPanel> *@
+    @*         <TabContent> *@
+    @*             <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Resources</MudText> *@
+    @*         </TabContent> *@
+    @*     </MudTabPanel> *@
+    @*     <MudTabPanel> *@
+    @*         <TabContent> *@
+    @*             <MudText Color="Color.Info" Typo="Typo.h5" Style="font-family:TitleFont;">Facilities</MudText> *@
+    @*         </TabContent> *@
+    @*     </MudTabPanel> *@
+    @* </MudTabs> *@
+    
+    @* @if (_panelIndex == 0) *@
+    @* { *@
+    @*     <MudGrid Class="py-3" Spacing="0"> *@
+    @*         @for (short index = 0; index < 6; index++) *@
+    @*         { *@
+    @*             short i = index; *@
+    @*             @BuildingDisplay(i) *@
+    @*             ; *@
+    @*         } *@
+    @*     </MudGrid> *@
+    @* } *@
+    @* else *@
+    @* { *@
+    @*     <MudGrid Class="py-3" Spacing="0"> *@
+    @*         @for (short index = 6; index < 11; index++) *@
+    @*         { *@
+    @*             short i = index; *@
+    @*             @BuildingDisplay(i) *@
+    @*             ; *@
+    @*         } *@
+    @*     </MudGrid> *@
+    @* } *@
 </MudContainer>
 
 <MudOverlay @bind-Visible="_overlayVisible" DarkBackground AutoClose>
@@ -58,6 +120,7 @@
     private Planet _planet = default!;
     private readonly CancellationTokenSource _source = new();
     private int _selectedIndex;
+    private int _panelIndex;
     private bool _overlayVisible;
 
     protected override void OnInitialized()
@@ -84,6 +147,42 @@
     {
         _source.Cancel();
         _source.Dispose();
+    }
+
+    private RenderFragment BuildingDisplay(short index)
+    {
+        string style = _planet.MeetsBuildingRequirements(_planet.Buildings[index].Building) ? string.Empty : "filter: grayscale(1)";
+        return @<MudItem xs="12" lg="6">
+                    <MudPaper Class="pa-2 ma-1">
+                        <MudStack Row>
+                            <MudImage Src="@_planet.Buildings[index].Building.ImagePath" Style="@style" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
+                            <MudStack Spacing="2" Style="width:100%">
+                                <MudStack Row Justify="Justify.SpaceBetween">
+                                    <MudText Typo="Typo.h5">@_planet.Buildings[index].Building.Name</MudText>
+                                    <MudText Color="Color.Info" Typo="Typo.h6">Level : @_planet.Buildings[index].Level</MudText>
+                                </MudStack>
+                                <MudDivider/>
+
+                                @if (_planet.BuildingUpgrade is not null && _planet.BuildingUpgrade.BuildingId == _planet.Buildings[index].BuildingId)
+                                {
+                                    <MudPaper Class="py-1 px-3 mx-3 border-solid border-2 mud-border-info">
+                                        <MudStack Justify="Justify.SpaceEvenly">
+                                            <MudText>@("Upgrading to level " + (_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Level + 1))</MudText>
+                                            <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="@_planet.BuildingUpgrade.PercentFinished"/>
+                                            <MudText>@_planet.BuildingUpgrade.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
+                                        </MudStack>
+                                    </MudPaper>
+                                }
+                                else
+                                {
+                                    @GetBuildingStatus(_planet.Buildings[index].BuildingId)
+                                    <MudSpacer/>
+                                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(_planet.Buildings[index].BuildingId)">Details</MudButton>
+                                }
+                            </MudStack>
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>;
     }
 
     private RenderFragment GetBuildingStatus(short buildingId)
