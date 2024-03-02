@@ -52,14 +52,14 @@ public sealed class Planet
     
     public string Name { get; set; }
 
-    public byte ImageIndex { get; set; }
+    public byte ImageIndex { get; init; }
 
     public string ImagePath => $"/images/planets/planet{ImageIndex}.avif";
 
-    public PlanetType PlanetType { get; set; }
-    public short OrbitalPeriod { get; set; }
-    public short AverageSurfaceTemp { get; set; }
-    public float Gravity { get; set; }
+    public PlanetType PlanetType { get; init; }
+    public short OrbitalPeriod { get; init; }
+    public short AverageSurfaceTemp { get; init; }
+    public float Gravity { get; init; }
 
     public long this[Resource resource]
     {
@@ -100,11 +100,11 @@ public sealed class Planet
     
     public long Helium { get; set; }
     
-    public List<BuildingLevel> Buildings { get; set; }
+    public List<BuildingLevel> Buildings { get; init; }
     
-    public List<CombatEntityInventory> Spaceships { get; set; }
+    public List<CombatEntityInventory> Spaceships { get; init; }
 
-    public List<CombatEntityInventory> Defenses { get; set; }
+    public List<CombatEntityInventory> Defenses { get; init; }
     
     public BuildingUpgrade? BuildingUpgrade { get; set; }
 
