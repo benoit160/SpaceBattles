@@ -8,16 +8,6 @@
 @using SpaceBattles.Core.Domain.Entities.Universe
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
-    
-    @if (_planet.BuildingUpgrade is not null)
-    {
-        <Progress
-            Display="@_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.Name"
-            DisplaySecondary="@("Upgrading to level " + (_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Level + 1))"
-            Image="@_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.ImagePath"
-            Process="_planet.BuildingUpgrade" />
-    }
-    
     <MudGrid Class="py-3" Spacing="0">
 
         @for (int index = 0; index < _planet.Buildings.Count; index++)
@@ -28,17 +18,29 @@
                 <MudPaper Class="pa-2 ma-1">
                     <MudStack Row>
                         <MudImage Src="@_planet.Buildings[i].Building.ImagePath" Style="@style" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150"/>
-                        <MudStack Style="width:100%">
+                        <MudStack Spacing="2" Style="width:100%">
                             <MudStack Row Justify="Justify.SpaceBetween">
                                 <MudText Typo="Typo.h5">@_planet.Buildings[i].Building.Name</MudText>
                                 <MudText Color="Color.Info" Typo="Typo.h6">Level : @_planet.Buildings[i].Level</MudText>
                             </MudStack>
                             <MudDivider/>
-                            @GetBuildingStatus(_planet.Buildings[i].BuildingId)
-
-                            <MudSpacer/>
-
-                            <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(_planet.Buildings[i].BuildingId)">Details</MudButton>
+                            
+                            @if (_planet.BuildingUpgrade is not null && _planet.BuildingUpgrade.BuildingId == _planet.Buildings[i].BuildingId)
+                            {
+                                <MudPaper Class="py-1 px-3 mx-3 border-solid border-2 mud-border-info">
+                                    <MudStack Justify="Justify.SpaceEvenly">
+                                        <MudText>@("Upgrading to level " + (_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Level + 1))</MudText>
+                                        <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="@_planet.BuildingUpgrade.PercentFinished"/>
+                                        <MudText>@_planet.BuildingUpgrade.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
+                                    </MudStack>
+                                </MudPaper>
+                            }
+                            else
+                            {
+                                @GetBuildingStatus(_planet.Buildings[i].BuildingId)
+                                <MudSpacer/>
+                                <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(_planet.Buildings[i].BuildingId)">Details</MudButton>
+                            }
                         </MudStack>
                     </MudStack>
                 </MudPaper>
@@ -140,8 +142,16 @@
                             </MudText><MudProgressLinear Color="color" Size="Size.Large" Rounded Value="current" Max="max" />
                         </div>;
 
+            case 7:
+                if (_planet.BuildingUpgrade is not null)
+                {
+                    string upgradeName = _planet.Buildings.Single(b => b.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.Name;
+                    return @<MudText Typo="Typo.body1" Color="Color.Info">Working on @upgradeName</MudText>;
+                }
+                goto default;
+                
             default:
-                return @<MudText Typo="Typo.body1" Color="Color.Info">Working at full capacity.</MudText>;
+                return @<MudText Typo="Typo.body1">Currently idle...</MudText>;
         }
     }
 }
