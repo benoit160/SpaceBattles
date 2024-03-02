@@ -33,9 +33,6 @@
                                         <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="@_planet.BuildingUpgrade.PercentFinished"/>
                                         <MudText>@_planet.BuildingUpgrade.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
                                     </MudStack>
-                                    @* <MudText>@("Upgrading to level " + (_planet.Buildings.Single(x => x.BuildingId == _planet.BuildingUpgrade.BuildingId).Level + 1))</MudText> *@
-                                    @* <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="@_planet.BuildingUpgrade.PercentFinished"/> *@
-                                    @* <MudText>@_planet.BuildingUpgrade.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText> *@
                                 </MudPaper>
                             }
                             else
