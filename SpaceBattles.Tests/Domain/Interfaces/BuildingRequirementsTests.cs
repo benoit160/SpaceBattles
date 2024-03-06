@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Entities.Building;
+﻿using SpaceBattles.Core.Application.Extensions;
+using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Records;
 

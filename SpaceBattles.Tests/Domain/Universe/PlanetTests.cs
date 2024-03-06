@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Entities.Universe;
+﻿using SpaceBattles.Core.Application.Extensions;
+using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
 
 namespace SpaceBattles.Tests.Domain.Universe;
@@ -16,7 +17,7 @@ public class PlanetTests
         Assert.NotEqual(default, planet.PlanetType);
         Assert.NotEqual(default, planet.LastUpdated);
         
-        Assert.Equal(11, planet.Buildings.Count);
+        Assert.Equal(11, planet.Buildings.Length);
         Assert.Equal(150, planet.Titanium);
         Assert.Equal(75, planet.Silicon);
         Assert.Equal(0, planet.Helium);
