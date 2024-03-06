@@ -2,5 +2,5 @@
 
 public interface INotificationService
 {
-    public void NotifyInfo(string text);
+    void NotifyInfo(string text);
 }

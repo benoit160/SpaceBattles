@@ -13,7 +13,7 @@ public sealed class Universe
 
     public float UniverseSpeed { get; init; }
 
-    public List<Planet> Planets { get; }
+    public List<Planet> Planets { get; init; }
         = new();
 
     public Planet this[int index]

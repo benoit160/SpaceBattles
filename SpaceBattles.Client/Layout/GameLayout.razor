@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
+@inject SaveService SaveService
 
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
 <MudSnackbarProvider/>
@@ -15,7 +16,8 @@
         <MudButton Size="Size.Small" Href="/Shipyard" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
 
         <MudSpacer />
-
+        
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" OnClick="SaveGame" Class="mx-2">Save</MudButton>
         <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Error" OnClick="Logout">Log out</MudButton>
     </MudAppBar>
     
@@ -68,6 +70,11 @@
         };
 
         NavigationManager.LocationChanged += _locationEvent;
+    }
+
+    private async Task SaveGame()
+    {
+        await SaveService.SaveToStorage();
     }
 
     private void Logout()

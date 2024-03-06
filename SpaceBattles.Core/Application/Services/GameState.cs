@@ -20,4 +20,10 @@ public sealed class GameState
         CurrentUniverse = Universe.CreateUniverse(model);
         CurrentPlanet = CurrentUniverse.Planets[0];
     }
+    
+    public void Restore(Universe universe)
+    {
+        CurrentUniverse = universe;
+        CurrentPlanet = CurrentUniverse.Planets[0];
+    }
 }
