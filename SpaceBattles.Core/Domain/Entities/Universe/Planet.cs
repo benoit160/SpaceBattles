@@ -31,7 +31,7 @@ public sealed class Planet
             {
                 BuildingId = building.Id,
                 Building = building,
-            }).ToList();
+            }).ToArray();
         
         Spaceships = Spaceship.Spaceships()
             .Select(entity => new CombatEntityInventory
@@ -39,7 +39,7 @@ public sealed class Planet
                 CombatEntity = entity,
                 CombatEntityId = entity.Id,
             })
-            .ToList();
+            .ToArray();
         
         Defenses = Defense.Defenses()
             .Select(entity => new CombatEntityInventory
@@ -47,7 +47,7 @@ public sealed class Planet
                 CombatEntity = entity,
                 CombatEntityId = entity.Id,
             })
-            .ToList();
+            .ToArray();
     }
     
     public string Name { get; set; }
@@ -100,11 +100,11 @@ public sealed class Planet
     
     public long Helium { get; set; }
     
-    public List<BuildingLevel> Buildings { get; init; }
+    public BuildingLevel[] Buildings { get; init; }
     
-    public List<CombatEntityInventory> Spaceships { get; init; }
+    public CombatEntityInventory[] Spaceships { get; init; }
 
-    public List<CombatEntityInventory> Defenses { get; init; }
+    public CombatEntityInventory[] Defenses { get; init; }
     
     public BuildingUpgrade? BuildingUpgrade { get; set; }
 
@@ -197,8 +197,8 @@ public sealed class Planet
     {
         if (BuildingUpgrade is not null) return false;
 
-        BuildingLevel? level = Buildings.Find(bl => bl.BuildingId == buildingId);
-
+        BuildingLevel? level = Array.Find(Buildings, buildingLevel => buildingLevel.BuildingId == buildingId);
+        
         if (level is null) return false;
 
         return HasEnoughResource(level);
@@ -206,7 +206,7 @@ public sealed class Planet
     
     public bool TryUpgradeBuilding(short buildingId)
     {
-        IRequirements? level = Buildings.Find(bl => bl.BuildingId == buildingId);
+        IRequirements? level = Array.Find(Buildings, buildingLevel => buildingLevel.BuildingId == buildingId);
 
         if (level is null) return false;
 
