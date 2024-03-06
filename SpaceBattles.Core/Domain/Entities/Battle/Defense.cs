@@ -68,7 +68,7 @@ public sealed class Defense : CombatEntity
             {
                 Id = 4,
                 Name = "Ion cannon",
-                ImageName = "",
+                ImageName = "ion_cannon.webp",
                 Description = "Sometime during the 21st century, a technology known as \"electromagnetic pulse\" (contracted to EMP) was developed. These pulses prove to be very effective against computer systems and anything that possesses an electronic circuit within its structural composition.\r\n\r\nIn the days of its inception, this breed of weapon was deployed using rockets, missiles and bombs. However, the recent improvement of various technologies has allowed such weapons to be employed through the use of simple cannons; both static and mounted on intergalactic ships. Such a focused ion beam is capable of obliterating any unshielded electrical system and destabilizes the shield circuits within its target. These combined effects often cause the destruction of the target ship while sparing any biological cargo, including the crew members.",
 
                 BaseArmor = 800,
