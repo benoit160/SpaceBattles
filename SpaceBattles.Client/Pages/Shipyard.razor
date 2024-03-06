@@ -4,27 +4,12 @@
 
 @inject GameState GameState
 
-<MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height);">
+<MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height);">
     <MudGrid Class="py-3" Spacing="0" Justify="Justify.Center">
-        @foreach (CombatEntityInventory spaceship in _spaceships)
+        @for (int i = 0; i < _spaceships.Count; i++)
         {
-            <MudItem xs="12" md="5">
-                <MudPaper Class="pa-2 ma-1">
-                    <MudStack Row>
-                        <MudImage Src="@spaceship.CombatEntity.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150" Style="@(GetImageStyle(spaceship))" />
-
-                        <MudStack Class="flex-grow-1">
-                            <MudText Typo="Typo.h5" Style="font-family:TitleFont">@spaceship.CombatEntity.Name</MudText>
-                            <MudDivider />
-                            <MudText Color="Color.Info" Typo="Typo.h6">@spaceship.Quantity available</MudText>
-
-                            <MudSpacer />
-                            <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(spaceship.CombatEntityId)">Details</MudButton>
-
-                        </MudStack>
-                    </MudStack>
-                </MudPaper>
-            </MudItem>
+            int localIndex = i;
+            SpaceshipCard(localIndex);
         }
     </MudGrid>
     
@@ -54,5 +39,27 @@
     private string GetImageStyle(CombatEntityInventory inv)
     {
         return GameState.CurrentPlanet.MeetsBuildingRequirements(inv.CombatEntity) ? "filter: blur(2px) grayscale(1)" : "";
+    }
+
+    private RenderFragment SpaceshipCard(int index)
+    {
+        return
+        @<MudItem xs="12" md="5">
+            <MudPaper Class="pa-2 ma-1">
+                <MudStack Row>
+                    <MudImage Src="@_spaceships[index].CombatEntity.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="150" Height="150" Style="@(GetImageStyle(_spaceships[index]))"/>
+
+                    <MudStack Class="flex-grow-1">
+                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_spaceships[index].CombatEntity.Name</MudText>
+                        <MudDivider/>
+                        <MudText Color="Color.Info" Typo="Typo.h6">@_spaceships[index].Quantity available</MudText>
+
+                        <MudSpacer/>
+                        <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(_spaceships[index].CombatEntityId)">Details</MudButton>
+
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        </MudItem>;
     }
 }
