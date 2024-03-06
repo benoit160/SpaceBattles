@@ -12,11 +12,6 @@
             @SpaceshipCard(localIndex);
         }
     </MudGrid>
-    
-    <MudOverlay @bind-Visible="overlayVisible" DarkBackground AutoClose>
-        <CombatEntityDetails CombatEntity="_spaceships[selectedIndex]"/>
-    </MudOverlay>
-    
 </MudContainer>
 
 @code {
