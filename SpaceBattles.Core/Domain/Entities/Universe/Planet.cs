@@ -7,7 +7,7 @@ using SpaceBattles.Core.Domain.ValueTypes;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-public sealed class Planet
+public sealed class Planet : ICombatEntityInventoryProvider
 {
     public Planet()
     {
@@ -229,5 +229,7 @@ public sealed class Planet
     }
     
     // stores fractional leftover value of resources
-    private readonly double[] _decimalResourcesLeft = new double[3]; 
+    private readonly double[] _decimalResourcesLeft = new double[3];
+    
+    public IEnumerable<CombatEntityInventory> Inventory => Spaceships.Concat(Defenses);
 }

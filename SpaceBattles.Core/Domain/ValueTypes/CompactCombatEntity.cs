@@ -1,4 +1,6 @@
-﻿namespace SpaceBattles.Core.Domain.ValueTypes;
+﻿using SpaceBattles.Core.Domain.Entities.Battle;
+
+namespace SpaceBattles.Core.Domain.ValueTypes;
 
 public struct CompactCombatEntity
 {
@@ -9,13 +11,13 @@ public struct CompactCombatEntity
     private int _firepower;
     
     public bool IsAlive => _armor > 0;
-
-    public CompactCombatEntity(int armor, int shield, int weapon, short id)
+    
+    public CompactCombatEntity(CombatEntity entity)
     {
-        _armor = armor;
-        _shield = shield;
-        _firepower = weapon;
-        _combatEntityId = id;
+        _armor = entity.BaseArmor;
+        _shield = entity.BaseShield;
+        _firepower = entity.BaseWeaponPower;
+        _combatEntityId = entity.Id;
     }
     
     public void FireAt(ref CompactCombatEntity target)
