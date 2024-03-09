@@ -1,6 +1,6 @@
 ﻿@using SpaceBattles.Core.Domain.Interfaces
 @using SpaceBattles.Core.Domain.Entities.Universe
-@using SpaceBattles.Core.Domain.Records
+@using SpaceBattles.Core.Domain.ValueTypes
 
 <MudStack Row Justify="Justify.SpaceAround">
     @foreach(ResourceCost requirement in Upgrade.Costs.Where(cost => cost.RequiredQuantity > 0))

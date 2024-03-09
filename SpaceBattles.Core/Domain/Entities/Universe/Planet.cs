@@ -3,7 +3,7 @@ using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
-using SpaceBattles.Core.Domain.Records;
+using SpaceBattles.Core.Domain.ValueTypes;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
