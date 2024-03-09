@@ -1,0 +1,13 @@
+﻿@page "/Building/{BuildingName}"
+
+<h3>Building</h3>
+
+@code {
+    [Parameter]
+    public string BuildingName { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine(BuildingName);
+    }
+}
