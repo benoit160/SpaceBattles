@@ -49,7 +49,11 @@ public sealed class Planet
             })
             .ToArray();
     }
-    
+
+    public Player.Player? Owner { get; set; }
+
+    public short? OwnerId { get; set; }
+
     public string Name { get; set; }
 
     public byte ImageIndex { get; init; }
@@ -109,6 +113,12 @@ public sealed class Planet
     public BuildingUpgrade? BuildingUpgrade { get; set; }
 
     public DateTime LastUpdated { get; set; }
+
+    public void DefineOwner(Player.Player player)
+    {
+        Owner = player;
+        OwnerId = player.Id;
+    }
 
     /// <summary>
     /// Adds resource to the planet inventory depending on production levels and storage capacity 
