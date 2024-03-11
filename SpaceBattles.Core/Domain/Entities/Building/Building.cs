@@ -1,5 +1,5 @@
 ﻿using SpaceBattles.Core.Domain.Interfaces;
-using SpaceBattles.Core.Domain.Records;
+using SpaceBattles.Core.Domain.ValueTypes;
 
 namespace SpaceBattles.Core.Domain.Entities.Building;
 
