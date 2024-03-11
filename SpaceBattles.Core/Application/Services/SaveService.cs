@@ -53,6 +53,11 @@ public sealed class SaveService
 
         foreach (Planet planet in universe.Planets)
         {
+            if (planet.OwnerId is not null)
+            {
+                planet.Owner = universe.Players.Find(p => p.Id == planet.OwnerId);
+            }
+
             foreach (BuildingLevel buildingLevel in planet.Buildings)
             {
                 buildingLevel.Building = buildings.Single(b => b.Id == buildingLevel.BuildingId);
