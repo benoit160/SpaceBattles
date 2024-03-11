@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Models;
+﻿using SpaceBattles.Core.Domain.Entities.Battle;
+using SpaceBattles.Core.Domain.Models;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
@@ -19,6 +20,9 @@ public sealed class Universe
     public List<Player.Player> Players { get; init; }
         = new();
 
+    public List<Fleet> Fleets { get; init; }
+        = new();
+    
     public Planet this[int index]
         => Planets[index];
 
@@ -42,7 +46,15 @@ public sealed class Universe
             Name = model.CommanderName,
         };
         
+        Player.Player pirates = new Player.Player()
+        {
+            Id = 2,
+            IsBot = true,
+            Name = "Space pirates",
+        };
+        
         newUniverse.Players.Add(mainPlayer);
+        newUniverse.Players.Add(pirates);
         newUniverse.Planets[0].DefineOwner(mainPlayer);
         
         return newUniverse;
