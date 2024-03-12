@@ -1,6 +1,9 @@
 ﻿@page "/"
-@using SpaceBattles.Core.Domain.Models
 @layout MainLayout
+
+@inject NavigationManager NavigationManager
+@inject GameState GameState
+@inject SaveService SaveService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -17,12 +20,6 @@
 </div>
 
 @code {
-    [Inject]
-    private NavigationManager NavigationManager { get; init; } = default!;
-
-    [Inject]
-    private Core.Application.Services.GameState GameState { get; init; } = default!;
-
     private UniverseCreationWaiter? _universeCreationWaiter;
 
     private bool _showCreationScreen;
@@ -31,8 +28,11 @@
     {
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
-        
-        GameState.Initialize(new UniverseCreationModel());
+
+        if (!await SaveService.LoadFromStorage())
+        {
+            GameState.Initialize(new UniverseCreationModel());
+        }
 
         await waitingScreen;
 

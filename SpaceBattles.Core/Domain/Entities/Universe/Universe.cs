@@ -13,7 +13,10 @@ public sealed class Universe
 
     public float UniverseSpeed { get; init; }
 
-    public List<Planet> Planets { get; }
+    public List<Planet> Planets { get; init; }
+        = new();
+    
+    public List<Player.Player> Players { get; init; }
         = new();
 
     public Planet this[int index]
@@ -32,6 +35,16 @@ public sealed class Universe
             .Range(0, model.NumberOfPlanets)
             .Select(_ => new Planet()));
 
+        Player.Player mainPlayer = new Player.Player()
+        {
+            Id = 1,
+            IsBot = false,
+            Name = model.CommanderName,
+        };
+        
+        newUniverse.Players.Add(mainPlayer);
+        newUniverse.Planets[0].DefineOwner(mainPlayer);
+        
         return newUniverse;
     }
 }

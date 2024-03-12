@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using SpaceBattles.Core.Domain.Interfaces;
 
 namespace SpaceBattles.Core.Domain.Entities.Building;
@@ -5,7 +6,8 @@ namespace SpaceBattles.Core.Domain.Entities.Building;
 #nullable disable annotations
 public sealed class BuildingLevel : IRequirements
 {
-    public Building Building { get; init; }
+    [JsonIgnore]
+    public Building Building { get; set; }
     
     public short BuildingId { get; init; }
 
