@@ -2,7 +2,7 @@
 
 public class Fleet
 {
-    public Player.Player Owner { get; init; }
+    public required Player.Player Owner { get; init; }
 
     public short OwnerId { get; init; }
 
@@ -10,4 +10,16 @@ public class Fleet
         = new List<CombatEntityInventory>();
 
     public int Fuel { get; set; }
+
+    public FleetAction Action { get; set; }
+}
+
+public enum FleetAction
+{
+    Idle,
+    Moving,
+    Attacking,
+    Transporting,
+    Recycling,
+    Spying,
 }
