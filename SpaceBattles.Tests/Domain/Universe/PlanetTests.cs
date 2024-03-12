@@ -17,7 +17,7 @@ public class PlanetTests
         Assert.NotEqual(default, planet.PlanetType);
         Assert.NotEqual(default, planet.LastUpdated);
         
-        Assert.Equal(12, planet.Buildings.Count);
+        Assert.Equal(12, planet.Buildings.Length);
         Assert.Equal(150, planet.Titanium);
         Assert.Equal(75, planet.Silicon);
         Assert.Equal(0, planet.Helium);
