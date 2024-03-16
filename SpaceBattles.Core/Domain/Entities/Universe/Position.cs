@@ -1,6 +1,6 @@
 ﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-public abstract class Position : IEquatable<Position>
+public interface IPosition
 {
     public byte Galaxy { get; init; }
     
@@ -13,7 +13,7 @@ public abstract class Position : IEquatable<Position>
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public int DistanceTo(Position other)
+    public int DistanceTo(IPosition other)
     {
         // Distance between a planet and it's moon for exemple
         if(Equals(other))
@@ -34,16 +34,12 @@ public abstract class Position : IEquatable<Position>
     /// <summary>
     /// Computes the distance between the 2 objects, to determine duration of spaceflight between
     /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    public static int DistanceBetween(Position first, Position second) => first.DistanceTo(second);
+    public static int DistanceBetween(IPosition first, IPosition second) => first.DistanceTo(second);
 
     /// <summary>
     /// Indicates whether the coordinates points to the same position.
     /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    public bool Equals(Position? other)
+    public bool Equals(IPosition? other)
     {
         return other is not null && (Slot == other.Slot && Galaxy == other.Galaxy && SolarSystem == other.SolarSystem);
     }
