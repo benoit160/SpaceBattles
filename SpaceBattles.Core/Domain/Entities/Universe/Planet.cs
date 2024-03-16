@@ -7,7 +7,7 @@ using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-public sealed class Planet
+public sealed class Planet : IPosition
 {
     public Planet()
     {
