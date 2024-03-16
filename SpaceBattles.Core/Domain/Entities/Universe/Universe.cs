@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Models;
+﻿using System.Runtime.InteropServices;
+using SpaceBattles.Core.Domain.Models;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
@@ -21,6 +22,11 @@ public sealed class Universe
 
     public Planet this[int index]
         => Planets[index];
+
+    public ReadOnlySpan<Planet> GetSolarSystemView(int galaxy, int solarSystem)
+    {
+        return CollectionsMarshal.AsSpan(Planets).Slice(0, 10);
+    }
 
     public static Universe CreateUniverse(UniverseCreationModel model)
     {
