@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Entities.Building;
+﻿using SpaceBattles.Core.Domain.Entities.Battle;
+using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
@@ -6,12 +7,12 @@ using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-public sealed class Planet
+public sealed class Planet : IPosition
 {
     public Planet()
     {
-        Name = "Earth";
-        ImageIndex = Convert.ToByte(Random.Shared.Next(0, 10));
+        Name = $"Planet-{Guid.NewGuid().ToString()[..4]}";
+        ImageIndex = Convert.ToByte(Random.Shared.Next(0, 14));
         
         PlanetType[] values = Enum.GetValues<PlanetType>();
         PlanetType = values[Random.Shared.Next(1, values.Length - 1)];
@@ -30,9 +31,29 @@ public sealed class Planet
             {
                 BuildingId = building.Id,
                 Building = building,
-            }).ToList();
+            }).ToArray();
+        
+        Spaceships = Spaceship.Spaceships()
+            .Select(entity => new CombatEntityInventory
+            {
+                CombatEntity = entity,
+                CombatEntityId = entity.Id,
+            })
+            .ToArray();
+        
+        Defenses = Defense.Defenses()
+            .Select(entity => new CombatEntityInventory
+            {
+                CombatEntity = entity,
+                CombatEntityId = entity.Id,
+            })
+            .ToArray();
     }
-    
+
+    public Player.Player? Owner { get; set; }
+
+    public short? OwnerId { get; set; }
+
     public string Name { get; set; }
 
     public bool IsComputer { get; set; }
@@ -40,6 +61,12 @@ public sealed class Planet
     public byte ImageIndex { get; init; }
 
     public string ImagePath => $"/images/planets/planet{ImageIndex}.avif";
+    
+    public byte Galaxy { get; init; }
+    
+    public byte SolarSystem { get; init; }
+    
+    public byte Slot { get; init; }
 
     public PlanetType PlanetType { get; init; }
     public short OrbitalPeriod { get; init; }
@@ -79,22 +106,32 @@ public sealed class Planet
         }
     }
 
-    public long Titanium { get; private set; }
+    public long Titanium { get; set; }
     
-    public long Silicon { get; private set; }
+    public long Silicon { get; set; }
     
-    public long Helium { get; private set; }
+    public long Helium { get; set; }
     
-    public List<BuildingLevel> Buildings { get; }
+    public BuildingLevel[] Buildings { get; init; }
+    
+    public CombatEntityInventory[] Spaceships { get; init; }
 
-    public BuildingUpgrade? BuildingUpgrade { get; private set; }
+    public CombatEntityInventory[] Defenses { get; init; }
+    
+    public BuildingUpgrade? BuildingUpgrade { get; set; }
 
-    public DateTime LastUpdated { get; private set; }
+    public DateTime LastUpdated { get; set; }
+
+    public void DefineOwner(Player.Player player)
+    {
+        Owner = player;
+        OwnerId = player.Id;
+    }
 
     /// <summary>
     /// Adds resource to the planet inventory depending on production levels and storage capacity 
     /// </summary>
-    public void ResourcesUpdate(DateTime now)
+    public void ResourcesUpdate(DateTime now, Span<long> totalResources)
     {
         TimeSpan elapsedTime = now - LastUpdated;
         int elapsedSeconds = (int)elapsedTime.TotalSeconds;
@@ -110,16 +147,18 @@ public sealed class Planet
             double resourceLeftover = resourceProduced - resourceProducedRounded;
 
             this[loopResource] += resourceProducedRounded;
+            totalResources[i] += resourceProducedRounded;
 
             _decimalResourcesLeft[i] += resourceLeftover;
 
             if (_decimalResourcesLeft[i] >= 1)
             {
                 this[loopResource] += 1;
+                totalResources[i] += 1;
                 _decimalResourcesLeft[i] -= 1;
             }
         }
-
+        
         LastUpdated += TimeSpan.FromSeconds(elapsedSeconds);
     }
     
@@ -144,6 +183,9 @@ public sealed class Planet
         Resource.Helium => Convert.ToInt32(11 * Buildings.First(x => x.BuildingId == 5).Level * Math.Pow(1.1, Buildings.First(x => x.BuildingId == 5).Level)),
         _ => default
     };
+
+    public bool MeetsBuildingRequirements(IBuildingRequirements requirements)
+        => requirements.BuildingRequirements.All(x => Buildings.Single(b => b.BuildingId == x.BuildingId).Level >= x.RequiredLevel);
     
     public bool HasEnoughResource(IRequirements requirements)
         => requirements.Costs.All(cost => this[cost.Resource] >= cost.RequiredQuantity);
@@ -156,21 +198,25 @@ public sealed class Planet
         }
     }
     
-    public void ProcessUpgrades(DateTime now)
+    public BuildingLevel? ProcessUpgrades(DateTime now)
     {
         if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
         {
-            Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId).Level++;
+            BuildingLevel upgradedBuilding = Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId);
+            upgradedBuilding.Level++;
             BuildingUpgrade = null;
+            return upgradedBuilding;
         }
+
+        return null;
     }
     
     public bool CanUpgradeBuilding(short buildingId)
     {
         if (BuildingUpgrade is not null) return false;
 
-        BuildingLevel? level = Buildings.Find(bl => bl.BuildingId == buildingId);
-
+        BuildingLevel? level = Array.Find(Buildings, buildingLevel => buildingLevel.BuildingId == buildingId);
+        
         if (level is null) return false;
 
         return HasEnoughResource(level);
@@ -178,7 +224,7 @@ public sealed class Planet
     
     public bool TryUpgradeBuilding(short buildingId)
     {
-        IRequirements? level = Buildings.Find(bl => bl.BuildingId == buildingId);
+        IRequirements? level = Array.Find(Buildings, buildingLevel => buildingLevel.BuildingId == buildingId);
 
         if (level is null) return false;
 

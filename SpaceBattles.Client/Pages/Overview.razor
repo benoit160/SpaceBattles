@@ -1,8 +1,12 @@
 ﻿@page "/Overview"
+
+@inject GameState GameState
+@inject PlanetService PlanetService
+
+@implements IDisposable
+
 @using SpaceBattles.Core.Domain.Entities.Universe
 @using SpaceBattles.Core.Domain.Records
-@using SpaceBattles.Core.Application.Services
-@implements IDisposable
 
 <MudContainer MaxWidth="MaxWidth.Small">
     <MudPaper Class="pa-4 rounded-xl align-self-center">
@@ -19,7 +23,7 @@
                     <MudText>Average surface temperature : @_planet.AverageSurfaceTemp C°</MudText>
                     <MudText>Gravity : @_planet.Gravity.ToString("0.##") G</MudText>
                 </MudStack>
-        </MudStack>
+            </MudStack>
 
             <MudStack Row Spacing="0">
                 <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
@@ -71,9 +75,7 @@
 </MudContainer>
 
 @code {
-    [Inject]
-    private GameState GameState { get; init; } = default!;
-
+    
     private Planet _planet = default!;
     
     private readonly CancellationTokenSource _source = new();
@@ -87,8 +89,7 @@
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {                
-                _planet.ProcessUpgrades(DateTime.Now);
-                _planet.ResourcesUpdate(DateTime.Now);
+                PlanetService.UpdateCurrentPlanet();
                 StateHasChanged();
             }
         });

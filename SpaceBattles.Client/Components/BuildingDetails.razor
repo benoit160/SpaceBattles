@@ -2,45 +2,49 @@
 @using SpaceBattles.Core.Domain.Entities.Universe
 
 <MudContainer Style="max-width: 760px;">
+    
     <MudPaper Class="pa-4 rounded-xl" >
-            <MudStack AlignItems="AlignItems.Stretch">
+        <MudStack AlignItems="AlignItems.Stretch">
+            <MudStack>
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudText Typo="Typo.h5" Style="font-family:TitleFont;">@Building.Building.Name</MudText>
+                    <MudText Color="Color.Info" Typo="Typo.h6">Level : @Building.Level</MudText>
+                </MudStack>
+                <MudDivider DividerType="DividerType.Middle"/>
+
                 <MudStack Row>
-                    <MudImage Src="@Building.Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="256" Height="256"/>
-                    <MudStack AlignItems="AlignItems.Stretch">
-                        <MudStack Row Justify="Justify.SpaceBetween">
-                            <MudText Typo="Typo.h5">@Building.Building.Name</MudText>
-                            <MudText Color="Color.Info" Typo="Typo.h6">Level : @Building.Level</MudText>
-                        </MudStack>
-    
-                        <MudDivider DividerType="DividerType.Middle"/>
-    
-                        <MudText Typo="Typo.body1">@Building.Building.Description</MudText>
-    
-                    </MudStack>
+                    <MudImage Style="@_style" Src="@Building.Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="256" Height="256"/>
+                    @ParagraphDisplay(@Building.Building.Description)
                 </MudStack>
-                
-                <MudStack Row Spacing="0" Class="pt-2">
-                    <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
-                    <MudText Typo="Typo.body1">@(Building.Level == 0 ? "Construction" : "Upgrade") costs</MudText>
-                    <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
-                </MudStack>
-                
-                <TotalCostDisplay Planet="Planet" Upgrade="Building"/>
-    
-                @if (Planet.BuildingUpgrade is not null)
-                {
-                    <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Warning">Another construction is already in progress..</MudAlert>
-                }
-                else if (Planet.HasEnoughResource(Building))
-                {
-                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="() => Upgrade()">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
-                }
-                else
-                {
-                    <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Error">Not enough resources</MudAlert>
-                }
+
             </MudStack>
-        </MudPaper>
+            
+            <MudStack Row Spacing="0" Class="pt-2">
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+                <MudText Typo="Typo.body1">@(Building.Level == 0 ? "Construction" : "Upgrade") costs</MudText>
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+            </MudStack>
+            
+            <TotalCostDisplay Planet="Planet" Upgrade="Building"/>
+
+            @if (Planet.BuildingUpgrade is not null)
+            {
+                <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Warning">Another construction is already in progress..</MudAlert>
+            }
+            else if (!Planet.MeetsBuildingRequirements(Building.Building))
+            {
+                <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Warning">Requirements not met</MudAlert>
+            }
+            else if (Planet.HasEnoughResource(Building))
+            {
+                <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="() => Upgrade()">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
+            }
+            else
+            {
+                <MudAlert Class="align-self-center pointer-events-none" Severity="Severity.Error">Not enough resources</MudAlert>
+            }
+        </MudStack>
+    </MudPaper>
 </MudContainer>
 
 @code {
@@ -49,9 +53,30 @@
     
     [Parameter]
     public Planet Planet { get; init; } = default!;
-    
+
+    string _style = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        _style = Planet.MeetsBuildingRequirements(Building.Building) ? string.Empty : "filter: grayscale(1)";
+    }
+
     private void Upgrade()
     {
         Planet.TryUpgradeBuilding(Building.BuildingId);
+    }
+
+    private static RenderFragment ParagraphDisplay(string text)
+    {
+        string[] paragraphs = text.Split(Environment.NewLine);
+
+        return
+            @<div  style="overflow-y: auto; max-height: 256px">
+                @for(int i = 0; i < paragraphs.Length; i++)
+                {
+                    int localI = i;
+                    <MudText Typo="Typo.body1" Style="@(localI == paragraphs.Length - 1 ? string.Empty : "margin-bottom: 0.5em")">@paragraphs[localI]</MudText>
+                }
+            </div>;
     }
 }

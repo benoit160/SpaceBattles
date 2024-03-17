@@ -1,7 +1,12 @@
 ﻿@using SpaceBattles.Core.Application.Services
 @inherits LayoutComponentBase
 
+@inject NavigationManager NavigationManager
+@inject SaveService SaveService
+@inject BotService BotService
+
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     
@@ -10,9 +15,13 @@
 
         <MudButton Size="Size.Small" Href="/Overview" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" DisableRipple>Overview</MudButton>
         <MudButton Size="Size.Small" Href="/Buildings" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
-        
-        <MudSpacer />
+        <MudButton Size="Size.Small" Href="/Shipyard" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
+        <MudButton Size="Size.Small" Href="/Defenses" Variant="_page == CurrentPage.Defenses ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Defenses</MudButton>
+        <MudButton Size="Size.Small" Href="/Universe" Variant="_page == CurrentPage.Universe ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Universe</MudButton>
 
+        <MudSpacer />
+        
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" OnClick="SaveGame" Class="mx-2">Save</MudButton>
         <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Error" OnClick="Logout">Log out</MudButton>
     </MudAppBar>
     
@@ -30,12 +39,6 @@
 </style>
 
 @code {
-    [Inject]
-    private NavigationManager Navigation { get; init; } = default!;
-    
-    [Inject]
-    private BotService BotService { get; init; } = default!;
-
     private CurrentPage _page;
     private EventHandler<LocationChangedEventArgs>? _locationEvent;
 
@@ -43,6 +46,9 @@
     {
         Overview, 
         Buildings,
+        Shipyard,
+        Defenses,
+        Universe,
     }
 
     protected override void OnInitialized()
@@ -60,12 +66,29 @@
                 case "Buildings":
                     _page = CurrentPage.Buildings;
                     break;
+                    
+                case "Shipyard":
+                    _page = CurrentPage.Shipyard;
+                    break;
+                    
+                case "Defenses":
+                    _page = CurrentPage.Defenses;
+                    break;
+                    
+                case "Universe":
+                    _page = CurrentPage.Universe;
+                    break;
             }
 
             StateHasChanged();
         };
 
-        Navigation.LocationChanged += _locationEvent;
+        NavigationManager.LocationChanged += _locationEvent;
+    }
+
+    private async Task SaveGame()
+    {
+        await SaveService.SaveToStorage();
     }
 
     private void Logout()
