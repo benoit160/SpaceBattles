@@ -84,6 +84,14 @@ public sealed class Universe
         startingPlanet.Name = model.StartingPlanetName;
         
         return newUniverse;
+        
+        /*
+        foreach (Planet planet in newUniverse.Planets.Skip(1))
+        {
+            if (Random.Shared.NextSingle() > 0.5)
+                planet.IsComputer = true;
+        }
+         */
     }
 
     private static (byte, byte, byte) GetSize(UniverseSize size)

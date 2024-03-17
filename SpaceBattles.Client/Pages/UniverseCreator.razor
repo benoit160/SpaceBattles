@@ -3,6 +3,7 @@
 
 @inject NavigationManager NavigationManager
 @inject GameState GameState
+@inject BotService BotService
 
 <div class=@(_showCreationScreen? "d-none" : "")>
     <MudContainer MaxWidth="MaxWidth.ExtraSmall">
@@ -50,6 +51,7 @@
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
         
         GameState.Initialize(_model);
+        BotService.StartService();
 
         await waitingScreen;
 

@@ -1,7 +1,9 @@
-﻿@inherits LayoutComponentBase
+﻿@using SpaceBattles.Core.Application.Services
+@inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
 @inject SaveService SaveService
+@inject BotService BotService
 
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
 <MudSnackbarProvider/>
@@ -91,7 +93,8 @@
 
     private void Logout()
     {
-        NavigationManager.LocationChanged -= _locationEvent;
-        NavigationManager.NavigateTo("/");
+        BotService.Dispose();
+        Navigation.LocationChanged -= _locationEvent;
+        Navigation.NavigateTo("/");
     }
 }
