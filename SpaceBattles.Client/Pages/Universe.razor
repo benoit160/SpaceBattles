@@ -1,0 +1,97 @@
+﻿@page "/Universe"
+@using SpaceBattles.Core.Domain.Entities.Universe
+@layout GameLayout
+
+@inject GameState GameState
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudStack>
+        <MudStack Row Justify="Justify.SpaceEvenly">
+            @if (GameState.CurrentUniverse.Galaxies != 1)
+            {
+                @GalaxyNavigator();
+            }
+            
+            @if (GameState.CurrentUniverse.SolarSystems != 1)
+            {
+                @SolarSystemsNavigator();
+            }
+        </MudStack>
+        @foreach (var planet in _planets)
+        {
+            string style = planet == GameState.CurrentPlanet
+                ? "border border-2 mud-border-success"
+                : "border border-2";
+                  <MudPaper Class=@("pa-2 ma-1 rounded-xl " + style)>
+                <MudStack Row Spacing="8">
+                    <MudImage Src="@planet.ImagePath" ObjectFit="ObjectFit.ScaleDown" Width="100" Height="100"/>
+                    <MudStack>
+                        <MudText Typo="Typo.h6" Style="font-family:TitleFont">@planet.Name</MudText>
+                        @if (planet == GameState.CurrentPlanet)
+                        {
+                            <MudText Typo="Typo.body1" Color="Color.Success">You are here</MudText>
+                        }
+                        else
+                        {
+                            string status = planet.Owner is null
+                                ? "Uncolonized"
+                                : "Colonized";
+                            <MudText Typo="Typo.body1">Status : @status</MudText>
+                        }
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        }
+    </MudStack>
+</MudContainer>
+
+@code {
+    private IEnumerable<Planet> _planets = Enumerable.Empty<Planet>();
+    private int _galaxy;
+    private int _solarSystem;
+
+    private void SwitchGalaxy(int index)
+    {
+        _galaxy = index;
+        _planets = GameState.CurrentUniverse.GetSolarSystemView(_galaxy, _solarSystem);
+    }
+    
+    private void SwitchSolarSystem(int index)
+    {
+        _solarSystem = index;
+        _planets = GameState.CurrentUniverse.GetSolarSystemView(_galaxy, _solarSystem);
+    }
+
+    protected override void OnInitialized()
+    {
+        _galaxy = GameState.CurrentPlanet.Galaxy;
+        _solarSystem = GameState.CurrentPlanet.SolarSystem;
+        _planets = GameState.CurrentUniverse.GetSolarSystemView(_galaxy, _solarSystem);
+    }
+
+    private RenderFragment GalaxyNavigator()
+    {
+        bool previousEnabled = _galaxy != 1;
+        bool nextEnabled = _galaxy != GameState.CurrentUniverse.Galaxies;
+
+        return 
+        @<MudButtonGroup Color="Color.Info" Variant="Variant.Outlined">
+            <MudButton StartIcon="@Icons.Material.Filled.FastRewind" Disabled="!previousEnabled" OnClick="() => SwitchGalaxy(_galaxy - 1)">Previous</MudButton>
+            <MudButton Class="pointer-events-none">Galaxy @_galaxy</MudButton>
+            <MudButton EndIcon="@Icons.Material.Filled.FastForward" Disabled="!nextEnabled" OnClick="() => SwitchGalaxy(_galaxy + 1)">Next</MudButton>
+        </MudButtonGroup>;
+    }
+    
+    private RenderFragment SolarSystemsNavigator()
+    {
+        bool previousEnabled = _solarSystem != 1;
+        bool nextEnabled = _solarSystem != GameState.CurrentUniverse.SolarSystems;
+
+        return 
+        @<MudButtonGroup Color="Color.Info" Variant="Variant.Outlined">
+            <MudButton StartIcon="@Icons.Material.Filled.FastRewind" Disabled="!previousEnabled" OnClick="() => SwitchSolarSystem(_solarSystem - 1)">Previous</MudButton>
+            <MudButton Class="pointer-events-none">Solar System @_solarSystem</MudButton>
+            <MudButton EndIcon="@Icons.Material.Filled.FastForward" Disabled="!nextEnabled" OnClick="() => SwitchSolarSystem(_solarSystem + 1)">Next</MudButton>
+        </MudButtonGroup>;
+    }
+}

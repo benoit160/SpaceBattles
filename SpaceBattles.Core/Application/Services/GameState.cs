@@ -18,7 +18,7 @@ public sealed class GameState
     public void Initialize(UniverseCreationModel model)
     {
         CurrentUniverse = Universe.CreateUniverse(model);
-        CurrentPlanet = CurrentUniverse.Planets[0];
+        CurrentPlanet = CurrentUniverse.Planets.Single(planet => !planet.Owner?.IsBot ?? false);
     }
     
     public void Restore(Universe universe)

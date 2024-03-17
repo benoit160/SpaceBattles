@@ -7,11 +7,11 @@ using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-public sealed class Planet
+public sealed class Planet : IPosition
 {
     public Planet()
     {
-        Name = "Earth";
+        Name = $"Planet-{Guid.NewGuid().ToString()[..4]}";
         ImageIndex = Convert.ToByte(Random.Shared.Next(0, 10));
         
         PlanetType[] values = Enum.GetValues<PlanetType>();
@@ -59,6 +59,12 @@ public sealed class Planet
     public byte ImageIndex { get; init; }
 
     public string ImagePath => $"/images/planets/planet{ImageIndex}.avif";
+    
+    public byte Galaxy { get; init; }
+    
+    public byte SolarSystem { get; init; }
+    
+    public byte Slot { get; init; }
 
     public PlanetType PlanetType { get; init; }
     public short OrbitalPeriod { get; init; }
