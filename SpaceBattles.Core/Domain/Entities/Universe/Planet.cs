@@ -11,7 +11,7 @@ public sealed class Planet : IPosition
 {
     public Planet()
     {
-        Name = "Earth";
+        Name = $"Planet-{Guid.NewGuid().ToString()[..4]}";
         ImageIndex = Convert.ToByte(Random.Shared.Next(0, 10));
         
         PlanetType[] values = Enum.GetValues<PlanetType>();
