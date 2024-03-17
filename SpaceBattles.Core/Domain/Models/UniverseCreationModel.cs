@@ -33,7 +33,8 @@ public class UniverseCreationModel
     {
         UniverseName = string.Empty;
         CommanderName = string.Empty;
+        StartingPlanetName = "Earth";
         UniverseSpeed = 1;
-        UniverseSize = UniverseSize.VeryLarge;
+        UniverseSize = UniverseSize.Medium;
     }
 }

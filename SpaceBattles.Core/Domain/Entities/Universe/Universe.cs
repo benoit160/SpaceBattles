@@ -74,8 +74,11 @@ public sealed class Universe
         };
         
         newUniverse.Players.Add(mainPlayer);
+        
         Span<Planet> planets = CollectionsMarshal.AsSpan(newUniverse.Planets);
-        planets[Random.Shared.Next(0, planets.Length)].DefineOwner(mainPlayer);
+        Planet startingPlanet = planets[Random.Shared.Next(0, planets.Length)];
+        startingPlanet.DefineOwner(mainPlayer);
+        startingPlanet.Name = model.StartingPlanetName;
         
         return newUniverse;
     }
