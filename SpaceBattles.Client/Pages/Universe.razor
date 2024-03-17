@@ -17,12 +17,11 @@
                 @SolarSystemsNavigator();
             }
         </MudStack>
-        @foreach (var planet in _planets)
+        @for(int i = 0; i < _planets.Length; i++)
         {
-            string style = planet == GameState.CurrentPlanet
-                ? "border border-2 mud-border-success"
-                : "border border-2";
-                  <MudPaper Class=@("pa-2 ma-1 rounded-xl " + style)>
+            Planet planet = _planets.Span[i]; 
+            string style = planet == GameState.CurrentPlanet ? "border border-2 mud-border-success" : "border border-2";
+            <MudPaper Class=@("pa-2 ma-1 rounded-xl " + style)>
                 <MudStack Row Spacing="8">
                     <MudImage Src="@planet.ImagePath" ObjectFit="ObjectFit.ScaleDown" Width="100" Height="100"/>
                     <MudStack>
@@ -33,9 +32,7 @@
                         }
                         else
                         {
-                            string status = planet.Owner is null
-                                ? "Uncolonized"
-                                : "Colonized";
+                            string status = planet.Owner is null ? "Uncolonized" : "Colonized";
                             <MudText Typo="Typo.body1">Status : @status</MudText>
                         }
                     </MudStack>
@@ -46,7 +43,7 @@
 </MudContainer>
 
 @code {
-    private IEnumerable<Planet> _planets = Enumerable.Empty<Planet>();
+    private Memory<Planet> _planets;
     private int _galaxy;
     private int _solarSystem;
 

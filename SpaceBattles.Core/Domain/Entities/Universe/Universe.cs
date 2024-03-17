@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using SpaceBattles.Core.Domain.Enums;
+﻿using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
@@ -21,8 +20,8 @@ public sealed class Universe
     
     public int Slots { get; init; }
 
-    public List<Planet> Planets { get; init; }
-        = new();
+    public Planet[] Planets { get; init; }
+        = Array.Empty<Planet>();
     
     public List<Player.Player> Players { get; init; }
         = new();
@@ -30,9 +29,11 @@ public sealed class Universe
     public Planet this[int index]
         => Planets[index];
 
-    public IEnumerable<Planet> GetSolarSystemView(int galaxy, int solarSystem)
+    public Memory<Planet> GetSolarSystemView(int galaxy, int solarSystem)
     {
-        return Planets.Where(planet => planet.Galaxy == galaxy && planet.SolarSystem == solarSystem);
+        int totalSlotsPerGalaxy = SolarSystems * Slots;
+        int start = totalSlotsPerGalaxy * (galaxy - 1) + ((solarSystem - 1) * Slots);
+        return Planets.AsMemory().Slice(start, Slots);
     }
 
     public static Universe CreateUniverse(UniverseCreationModel model)
@@ -44,24 +45,27 @@ public sealed class Universe
             Name = model.UniverseName,
             IsPeacefulUniverse = model.IsPeacefulMode,
             UniverseSpeed = model.UniverseSpeed,
-            Planets = new List<Planet>(galaxies * solarSystems * slots),
+            Planets = new Planet[galaxies * solarSystems * slots],
             Galaxies = galaxies,
             SolarSystems = solarSystems,
             Slots = slots,
         };
 
+        int index = 0;
+        
         for (byte gal = 1; gal <= galaxies; gal++)
         {
             for (byte sol = 1; sol <= solarSystems; sol++)
             {
                 for (byte slot = 1; slot <= slots; slot++)
                 {
-                    newUniverse.Planets.Add(new Planet()
+                    newUniverse.Planets[index] = new Planet()
                     {
                         Galaxy = gal,
                         SolarSystem = sol,
                         Slot = slot,
-                    });
+                    };
+                    index++;
                 }
             }
         }
@@ -75,8 +79,7 @@ public sealed class Universe
         
         newUniverse.Players.Add(mainPlayer);
         
-        Span<Planet> planets = CollectionsMarshal.AsSpan(newUniverse.Planets);
-        Planet startingPlanet = planets[Random.Shared.Next(0, planets.Length)];
+        Planet startingPlanet = newUniverse.Planets[Random.Shared.Next(0, newUniverse.Planets.Length)];
         startingPlanet.DefineOwner(mainPlayer);
         startingPlanet.Name = model.StartingPlanetName;
         
