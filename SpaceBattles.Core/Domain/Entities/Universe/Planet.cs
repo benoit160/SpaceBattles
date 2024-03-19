@@ -22,7 +22,10 @@ public sealed class Planet : IPosition
         Gravity = Random.Shared.NextSingle() * 5;
         
         LastUpdated = DateTime.Now;
-        
+    }
+
+    public void Init()
+    {        
         Titanium = 150;
         Silicon = 75;
         
@@ -32,22 +35,14 @@ public sealed class Planet : IPosition
                 BuildingId = building.Id,
                 Building = building,
             }).ToArray();
-        
-        Spaceships = Spaceship.Spaceships()
+
+        BattleUnits = Defense.Defenses()
+            .Concat<CombatEntity>(Spaceship.Spaceships())
             .Select(entity => new CombatEntityInventory
             {
                 CombatEntity = entity,
                 CombatEntityId = entity.Id,
-            })
-            .ToArray();
-        
-        Defenses = Defense.Defenses()
-            .Select(entity => new CombatEntityInventory
-            {
-                CombatEntity = entity,
-                CombatEntityId = entity.Id,
-            })
-            .ToArray();
+            }).ToArray();
     }
 
     public Player.Player? Owner { get; set; }
@@ -109,12 +104,18 @@ public sealed class Planet : IPosition
     public long Silicon { get; set; }
     
     public long Helium { get; set; }
-    
-    public BuildingLevel[] Buildings { get; init; }
-    
-    public CombatEntityInventory[] Spaceships { get; init; }
 
-    public CombatEntityInventory[] Defenses { get; init; }
+    public BuildingLevel[] Buildings { get; private set; }
+        = Array.Empty<BuildingLevel>();
+
+    public CombatEntityInventory[] BattleUnits { get; private set; }
+        = Array.Empty<CombatEntityInventory>();
+
+    public Memory<CombatEntityInventory> Defenses
+        => BattleUnits.AsMemory().Slice(0, 8);
+
+    public Memory<CombatEntityInventory> Spaceships
+        => BattleUnits.AsMemory().Slice(8, 10);
     
     public BuildingUpgrade? BuildingUpgrade { get; set; }
 

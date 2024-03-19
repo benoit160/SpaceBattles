@@ -6,7 +6,7 @@
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height);">
     <MudGrid Class="py-3" Spacing="0" Justify="Justify.Center">
-        @for (int i = 0; i < _spaceships.Count; i++)
+        @for (int i = 0; i < _spaceships.Length; i++)
         {
             int localIndex = i;
             @SpaceshipCard(localIndex);
@@ -15,13 +15,11 @@
 </MudContainer>
 
 @code {
-    private List<CombatEntityInventory> _spaceships = [];
-
+    private ReadOnlyMemory<CombatEntityInventory> _spaceships;
+    
     protected override void OnInitialized()
     {
-        _spaceships = GameState.CurrentPlanet.Spaceships
-            .Where(inv => !(inv.CombatEntity as Spaceship).Characteristics.HasFlag(SpaceshipsCharacteristics.Utility))
-            .ToList();
+        _spaceships = GameState.CurrentPlanet.Spaceships;
     }
     
     private string GetImageStyle(CombatEntityInventory inv)
@@ -35,12 +33,15 @@
         @<MudItem xs="12" md="5">
             <MudPaper Class="pa-2 ma-1">
                 <MudStack Row>
-                    <MudImage Src="@_spaceships[index].CombatEntity.ImagePath" Alt="a visual representation of this spaceship" Class="align-self-center rounded-lg" Width="150" Height="150" Style="@(GetImageStyle(_spaceships[index]))"/>
+                    <MudImage Src="@_spaceships.Span[index].CombatEntity.ImagePath"
+                              Alt="a visual representation of this spaceship"
+                              Class="align-self-center rounded-lg"
+                              Width="150" Height="150" Style="@(GetImageStyle(_spaceships.Span[index]))"/>
 
                     <MudStack Class="flex-grow-1">
-                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_spaceships[index].CombatEntity.Name</MudText>
+                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_spaceships.Span[index].CombatEntity.Name</MudText>
                         <MudDivider/>
-                        <MudText Color="Color.Info" Typo="Typo.h6">@_spaceships[index].Quantity available</MudText>
+                        <MudText Color="Color.Info" Typo="Typo.h6">@_spaceships.Span[index].Quantity available</MudText>
 
                         <MudSpacer/>
                     </MudStack>
