@@ -111,10 +111,10 @@ public sealed class Planet : IPosition
     public CombatEntityInventory[] BattleUnits { get; private set; }
         = Array.Empty<CombatEntityInventory>();
 
-    public Memory<CombatEntityInventory> Defenses
+    public ReadOnlyMemory<CombatEntityInventory> Defenses
         => BattleUnits.AsMemory().Slice(0, 8);
 
-    public Memory<CombatEntityInventory> Spaceships
+    public ReadOnlyMemory<CombatEntityInventory> Spaceships
         => BattleUnits.AsMemory().Slice(8, 10);
     
     public BuildingUpgrade? BuildingUpgrade { get; set; }
