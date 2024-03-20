@@ -58,18 +58,21 @@ public sealed class SaveService
                 planet.Owner = universe.Players.Find(p => p.Id == planet.OwnerId);
             }
 
-            foreach (BuildingLevel buildingLevel in planet.Buildings)
+            for (int index = 0; index < planet.Buildings.Length; index++)
             {
+                BuildingLevel buildingLevel = planet.Buildings[index];
                 buildingLevel.Building = buildings.Single(b => b.Id == buildingLevel.BuildingId);
             }
-            
-            foreach (CombatEntityInventory combatEntityInventory in planet.Defenses)
+
+            for (int index = 0; index < planet.Defenses.Length; index++)
             {
+                CombatEntityInventory combatEntityInventory = planet.Defenses.Span[index];
                 combatEntityInventory.CombatEntity = defenses.Single(defense => defense.Id == combatEntityInventory.CombatEntityId);
             }
             
-            foreach (CombatEntityInventory combatEntityInventory in planet.Spaceships)
+            for (int index = 0; index < planet.Spaceships.Length; index++)
             {
+                CombatEntityInventory combatEntityInventory = planet.Spaceships.Span[index];
                 combatEntityInventory.CombatEntity = spaceships.Single(spaceship => spaceship.Id == combatEntityInventory.CombatEntityId);
             }
         }
