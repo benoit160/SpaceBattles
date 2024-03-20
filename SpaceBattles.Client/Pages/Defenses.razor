@@ -16,12 +16,12 @@
 
 @code {
     private ReadOnlyMemory<CombatEntityInventory> _defenses;
-        
+
     protected override void OnInitialized()
     {
         _defenses = GameState.CurrentPlanet.Defenses;
     }
-    
+
     private string GetImageStyle(CombatEntityInventory inv)
     {
         return !GameState.CurrentPlanet.MeetsBuildingRequirements(inv.CombatEntity) ? "filter: grayscale(1)" : "";
