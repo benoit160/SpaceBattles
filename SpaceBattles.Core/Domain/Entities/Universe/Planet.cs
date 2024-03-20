@@ -22,10 +22,7 @@ public sealed class Planet : IPosition
         Gravity = Random.Shared.NextSingle() * 5;
         
         LastUpdated = DateTime.Now;
-    }
-
-    public void Init()
-    {        
+        
         Titanium = 150;
         Silicon = 75;
         
