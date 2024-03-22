@@ -1,4 +1,5 @@
 using SpaceBattles.Core.Domain.Entities.Battle;
+using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
 
 namespace SpaceBattles.Core.Domain.Entities.Universe;
