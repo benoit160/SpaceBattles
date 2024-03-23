@@ -93,6 +93,7 @@ public sealed class Universe
         
         Planet startingPlanet = newUniverse.Planets[Random.Shared.Next(0, newUniverse.Planets.Length)];
         startingPlanet.DefineOwner(mainPlayer);
+        startingPlanet.Init();
         startingPlanet.Name = model.StartingPlanetName;
         
         return newUniverse;

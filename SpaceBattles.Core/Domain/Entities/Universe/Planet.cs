@@ -20,26 +20,6 @@ public sealed class Planet : IPosition
         OrbitalPeriod = Convert.ToInt16(Random.Shared.Next(50, 2000));
         AverageSurfaceTemp = Convert.ToInt16(Random.Shared.Next(1, 50));
         Gravity = Random.Shared.NextSingle() * 5;
-        
-        LastUpdated = DateTime.Now;
-        
-        Titanium = 150;
-        Silicon = 75;
-        
-        Buildings = Building.Building.Buildings()
-            .Select(building => new BuildingLevel
-            {
-                BuildingId = building.Id,
-                Building = building,
-            }).ToArray();
-
-        BattleUnits = Defense.Defenses()
-            .Concat<CombatEntity>(Spaceship.Spaceships())
-            .Select(entity => new CombatEntityInventory
-            {
-                CombatEntity = entity,
-                CombatEntityId = entity.Id,
-            }).ToArray();
     }
 
     public Player.Player? Owner { get; set; }
@@ -108,20 +88,46 @@ public sealed class Planet : IPosition
     public CombatEntityInventory[] BattleUnits { get; private set; }
         = Array.Empty<CombatEntityInventory>();
 
-    public ReadOnlyMemory<CombatEntityInventory> Defenses
-        => BattleUnits.AsMemory().Slice(0, 8);
+    public ReadOnlyMemory<CombatEntityInventory> Defenses  { get; private set; }
 
-    public ReadOnlyMemory<CombatEntityInventory> Spaceships
-        => BattleUnits.AsMemory().Slice(8, 10);
-    
+    public ReadOnlyMemory<CombatEntityInventory> Spaceships { get; private set; }
+
     public BuildingUpgrade? BuildingUpgrade { get; set; }
 
     public DateTime LastUpdated { get; set; }
+
+    public bool IsInitialized => LastUpdated != default;
 
     public void DefineOwner(Player.Player player)
     {
         Owner = player;
         OwnerId = player.Id;
+    }
+
+    public void Init()
+    {
+        LastUpdated = DateTime.Now;
+        
+        Titanium = 150;
+        Silicon = 75;
+        
+        Buildings = Building.Building.Buildings()
+            .Select(building => new BuildingLevel
+            {
+                BuildingId = building.Id,
+                Building = building,
+            }).ToArray();
+
+        BattleUnits = Defense.Defenses()
+            .Concat<CombatEntity>(Spaceship.Spaceships())
+            .Select(entity => new CombatEntityInventory
+            {
+                CombatEntity = entity,
+                CombatEntityId = entity.Id,
+            }).ToArray();
+            
+        Spaceships = BattleUnits.AsMemory(8, 10);
+        Defenses = BattleUnits.AsMemory(0, 8);
     }
 
     /// <summary>
