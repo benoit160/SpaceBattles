@@ -11,6 +11,24 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        
+        // Assert
+        Assert.False(string.IsNullOrWhiteSpace(planet.Name));
+        Assert.NotEqual(default, planet.PlanetType);
+        Assert.Equal(default, planet.LastUpdated);
+        
+        Assert.Empty(planet.Buildings);
+        Assert.Empty(planet.BattleUnits);
+        Assert.Equal(0, planet.Titanium);
+        Assert.Equal(0, planet.Silicon);
+        Assert.Equal(0, planet.Helium);
+    }
+    
+    [Fact]
+    public void Planet_Init()
+    {
+        // Arrange
+        Planet planet = new Planet();
         planet.Init();
         
         // Assert
