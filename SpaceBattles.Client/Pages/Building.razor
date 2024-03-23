@@ -1,5 +1,7 @@
 ﻿@page "/Building/{BuildingName}"
 
+@inject NavigationManager NavigationManager
+
 <h3>Building</h3>
 
 @code {
@@ -8,6 +10,9 @@
 
     protected override void OnInitialized()
     {
-        Console.WriteLine(BuildingName);
+        if (!Core.Domain.Entities.Building.Building.ValidBuildingNames.Contains(BuildingName))
+        {
+            NavigationManager.NavigateTo("/Buildings");
+        }
     }
 }

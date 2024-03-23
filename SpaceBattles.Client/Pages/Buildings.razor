@@ -2,6 +2,7 @@
 
 @inject GameState GameState
 @inject PlanetService PlanetService
+@inject NavigationManager NavigationManager
 
 @implements IDisposable
 
@@ -75,6 +76,11 @@
         _selectedIndex = buildingId - 1;
         _overlayVisible = true;
     }
+
+    private void Goto(string name)
+    {
+        NavigationManager.NavigateTo($"Building/{name}");
+    }
     
     public void Dispose()
     {
@@ -110,7 +116,18 @@
                                 {
                                     @GetBuildingStatus(building.BuildingId)
                                     <MudSpacer/>
-                                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(building.BuildingId)">Details</MudButton>
+                                    <MudStack Row>
+                                        <MudButton 
+                                            Class="align-self-center"
+                                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                                            OnClick="() => OpenDetails(building.BuildingId)">Details</MudButton>
+                                        
+                                        <MudButton 
+                                            Class="align-self-center"
+                                            StartIcon="@Icons.Material.Filled.OpenInNew"
+                                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                                            OnClick="() => Goto(building.Building.Name.Replace(' ', '-'))">To page</MudButton>
+                                    </MudStack>
                                 }
                             </MudStack>
                         </MudStack>

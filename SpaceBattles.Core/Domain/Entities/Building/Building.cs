@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Domain.Interfaces;
+﻿using System.Collections.Frozen;
+using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
 
 namespace SpaceBattles.Core.Domain.Entities.Building;
@@ -28,6 +29,9 @@ public sealed class Building : IBuildingRequirements
 
     public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
         = Enumerable.Empty<BuildingRequirement>();
+
+    public static FrozenSet<string> ValidBuildingNames
+        = Buildings().Select(b => b.Name.Replace(' ', '-')).ToFrozenSet(); 
 
     /// <summary>
     /// Contains the initial buildings list.
