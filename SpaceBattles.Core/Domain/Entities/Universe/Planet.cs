@@ -20,6 +20,7 @@ public sealed class Planet : IPosition
         OrbitalPeriod = Convert.ToInt16(Random.Shared.Next(50, 2000));
         AverageSurfaceTemp = Convert.ToInt16(Random.Shared.Next(1, 50));
         Gravity = Random.Shared.NextSingle() * 5;
+        Rotation = Random.Shared.NextSingle() * 360f;
     }
 
     public Player.Player? Owner { get; set; }
@@ -42,6 +43,8 @@ public sealed class Planet : IPosition
     public short OrbitalPeriod { get; init; }
     public short AverageSurfaceTemp { get; init; }
     public float Gravity { get; init; }
+    
+    public float Rotation { get; init; }
 
     public long this[Resource resource]
     {
@@ -82,7 +85,7 @@ public sealed class Planet : IPosition
     
     public long Helium { get; set; }
 
-    public BuildingLevel[] Buildings { get; private set; }
+    public BuildingLevel[] Buildings { get; set; }
         = Array.Empty<BuildingLevel>();
 
     public CombatEntityInventory[] BattleUnits { get; private set; }

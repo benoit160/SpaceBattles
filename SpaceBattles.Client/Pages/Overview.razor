@@ -13,16 +13,19 @@
         <MudStack>
             <MudText Typo="Typo.h4" Class="align-self-center" Style="font-family:TitleFont;">@_planet.Name</MudText>
             <MudStack Row Justify="Justify.SpaceAround">
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                    <image width="200" height="200" href="@_planet.ImagePath" transform="rotate(@_planet.Rotation, 100 100)"/>
+                </svg>
                 <MudImage Src="@_planet.ImagePath" Alt="an image of your current planet" Width="200" Height="200" ObjectFit="ObjectFit.Contain"/>
 
-                <MudDivider Vertical FlexItem/>
-
-                <MudStack Justify="Justify.SpaceAround">
-                    <MudText>Planet type : @_planet.PlanetType.ToString().Replace("_"," ")</MudText>
-                    <MudText>Orbital period : @_planet.OrbitalPeriod days</MudText>
-                    <MudText>Average surface temperature : @_planet.AverageSurfaceTemp C°</MudText>
-                    <MudText>Gravity : @_planet.Gravity.ToString("0.##") G</MudText>
-                </MudStack>
+                @* <MudDivider Vertical FlexItem/> *@
+                @* *@
+                @* <MudStack Justify="Justify.SpaceAround"> *@
+                @*     <MudText>Planet type : @_planet.PlanetType.ToString().Replace("_", " ")</MudText> *@
+                @*     <MudText>Orbital period : @_planet.OrbitalPeriod days</MudText> *@
+                @*     <MudText>Average surface temperature : @_planet.AverageSurfaceTemp C°</MudText> *@
+                @*     <MudText>Gravity : @_planet.Gravity.ToString("0.##") G</MudText> *@
+                @* </MudStack> *@
             </MudStack>
 
             <MudStack Row Spacing="0">
