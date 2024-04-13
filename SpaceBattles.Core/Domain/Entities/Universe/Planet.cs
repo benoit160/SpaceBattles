@@ -55,15 +55,15 @@ public sealed class Planet : IPosition
 
     public long Helium { get; set; }
 
-    public BuildingLevel[] Buildings { get; private set; }
+    public BuildingLevel[] Buildings { get; set; }
         = Array.Empty<BuildingLevel>();
 
-    public CombatEntityInventory[] BattleUnits { get; private set; }
+    public CombatEntityInventory[] BattleUnits { get; set; }
         = Array.Empty<CombatEntityInventory>();
 
-    public ReadOnlyMemory<CombatEntityInventory> Defenses { get; private set; }
+    public ReadOnlyMemory<CombatEntityInventory> Defenses { get; set; }
 
-    public ReadOnlyMemory<CombatEntityInventory> Spaceships { get; private set; }
+    public ReadOnlyMemory<CombatEntityInventory> Spaceships { get; set; }
 
     public BuildingUpgrade? BuildingUpgrade { get; set; }
 
