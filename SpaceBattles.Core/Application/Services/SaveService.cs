@@ -1,18 +1,17 @@
-﻿using System.Text;
+﻿namespace SpaceBattles.Core.Application.Services;
+
 using System.Text.Json;
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
-namespace SpaceBattles.Core.Application.Services;
-
 public sealed class SaveService
 {
+    private const string Key = "SaveData";
+
     private readonly GameState _gameState;
     private readonly IBrowserService _browserService;
 
-    private const string Key = "SaveData";
-    
     public SaveService(GameState gameState, IBrowserService browserService)
     {
         _gameState = gameState;
@@ -35,9 +34,9 @@ public sealed class SaveService
         string? data = await _browserService.ReadLocalStorage(Key);
 
         if (data is null) return false;
-        
+
         Universe? universe = JsonSerializer.Deserialize<Universe>(data);
-        
+
         if (universe is null) return false;
 
         RebuildEntityGraph(universe);
@@ -69,7 +68,7 @@ public sealed class SaveService
                 CombatEntityInventory combatEntityInventory = planet.Defenses.Span[index];
                 combatEntityInventory.CombatEntity = defenses.Single(defense => defense.Id == combatEntityInventory.CombatEntityId);
             }
-            
+
             for (int index = 0; index < planet.Spaceships.Length; index++)
             {
                 CombatEntityInventory combatEntityInventory = planet.Spaceships.Span[index];

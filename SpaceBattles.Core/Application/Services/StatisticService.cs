@@ -1,7 +1,7 @@
-﻿using System.Collections.Frozen;
-using SpaceBattles.Core.Domain.Entities.Universe;
+﻿namespace SpaceBattles.Core.Application.Services;
 
-namespace SpaceBattles.Core.Application.Services;
+using System.Collections.Frozen;
+using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class StatisticService
 {

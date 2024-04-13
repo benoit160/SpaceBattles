@@ -1,7 +1,7 @@
-﻿using SpaceBattles.Core.Domain.Interfaces;
-using SpaceBattles.Core.Domain.Records;
+﻿namespace SpaceBattles.Core.Domain.Entities.Building;
 
-namespace SpaceBattles.Core.Domain.Entities.Building;
+using SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
 public sealed class Building : IBuildingRequirements
 {
@@ -19,9 +19,9 @@ public sealed class Building : IBuildingRequirements
     public string ImagePath => $"/images/buildings/{ImageName}";
 
     public int TitaniumCost { get; init; }
-    
+
     public int SiliconCost { get; init; }
-    
+
     public int HeliumCost { get; init; }
 
     public float ScalingFactor { get; init; }
@@ -90,7 +90,7 @@ public sealed class Building : IBuildingRequirements
 
                 Name = "³Helium synthesizer",
                 Description = "³Helium is a stable isotope of helium with a natural abundance in the oceans of colonies of approximately one atom in 6500 of helium (~154 PPM). Helium³ thus accounts for approximately 0.015% (on a weight basis, 0.030%) of all water.\nHelium³ is processed by special synthesizers which can separate the water from the Helium³ using specially designed centrifuges. The upgrade of the synthesizer allows for increasing the amount of Helium³ deposits processed.\nHelium³ is used when carrying out sensor phalanx scans, viewing galaxies, as fuel for ships, and performing specialized research upgrades.",
-                
+
                 ScalingFactor = 1.5f,
                 TitaniumCost = 225,
                 SiliconCost = 75,
@@ -132,8 +132,8 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 400,
                 SiliconCost = 200,
                 HeliumCost = 100,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(7, 2),
                 ],
@@ -145,7 +145,7 @@ public sealed class Building : IBuildingRequirements
 
                 Name = "Research lab",
                 Description = "An essential part of any empire, Research Labs are where new technologies are discovered and older technologies are improved upon. With each level of the Research Lab constructed, the speed in which new technologies are researched is increased, while also unlocking newer technologies to research.\nIn order to conduct research as quickly as possible, research scientists are immediately dispatched to the colony to begin work and development. In this way, knowledge about new technologies can easily be disseminated throughout the empire.",
-                
+
                 ScalingFactor = 2f,
                 TitaniumCost = 200,
                 SiliconCost = 400,
@@ -163,8 +163,8 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 1_000_000,
                 SiliconCost = 500_000,
                 HeliumCost = 100_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(7, 10),
                 ],
@@ -181,8 +181,8 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 20_000,
                 SiliconCost = 20_000,
                 HeliumCost = 1_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 1),
                 ],
