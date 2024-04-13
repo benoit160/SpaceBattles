@@ -12,7 +12,7 @@ public sealed class UniverseService
         _statisticService = statisticService;
         _notificationService = notificationService;
     }
-    
+
     public void UpdateUniverse()
     {
         foreach (var planet in _gameState.CurrentUniverse.Planets)
@@ -25,7 +25,7 @@ public sealed class UniverseService
     {
         Span<long> totals = stackalloc long[3];
         PlanetStatistics stat = _statisticService[planet];
-        
+
         planet.ResourcesUpdate(DateTime.Now, totals);
         planet.ProcessUpgrades(DateTime.Now);
 

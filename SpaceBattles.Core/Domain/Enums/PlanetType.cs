@@ -15,5 +15,5 @@ public enum PlanetType
     Lava_planet = 10,
     Protoplanet = 11,
     Silicate_planet = 12,
-    Terrestrial_planet = 13
+    Terrestrial_planet = 13,
 }

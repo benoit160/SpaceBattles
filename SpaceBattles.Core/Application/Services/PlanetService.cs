@@ -1,7 +1,7 @@
-﻿using SpaceBattles.Core.Domain.Entities.Building;
-using SpaceBattles.Core.Domain.Entities.Universe;
+﻿namespace SpaceBattles.Core.Application.Services;
 
-namespace SpaceBattles.Core.Application.Services;
+using SpaceBattles.Core.Domain.Entities.Building;
+using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class PlanetService
 {
@@ -15,14 +15,14 @@ public sealed class PlanetService
         _statisticService = statisticService;
         _notificationService = notificationService;
     }
-    
+
     public void UpdateCurrentPlanet()
     {
         Span<long> totals = stackalloc long[3];
         PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet];
         Planet planet = _gameState.CurrentPlanet;
         BuildingLevel? result = null;
-        
+
         if (planet.BuildingUpgrade is null)
         {
             planet.ResourcesUpdate(DateTime.Now, totals);
