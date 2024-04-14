@@ -24,6 +24,6 @@ public sealed class GameState
     public void Restore(Universe universe)
     {
         CurrentUniverse = universe;
-        CurrentPlanet = CurrentUniverse.Planets[0];
+        CurrentPlanet = CurrentUniverse.Planets.Single(planet => !planet.Owner?.IsBot ?? false);
     }
 }
