@@ -69,8 +69,6 @@ public sealed class Planet : IPosition
 
     public DateTime LastUpdated { get; set; }
 
-    public bool IsInitialized => LastUpdated != default;
-
     public long this[Resource resource]
     {
         get
@@ -253,5 +251,10 @@ public sealed class Planet : IPosition
         BuildingUpgrade = upgrade;
 
         return true;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(ImageIndex, Galaxy, SolarSystem, Slot, PlanetType, OrbitalPeriod, AverageSurfaceTemp, Gravity);
     }
 }
