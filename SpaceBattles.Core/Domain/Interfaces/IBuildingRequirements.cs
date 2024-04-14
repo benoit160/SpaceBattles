@@ -1,6 +1,6 @@
-﻿using SpaceBattles.Core.Domain.Records;
+﻿namespace SpaceBattles.Core.Domain.Interfaces;
 
-namespace SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
 public interface IBuildingRequirements
 {

@@ -1,6 +1,6 @@
-using SpaceBattles.Core.Domain.Records;
-
 namespace SpaceBattles.Core.Domain.Entities.Battle;
+
+using SpaceBattles.Core.Domain.Records;
 
 public sealed class Defense : CombatEntity
 {
@@ -18,10 +18,10 @@ public sealed class Defense : CombatEntity
                 BaseArmor = 200,
                 BaseShield = 20,
                 BaseWeaponPower = 80,
-                
+
                 TitaniumCost = 2_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 1),
                 ],
@@ -36,11 +36,11 @@ public sealed class Defense : CombatEntity
                 BaseArmor = 200,
                 BaseShield = 25,
                 BaseWeaponPower = 100,
-                
+
                 TitaniumCost = 1_500,
                 SiliconCost = 500,
 
-                BuildingRequirements = 
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 2),
                 ],
@@ -55,11 +55,11 @@ public sealed class Defense : CombatEntity
                 BaseArmor = 800,
                 BaseShield = 100,
                 BaseWeaponPower = 250,
-                
+
                 TitaniumCost = 6_000,
                 SiliconCost = 2_000,
 
-                BuildingRequirements = 
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 4),
                 ],
@@ -68,17 +68,17 @@ public sealed class Defense : CombatEntity
             {
                 Id = 4,
                 Name = "Ion cannon",
-                ImageName = "",
+                ImageName = "ion_cannon.webp",
                 Description = "Sometime during the 21st century, a technology known as \"electromagnetic pulse\" (contracted to EMP) was developed. These pulses prove to be very effective against computer systems and anything that possesses an electronic circuit within its structural composition.\r\n\r\nIn the days of its inception, this breed of weapon was deployed using rockets, missiles and bombs. However, the recent improvement of various technologies has allowed such weapons to be employed through the use of simple cannons; both static and mounted on intergalactic ships. Such a focused ion beam is capable of obliterating any unshielded electrical system and destabilizes the shield circuits within its target. These combined effects often cause the destruction of the target ship while sparing any biological cargo, including the crew members.",
 
                 BaseArmor = 800,
                 BaseShield = 500,
                 BaseWeaponPower = 150,
-                
+
                 TitaniumCost = 5_000,
                 SiliconCost = 3_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 4),
                 ],
@@ -93,12 +93,12 @@ public sealed class Defense : CombatEntity
                 BaseArmor = 3_500,
                 BaseShield = 200,
                 BaseWeaponPower = 1_100,
-                
+
                 TitaniumCost = 20_000,
                 SiliconCost = 15_000,
                 HeliumCost = 2_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 6),
                 ],
@@ -113,12 +113,12 @@ public sealed class Defense : CombatEntity
                 BaseArmor = 10_000,
                 BaseShield = 300,
                 BaseWeaponPower = 3_000,
-                
+
                 TitaniumCost = 50_000,
                 SiliconCost = 50_000,
                 HeliumCost = 30_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 8),
                 ],
@@ -133,11 +133,11 @@ public sealed class Defense : CombatEntity
                 BaseArmor = 20_000,
                 BaseShield = 2_000,
                 BaseWeaponPower = 0,
-                
+
                 TitaniumCost = 10_000,
                 SiliconCost = 10_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 1),
                 ],
@@ -155,8 +155,8 @@ public sealed class Defense : CombatEntity
 
                 TitaniumCost = 50_000,
                 SiliconCost = 50_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 6),
                 ],

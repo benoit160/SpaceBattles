@@ -3,20 +3,12 @@
 public sealed class PlanetStatistics
 {
     public long TotalTitaniumProduced { get; set; }
-    
+
     public long TotalSiliconProduced { get; set; }
-    
+
     public long TotalHeliumProduced { get; set; }
 
     public int NumberOfAttackLaunched { get; set; }
-    
-    public int NumberOfAttackReceived { get; set; }
 
-    public void PrintStats()
-    {
-        Console.Clear();
-        Console.WriteLine($"Total titanium produced : {TotalTitaniumProduced}");
-        Console.WriteLine($"Total silicon produced : {TotalSiliconProduced}");
-        Console.WriteLine($"Total helium produced : {TotalHeliumProduced}");
-    }
+    public int NumberOfAttackReceived { get; set; }
 }
