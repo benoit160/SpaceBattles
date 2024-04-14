@@ -173,8 +173,12 @@
                                 Storage capacity : @current.ToString("#,##0") / @_planet.ResourceCapacity(Resource.Helium).ToString("#,##0")
                             </MudText><MudProgressLinear Color="color" Size="Size.Large" Rounded Value="current" Max="max" />
                         </div>;
-
+                
             case 7:
+                return @<MudText Typo="Typo.body1">Producing @_planet.Buildings[6].Energy energy</MudText>;
+
+
+            case 8:
                 if (_planet.BuildingUpgrade is not null)
                 {
                     string upgradeName = _planet.Buildings.Single(b => b.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.Name;
