@@ -12,6 +12,7 @@ public class BuildingRequirementsTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         Building building = Building.Buildings().First();
 
         // Act
@@ -26,6 +27,7 @@ public class BuildingRequirementsTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         Building building = new Building
         {
             BuildingRequirements = 
@@ -48,6 +50,7 @@ public class BuildingRequirementsTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         Building building = new Building
         {
             BuildingRequirements = 
@@ -68,6 +71,7 @@ public class BuildingRequirementsTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         planet.Buildings.ForEach(x => x.Level++);
         
         Building building = new Building

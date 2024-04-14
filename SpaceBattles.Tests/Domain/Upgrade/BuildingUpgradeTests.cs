@@ -13,6 +13,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         
         // Act
         bool succeeded = planet.CanUpgradeBuilding(buildingId);
@@ -26,6 +27,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         const short invalidId = 17;
         
         // Act
@@ -40,6 +42,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         
         // Act
         bool succeeded = planet.TryUpgradeBuilding(1);
@@ -55,6 +58,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         const short invalidId = 17;
         
         // Act
@@ -70,6 +74,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         
         // Act
         bool succeeded = planet.TryUpgradeBuilding(2);
@@ -84,6 +89,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
 
         // Act
         planet.TryUpgradeBuilding(1);
@@ -99,6 +105,7 @@ public class BuildingUpgradeTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
 
         // Act
         planet.TryUpgradeBuilding(1);

@@ -28,6 +28,7 @@ public class RequirementsTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         IRequirements building = planet.Buildings.First(b => b.BuildingId == buildingId);
 
         // Act
@@ -42,6 +43,7 @@ public class RequirementsTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         IRequirements building = planet.Buildings.First();
 
         // Act
@@ -60,6 +62,7 @@ public class RequirementsTests
     public void CostScaling(short level, int titanium, int silicon, int helium)
     {
         Planet planet = new Planet();
+        planet.Init();
         BuildingLevel building = planet.Buildings.First(b => b.BuildingId == 11);
         building.Level = level;
         

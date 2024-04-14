@@ -1,56 +1,32 @@
-﻿using SpaceBattles.Core.Domain.Entities.Battle;
+﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
+
+using System.Text.Json.Serialization;
+using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
 
-namespace SpaceBattles.Core.Domain.Entities.Universe;
-
-public sealed class Planet
+public sealed class Planet : IPosition
 {
+    // stores fractional leftover value of resources
+    private readonly double[] _decimalResourcesLeft = new double[3];
+
     public Planet()
     {
-        Name = "Earth";
-        ImageIndex = Convert.ToByte(Random.Shared.Next(0, 10));
-        
+        Name = $"Planet-{Guid.NewGuid().ToString()[..4]}";
+        ImageIndex = Convert.ToByte(Random.Shared.Next(0, 14));
+
         PlanetType[] values = Enum.GetValues<PlanetType>();
         PlanetType = values[Random.Shared.Next(1, values.Length - 1)];
-        
+
         OrbitalPeriod = Convert.ToInt16(Random.Shared.Next(50, 2000));
         AverageSurfaceTemp = Convert.ToInt16(Random.Shared.Next(1, 50));
         Gravity = Random.Shared.NextSingle() * 5;
-        
-        LastUpdated = DateTime.Now;
-        
-        Titanium = 150;
-        Silicon = 75;
-        
-        Buildings = Building.Building.Buildings()
-            .Select(building => new BuildingLevel
-            {
-                BuildingId = building.Id,
-                Building = building,
-                OperatingLevel = 100,
-            }).ToArray();
-        
-        Spaceships = Spaceship.Spaceships()
-            .Select(entity => new CombatEntityInventory
-            {
-                CombatEntity = entity,
-                CombatEntityId = entity.Id,
-            })
-            .ToArray();
-        
-        Defenses = Defense.Defenses()
-            .Select(entity => new CombatEntityInventory
-            {
-                CombatEntity = entity,
-                CombatEntityId = entity.Id,
-            })
-            .ToArray();
     }
 
+    [JsonIgnore]
     public Player.Player? Owner { get; set; }
 
     public short? OwnerId { get; set; }
@@ -61,10 +37,41 @@ public sealed class Planet
 
     public string ImagePath => $"/images/planets/planet{ImageIndex}.avif";
 
+    public byte Galaxy { get; init; }
+
+    public byte SolarSystem { get; init; }
+
+    public byte Slot { get; init; }
+
     public PlanetType PlanetType { get; init; }
+
     public short OrbitalPeriod { get; init; }
+
     public short AverageSurfaceTemp { get; init; }
+
     public float Gravity { get; init; }
+
+    public long Titanium { get; set; }
+
+    public long Silicon { get; set; }
+
+    public long Helium { get; set; }
+
+    public BuildingLevel[] Buildings { get; set; }
+        = Array.Empty<BuildingLevel>();
+
+    public CombatEntityInventory[] BattleUnits { get; set; }
+        = Array.Empty<CombatEntityInventory>();
+
+    [JsonIgnore]
+    public ReadOnlyMemory<CombatEntityInventory> Defenses { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyMemory<CombatEntityInventory> Spaceships { get; set; }
+
+    public BuildingUpgrade? BuildingUpgrade { get; set; }
+
+    public DateTime LastUpdated { get; set; }
 
     public long this[Resource resource]
     {
@@ -75,9 +82,10 @@ public sealed class Planet
                 Resource.Titanium => Titanium,
                 Resource.Silicon => Silicon,
                 Resource.Helium => Helium,
-                _ => throw new ArgumentOutOfRangeException(nameof(resource), resource, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(resource), resource, null),
             };
         }
+
         set
         {
             long max = Math.Min(value, ResourceCapacity(resource));
@@ -99,30 +107,41 @@ public sealed class Planet
         }
     }
 
-    public long Titanium { get; set; }
-    
-    public long Silicon { get; set; }
-    
-    public long Helium { get; set; }
-    
-    public BuildingLevel[] Buildings { get; init; }
-    
-    public CombatEntityInventory[] Spaceships { get; init; }
-
-    public CombatEntityInventory[] Defenses { get; init; }
-    
-    public BuildingUpgrade? BuildingUpgrade { get; set; }
-
-    public DateTime LastUpdated { get; set; }
-
     public void DefineOwner(Player.Player player)
     {
         Owner = player;
         OwnerId = player.Id;
     }
 
+    public void Init()
+    {
+        LastUpdated = DateTime.Now;
+
+        Titanium = 150;
+        Silicon = 75;
+
+        Buildings = Building.Buildings()
+            .Select(building => new BuildingLevel
+            {
+                BuildingId = building.Id,
+                Building = building,
+                OperatingLevel = 100,
+            }).ToArray();
+
+        BattleUnits = Defense.Defenses()
+            .Concat<CombatEntity>(Spaceship.Spaceships())
+            .Select(entity => new CombatEntityInventory
+            {
+                CombatEntity = entity,
+                CombatEntityId = entity.Id,
+            }).ToArray();
+
+        Spaceships = BattleUnits.AsMemory(8, 10);
+        Defenses = BattleUnits.AsMemory(0, 8);
+    }
+
     /// <summary>
-    /// Adds resource to the planet inventory depending on production levels and storage capacity 
+    /// Adds resource to the planet inventory depending on production levels and storage capacity.
     /// </summary>
     public void ResourcesUpdate(DateTime now, Span<long> totalResources)
     {
@@ -151,38 +170,38 @@ public sealed class Planet
                 _decimalResourcesLeft[i] -= 1;
             }
         }
-        
+
         LastUpdated += TimeSpan.FromSeconds(elapsedSeconds);
     }
-    
+
     /// <summary>
-    /// Gets the storage capacity of the resource on this current planet
+    /// Gets the storage capacity of the resource on this current planet.
     /// </summary>
     public long ResourceCapacity(Resource resource) => resource switch
     {
         Resource.Titanium => 5_000 * Convert.ToInt64(Math.Floor(2.5d * Math.Pow(Math.E, 20d / 33d * Buildings.First(x => x.BuildingId == 2).Level))),
         Resource.Silicon => 5_000 * Convert.ToInt64(Math.Floor(2.5d * Math.Pow(Math.E, 20d / 33d * Buildings.First(x => x.BuildingId == 4).Level))),
         Resource.Helium => 5_000 * Convert.ToInt64(Math.Floor(2.5d * Math.Pow(Math.E, 20d / 33d * Buildings.First(x => x.BuildingId == 6).Level))),
-        _ => default
+        _ => default,
     };
 
     /// <summary>
-    /// Gets the resource production per minute of the resource on this current planet
+    /// Gets the resource production per minute of the resource on this current planet.
     /// </summary>
     public int ResourceProduction(Resource resource) => resource switch
     {
         Resource.Titanium => 30 + Convert.ToInt32(30 * Buildings.First(x => x.BuildingId == 1).Level * Math.Pow(1.1, Buildings.First(x => x.BuildingId == 1).Level)),
         Resource.Silicon => 15 + Convert.ToInt32(20 * Buildings.First(x => x.BuildingId == 3).Level * Math.Pow(1.1, Buildings.First(x => x.BuildingId == 3).Level)),
         Resource.Helium => Convert.ToInt32(11 * Buildings.First(x => x.BuildingId == 5).Level * Math.Pow(1.1, Buildings.First(x => x.BuildingId == 5).Level)),
-        _ => default
+        _ => default,
     };
 
     public bool MeetsBuildingRequirements(IBuildingRequirements requirements)
         => requirements.BuildingRequirements.All(x => Buildings.Single(b => b.BuildingId == x.BuildingId).Level >= x.RequiredLevel);
-    
+
     public bool HasEnoughResource(IRequirements requirements)
         => requirements.Costs.All(cost => this[cost.Resource] >= cost.RequiredQuantity);
-    
+
     public void ConsumeResources(IRequirements requirements)
     {
         foreach (ResourceCost cost in requirements.Costs)
@@ -190,7 +209,7 @@ public sealed class Planet
             this[cost.Resource] -= cost.RequiredQuantity;
         }
     }
-    
+
     public BuildingLevel? ProcessUpgrades(DateTime now)
     {
         if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
@@ -203,18 +222,18 @@ public sealed class Planet
 
         return null;
     }
-    
+
     public bool CanUpgradeBuilding(short buildingId)
     {
         if (BuildingUpgrade is not null) return false;
 
         BuildingLevel? level = Array.Find(Buildings, buildingLevel => buildingLevel.BuildingId == buildingId);
-        
+
         if (level is null) return false;
 
         return HasEnoughResource(level);
     }
-    
+
     public bool TryUpgradeBuilding(short buildingId)
     {
         IRequirements? level = Array.Find(Buildings, buildingLevel => buildingLevel.BuildingId == buildingId);
@@ -235,10 +254,12 @@ public sealed class Planet
         };
 
         BuildingUpgrade = upgrade;
-        
+
         return true;
     }
-    
-    // stores fractional leftover value of resources
-    private readonly double[] _decimalResourcesLeft = new double[3]; 
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(ImageIndex, Galaxy, SolarSystem, Slot, PlanetType, OrbitalPeriod, AverageSurfaceTemp, Gravity);
+    }
 }

@@ -15,6 +15,25 @@ public class PlanetTests
         // Assert
         Assert.False(string.IsNullOrWhiteSpace(planet.Name));
         Assert.NotEqual(default, planet.PlanetType);
+        Assert.Equal(default, planet.LastUpdated);
+        
+        Assert.Empty(planet.Buildings);
+        Assert.Empty(planet.BattleUnits);
+        Assert.Equal(0, planet.Titanium);
+        Assert.Equal(0, planet.Silicon);
+        Assert.Equal(0, planet.Helium);
+    }
+    
+    [Fact]
+    public void Planet_Init()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        
+        // Assert
+        Assert.False(string.IsNullOrWhiteSpace(planet.Name));
+        Assert.NotEqual(default, planet.PlanetType);
         Assert.NotEqual(default, planet.LastUpdated);
         
         Assert.Equal(12, planet.Buildings.Length);
@@ -28,6 +47,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new();
+        planet.Init();
         
         // Assert
         Assert.Equal(30, planet.ResourceProduction(Resource.Titanium));
@@ -40,6 +60,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new();
+        planet.Init();
         
         // Assert
         Assert.Equal(10_000, planet.ResourceCapacity(Resource.Titanium));
@@ -52,6 +73,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         planet.Buildings.ForEach(x => x.Level++);
         Span<long> totals = [0, 0, 0];
         
@@ -69,6 +91,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
 
         // Assert
         Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -81,6 +104,7 @@ public class PlanetTests
     public void OutOfRangeIndexerSet()
     {
         Planet planet = new Planet();
+        planet.Init();
 
         // Assert
         Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -95,6 +119,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         const int outOfRangeIndex = 27;
 
         // Act
@@ -109,6 +134,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         const int outOfRangeIndex = 27;
 
         // Act
@@ -123,6 +149,7 @@ public class PlanetTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         DateTime advancedTime = DateTime.Now + TimeSpan.FromSeconds(5);
         Span<long> totals = [0, 0, 0];
 

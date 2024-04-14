@@ -15,6 +15,7 @@
         <MudButton Size="Size.Small" Href="/Buildings" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
         <MudButton Size="Size.Small" Href="/Shipyard" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
         <MudButton Size="Size.Small" Href="/Defenses" Variant="_page == CurrentPage.Defenses ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Defenses</MudButton>
+        <MudButton Size="Size.Small" Href="/Universe" Variant="_page == CurrentPage.Universe ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Universe</MudButton>
 
         <MudSpacer />
         
@@ -33,6 +34,15 @@
         background-size: cover;
         height: 100vh;
     }
+    
+    .mud-paper {
+        backdrop-filter: blur(6px);
+    }
+    
+    .mud-typography, .mud-image {
+        pointer-events: none;
+        user-select: none;
+    }
 </style>
 
 @code {
@@ -45,6 +55,7 @@
         Buildings,
         Shipyard,
         Defenses,
+        Universe,
     }
 
     protected override void OnInitialized()
@@ -69,6 +80,10 @@
                     
                 case "Defenses":
                     _page = CurrentPage.Defenses;
+                    break;
+                    
+                case "Universe":
+                    _page = CurrentPage.Universe;
                     break;
             }
 
