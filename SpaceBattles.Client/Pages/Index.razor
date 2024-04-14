@@ -7,13 +7,12 @@
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
-<div class=@(_showCreationScreen? "d-none" : "")>	<MudStack AlignItems="AlignItems.Center">
-        <MudStack AlignItems="AlignItems.Center">	    <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
-            <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
+<div class=@(_showCreationScreen? "d-none" : "")>
+    <MudStack AlignItems="AlignItems.Center">
+        <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
 
-
-            <MudButton OnClick="StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>	    <MudButton OnClick="StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
-        </MudStack>	</MudStack>
+        <MudButton OnClick="StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+    </MudStack>
 </div>
 
 <div class=@(_showCreationScreen? "" : "d-none")>
