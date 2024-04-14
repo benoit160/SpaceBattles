@@ -1,7 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-namespace SpaceBattles.Core.Domain.Entities.Universe;
-
+using System.Text.Json.Serialization;
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
