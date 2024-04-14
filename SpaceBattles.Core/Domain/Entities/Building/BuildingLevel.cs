@@ -18,4 +18,8 @@ public sealed class BuildingLevel : IRequirements
     public long SiliconCost => (long)(Building.SiliconCost * Math.Pow(Building.ScalingFactor, Level));
 
     public long HeliumCost => (long)(Building.HeliumCost * Math.Pow(Building.ScalingFactor, Level));
+
+    public short OperatingLevel { get; set; }
+
+    public int Energy => Convert.ToInt32(Building.BaseEnergy * Level * Math.Pow(1.1f, Level)) * (int)Building.EnergyStatus;
 }

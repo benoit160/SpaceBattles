@@ -26,6 +26,10 @@ public sealed class Building : IBuildingRequirements
 
     public float ScalingFactor { get; init; }
 
+    public ElectricalEntityStatus EnergyStatus { get; init; }
+
+    public int BaseEnergy { get; set; }
+
     public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
         = Enumerable.Empty<BuildingRequirement>();
 
@@ -47,6 +51,9 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.5f,
                 TitaniumCost = 60,
                 SiliconCost = 15,
+
+                EnergyStatus = ElectricalEntityStatus.Consummer,
+                BaseEnergy = 10,
             },
             new()
             {
@@ -70,6 +77,9 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.6f,
                 TitaniumCost = 48,
                 SiliconCost = 24,
+
+                EnergyStatus = ElectricalEntityStatus.Consummer,
+                BaseEnergy = 10,
             },
             new()
             {
@@ -94,6 +104,9 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.5f,
                 TitaniumCost = 225,
                 SiliconCost = 75,
+
+                EnergyStatus = ElectricalEntityStatus.Consummer,
+                BaseEnergy = 20,
             },
             new()
             {
@@ -110,6 +123,21 @@ public sealed class Building : IBuildingRequirements
             new()
             {
                 Id = 7,
+                ImageName = "solar_plant.webp",
+
+                Name = "Solar plant",
+                Description = "Each mine requires energy to function, which is produced primarily by the Solar Plant.",
+
+                ScalingFactor = 1.5f,
+                TitaniumCost = 75,
+                SiliconCost = 30,
+
+                EnergyStatus = ElectricalEntityStatus.Producer,
+                BaseEnergy = 20,
+            },
+            new()
+            {
+                Id = 8,
                 ImageName = "robotic_factory.webp",
 
                 Name = "Robotics factory",
@@ -122,7 +150,7 @@ public sealed class Building : IBuildingRequirements
             },
             new()
             {
-                Id = 8,
+                Id = 9,
                 ImageName = "shipyard.webp",
 
                 Name = "Shipyard",
@@ -140,7 +168,7 @@ public sealed class Building : IBuildingRequirements
             },
             new()
             {
-                Id = 9,
+                Id = 10,
                 ImageName = "research_lab.webp",
 
                 Name = "Research lab",
@@ -153,7 +181,7 @@ public sealed class Building : IBuildingRequirements
             },
             new()
             {
-                Id = 10,
+                Id = 11,
                 ImageName = "nanite_factory.webp",
 
                 Name = "Nanite factory",
@@ -171,7 +199,7 @@ public sealed class Building : IBuildingRequirements
             },
             new()
             {
-                Id = 11,
+                Id = 12,
                 ImageName = "missile_silo.webp",
 
                 Name = "Missile silo",
