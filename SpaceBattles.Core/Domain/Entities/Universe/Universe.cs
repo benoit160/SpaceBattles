@@ -45,6 +45,7 @@ public sealed class Universe
         };
 
         int index = 0;
+        Span<byte> usedPlanetIndexes = stackalloc byte[slots];
 
         for (byte gal = 1; gal <= galaxies; gal++)
         {
@@ -52,12 +53,23 @@ public sealed class Universe
             {
                 for (byte slot = 1; slot <= slots; slot++)
                 {
+                    byte newImageIndex = 0;
+
+                    // loop until a new random value is found that doesn't duplicate index for this solar system
+                    while (usedPlanetIndexes.Contains(newImageIndex))
+                    {
+                        newImageIndex = Convert.ToByte(Random.Shared.Next(0, 14));
+                    }
+
                     newUniverse.Planets[index] = new Planet()
                     {
+                        ImageIndex = newImageIndex,
                         Galaxy = gal,
                         SolarSystem = sol,
                         Slot = slot,
                     };
+
+                    usedPlanetIndexes[slot - 1] = newImageIndex;
                     index++;
                 }
             }
@@ -87,7 +99,7 @@ public sealed class Universe
         return Planets.AsMemory().Slice(start, Slots);
     }
 
-    private static (byte, byte, byte) GetSize(UniverseSize size)
+    private static (byte Slots, byte SolarSystems, byte Galaxies) GetSize(UniverseSize size)
     {
         return size switch
         {
