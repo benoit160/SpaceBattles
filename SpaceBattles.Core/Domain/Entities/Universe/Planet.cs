@@ -1,5 +1,6 @@
 ﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
+using System.Text.Json.Serialization;
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
@@ -25,6 +26,7 @@ public sealed class Planet : IPosition
         Gravity = Random.Shared.NextSingle() * 5;
     }
 
+    [JsonIgnore]
     public Player.Player? Owner { get; set; }
 
     public short? OwnerId { get; set; }
@@ -61,8 +63,10 @@ public sealed class Planet : IPosition
     public CombatEntityInventory[] BattleUnits { get; set; }
         = Array.Empty<CombatEntityInventory>();
 
+    [JsonIgnore]
     public ReadOnlyMemory<CombatEntityInventory> Defenses { get; set; }
 
+    [JsonIgnore]
     public ReadOnlyMemory<CombatEntityInventory> Spaceships { get; set; }
 
     public BuildingUpgrade? BuildingUpgrade { get; set; }
