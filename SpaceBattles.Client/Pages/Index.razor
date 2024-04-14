@@ -2,6 +2,8 @@
 @layout MainLayout
 
 @inject NavigationManager NavigationManager
+@inject GameState GameState
+@inject SaveService SaveService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -12,8 +14,22 @@
 </MudStack>
 
 @code {
-    private void StartGame()
+    private UniverseCreationWaiter? _universeCreationWaiter;
+
+    private bool _showCreationScreen;
+
+    private async Task StartGame()
     {
-        NavigationManager.NavigateTo("/UniverseCreator");
+        _showCreationScreen = true;
+        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
+
+        if (!await SaveService.LoadFromStorage())
+        {
+            GameState.Initialize(new UniverseCreationModel());
+        }
+
+        await waitingScreen;
+
+        NavigationManager.NavigateTo("/Overview");
     }
 }
