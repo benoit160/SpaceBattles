@@ -136,7 +136,7 @@ public sealed class Planet : IPosition
     }
 
     /// <summary>
-    /// Adds resource to the planet inventory depending on production levels and storage capacity
+    /// Adds resource to the planet inventory depending on production levels and storage capacity.
     /// </summary>
     public void ResourcesUpdate(DateTime now, Span<long> totalResources)
     {
@@ -170,7 +170,7 @@ public sealed class Planet : IPosition
     }
 
     /// <summary>
-    /// Gets the storage capacity of the resource on this current planet
+    /// Gets the storage capacity of the resource on this current planet.
     /// </summary>
     public long ResourceCapacity(Resource resource) => resource switch
     {
@@ -181,7 +181,7 @@ public sealed class Planet : IPosition
     };
 
     /// <summary>
-    /// Gets the resource production per minute of the resource on this current planet
+    /// Gets the resource production per minute of the resource on this current planet.
     /// </summary>
     public int ResourceProduction(Resource resource) => resource switch
     {

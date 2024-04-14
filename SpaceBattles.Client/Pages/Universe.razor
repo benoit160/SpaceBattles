@@ -9,12 +9,12 @@
         <MudStack Row Justify="Justify.SpaceEvenly">
             @if (GameState.CurrentUniverse.Galaxies != 1)
             {
-                @GalaxyNavigator();
+                @GalaxyNavigator()
             }
             
             @if (GameState.CurrentUniverse.SolarSystems != 1)
             {
-                @SolarSystemsNavigator();
+                @SolarSystemsNavigator()
             }
         </MudStack>
         @for(int i = 0; i < _planets.Length; i++)

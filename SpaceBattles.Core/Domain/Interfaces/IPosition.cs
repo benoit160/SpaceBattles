@@ -9,7 +9,7 @@ public interface IPosition
     public byte Slot { get; init; }
 
     /// <summary>
-    /// Computes the distance to the other object, to determine duration of spaceflight between
+    /// Computes the distance to the other object, to determine duration of spaceflight between.
     /// </summary>
     public int DistanceTo(IPosition other)
     {
@@ -30,7 +30,7 @@ public interface IPosition
     }
 
     /// <summary>
-    /// Computes the distance between the 2 objects, to determine duration of spaceflight between
+    /// Computes the distance between the 2 objects, to determine duration of spaceflight between.
     /// </summary>
     public static int DistanceBetween(IPosition first, IPosition second) => first.DistanceTo(second);
 
