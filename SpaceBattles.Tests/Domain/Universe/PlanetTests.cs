@@ -198,9 +198,27 @@ public class PlanetTests
         Assert.False(result);
     }
     
-    [Theory]
-    [InlineData(1)]
-    public void SetOperatingLevel(short buildingId)
+    [Fact]
+    public void SetOperatingLevel()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+
+        bool eventRaised = false;
+        
+        Action onAction = () => eventRaised = true;
+        planet.OnBlackOut += onAction;
+
+        // Act
+        planet.SetOperatingLevel(1, 100);
+
+        // Assert
+        Assert.False(eventRaised);
+    }
+    
+    [Fact]
+    public void SetOperatingLevel_Blackout()
     {
         // Arrange
         Planet planet = new Planet();
@@ -214,7 +232,7 @@ public class PlanetTests
         planet.OnBlackOut += onAction;
 
         // Act
-        planet.SetOperatingLevel(buildingId, 100);
+        planet.SetOperatingLevel(1, 100);
 
         // Assert
         Assert.True(eventRaised);
