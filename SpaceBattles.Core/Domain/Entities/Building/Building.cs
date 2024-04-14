@@ -51,7 +51,7 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.5f,
                 TitaniumCost = 60,
                 SiliconCost = 15,
-                
+
                 EnergyStatus = ElectricalEntityStatus.Consummer,
                 BaseEnergy = 10,
             },
@@ -77,7 +77,7 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.6f,
                 TitaniumCost = 48,
                 SiliconCost = 24,
-                
+
                 EnergyStatus = ElectricalEntityStatus.Consummer,
                 BaseEnergy = 10,
             },
@@ -104,7 +104,7 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.5f,
                 TitaniumCost = 225,
                 SiliconCost = 75,
-                
+
                 EnergyStatus = ElectricalEntityStatus.Consummer,
                 BaseEnergy = 20,
             },
@@ -124,14 +124,14 @@ public sealed class Building : IBuildingRequirements
             {
                 Id = 7,
                 ImageName = "solar_plant.webp",
-            
+
                 Name = "Solar plant",
                 Description = "Each mine requires energy to function, which is produced primarily by the Solar Plant.",
-            
+
                 ScalingFactor = 1.5f,
                 TitaniumCost = 75,
                 SiliconCost = 30,
-                
+
                 EnergyStatus = ElectricalEntityStatus.Producer,
                 BaseEnergy = 20,
             },
