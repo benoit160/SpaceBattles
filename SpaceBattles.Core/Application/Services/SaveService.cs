@@ -40,7 +40,7 @@ public sealed class SaveService
         if (universe is null) return false;
 
         RebuildEntityGraph(universe);
-        _gameState.Restore(universe);
+        _gameState.SetState(universe);
         return true;
     }
 

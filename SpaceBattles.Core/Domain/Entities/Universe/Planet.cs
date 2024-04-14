@@ -69,8 +69,6 @@ public sealed class Planet : IPosition
 
     public DateTime LastUpdated { get; set; }
 
-    public bool IsInitialized => LastUpdated != default;
-
     public long this[Resource resource]
     {
         get

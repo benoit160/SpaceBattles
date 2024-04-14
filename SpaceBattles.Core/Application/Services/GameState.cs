@@ -15,15 +15,15 @@ public sealed class GameState
 
     public Universe CurrentUniverse { get; private set; }
 
-    public void Initialize(UniverseCreationModel model)
+    public void SetState(Universe universe)
     {
-        CurrentUniverse = Universe.CreateUniverse(model);
+        CurrentUniverse = universe;
         CurrentPlanet = CurrentUniverse.Planets.Single(planet => !planet.Owner?.IsBot ?? false);
     }
 
-    public void Restore(Universe universe)
+    public void Initialize(UniverseCreationModel model)
     {
-        CurrentUniverse = universe;
+        CurrentUniverse = Universe.CreateUniverse(model);
         CurrentPlanet = CurrentUniverse.Planets.Single(planet => !planet.Owner?.IsBot ?? false);
     }
 }
