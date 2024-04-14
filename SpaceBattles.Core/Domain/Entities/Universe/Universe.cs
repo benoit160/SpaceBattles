@@ -5,8 +5,6 @@ using SpaceBattles.Core.Domain.Models;
 
 public sealed class Universe
 {
-    public required string Name { get; init; }
-
     public DateTime CreationDate { get; init; }
         = DateTime.Now;
 
@@ -35,7 +33,6 @@ public sealed class Universe
 
         Universe newUniverse = new Universe()
         {
-            Name = model.UniverseName,
             IsPeacefulUniverse = model.IsPeacefulMode,
             UniverseSpeed = model.UniverseSpeed,
             Planets = new Planet[galaxies * solarSystems * slots],
@@ -87,12 +84,15 @@ public sealed class Universe
 
             random.Init();
 
-            random.DefineOwner(new Player.Player()
+            Player.Player bot = new Player.Player()
             {
                 Id = playerIndex++,
                 Name = "Pirate captain",
                 IsBot = true,
-            });
+            };
+
+            random.DefineOwner(bot);
+            newUniverse.Players.Add(bot);
 
             botsToAdd--;
         }

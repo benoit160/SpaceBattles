@@ -11,6 +11,7 @@ public class UniverseCreationModel
         StartingPlanetName = "Earth";
         UniverseSpeed = 1f;
         UniverseSize = UniverseSize.Medium;
+        IncludeBots = true;
     }
 
     [Required(ErrorMessage = "Please enter a name")]

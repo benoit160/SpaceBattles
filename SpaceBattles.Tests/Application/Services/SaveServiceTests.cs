@@ -21,7 +21,6 @@ public class SaveServiceTests
         {
             CommanderName = "Ben",
             StartingPlanetName = "Test",
-            UniverseName = "Test",
             UniverseSize = UniverseSize.VeryLarge,
         };
         _gameState.Initialize(model);
