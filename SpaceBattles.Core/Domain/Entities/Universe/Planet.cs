@@ -254,4 +254,9 @@ public sealed class Planet : IPosition
 
         return true;
     }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(ImageIndex, Galaxy, SolarSystem, Slot, PlanetType, OrbitalPeriod, AverageSurfaceTemp, Gravity);
+    }
 }
