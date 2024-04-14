@@ -75,6 +75,28 @@ public sealed class Universe
             }
         }
 
+        int botsToAdd = model.NumberOfBots;
+        short playerIndex = 2;
+
+        while (botsToAdd > 0)
+        {
+            Planet random = newUniverse.Planets
+                .Where(p => p.OwnerId is null)
+                .OrderBy(_ => Random.Shared.Next())
+                .First();
+
+            random.Init();
+
+            random.DefineOwner(new Player.Player()
+            {
+                Id = playerIndex++,
+                Name = "Pirate captain",
+                IsBot = true,
+            });
+
+            botsToAdd--;
+        }
+
         Player.Player mainPlayer = new Player.Player()
         {
             Id = 1,

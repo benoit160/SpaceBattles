@@ -8,9 +8,9 @@ public class UniverseCreationModel
     public UniverseCreationModel()
     {
         UniverseName = string.Empty;
-        CommanderName = string.Empty;
+        CommanderName = "Player";
         StartingPlanetName = "Earth";
-        UniverseSpeed = 1;
+        UniverseSpeed = 1f;
         UniverseSize = UniverseSize.Medium;
     }
 
@@ -29,7 +29,6 @@ public class UniverseCreationModel
     [MinLength(3, ErrorMessage = "Your planet name must be at least 3 characters")]
     public string StartingPlanetName { get; set; }
 
-    [Range(1, 10)]
     public float UniverseSpeed { get; set; }
 
     public bool IsPeacefulMode { get; set; }
@@ -37,4 +36,22 @@ public class UniverseCreationModel
     public bool IncludeBots { get; set; }
 
     public UniverseSize UniverseSize { get; set; }
+
+    public int NumberOfBots
+    {
+        get
+        {
+            return !IncludeBots
+                ? 0
+                : UniverseSize switch
+                {
+                    UniverseSize.VerySmall => 1,
+                    UniverseSize.Small => 3,
+                    UniverseSize.Medium => 6,
+                    UniverseSize.Large => 15,
+                    UniverseSize.VeryLarge => 30,
+                    _ => 1,
+                };
+        }
+    }
 }
