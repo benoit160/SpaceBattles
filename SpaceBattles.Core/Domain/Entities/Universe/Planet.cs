@@ -26,6 +26,8 @@ public sealed class Planet : IPosition
         Gravity = Random.Shared.NextSingle() * 5;
     }
 
+    public event Action? OnBlackOut;
+
     [JsonIgnore]
     public Player.Player? Owner { get; set; }
 
@@ -138,6 +140,38 @@ public sealed class Planet : IPosition
 
         Spaceships = BattleUnits.AsMemory(8, 10);
         Defenses = BattleUnits.AsMemory(0, 8);
+    }
+
+    /// <summary>
+    /// Gets the energy production and usage of the planet.
+    /// </summary>
+    public (int Produced, int Usage) GetEnergyStatus()
+    {
+        int produced = Buildings
+            .Where(b => b.Building.EnergyStatus == ElectricalEntityStatus.Producer)
+            .Sum(b => b.Energy);
+
+        int consumed = Buildings
+            .Where(b => b.Building.EnergyStatus == ElectricalEntityStatus.Consummer)
+            .Sum(b => b.Energy);
+
+        return (produced, consumed);
+    }
+
+    /// <summary>
+    /// Sets the building operating level, in the 0-100% range.
+    /// </summary>
+    public bool SetOperatingLevel(short buildingId, short level)
+    {
+        BuildingLevel? building = Array.Find(Buildings, b => b.BuildingId == buildingId);
+
+        if (building is null) return false;
+
+        building.OperatingLevel = level;
+
+        CheckBlackOut();
+
+        return true;
     }
 
     /// <summary>
@@ -261,5 +295,19 @@ public sealed class Planet : IPosition
     public override int GetHashCode()
     {
         return HashCode.Combine(ImageIndex, Galaxy, SolarSystem, Slot, PlanetType, OrbitalPeriod, AverageSurfaceTemp, Gravity);
+    }
+
+    /// <summary>
+    /// Disables all buildings when the energy usage  is higher than the planet production.
+    /// </summary>
+    private void CheckBlackOut()
+    {
+        (int Produced, int Usage) energy = GetEnergyStatus();
+
+        if (Math.Abs(energy.Usage) > energy.Produced)
+        {
+            OnBlackOut?.Invoke();
+            Array.ForEach(Buildings, b => b.OperatingLevel = 0);
+        }
     }
 }

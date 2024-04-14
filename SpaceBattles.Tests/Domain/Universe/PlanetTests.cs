@@ -164,4 +164,59 @@ public class PlanetTests
         
         planet.ResourcesUpdate(advancedTime, totals);
     }
+
+    [Theory]
+    [InlineData(0, 0, 0)]
+    [InlineData(1, 22, -44)]
+    public void GetEnergyStatus(byte level, int expectedProduction, int expectedUsage)
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        Array.ForEach(planet.Buildings, b => b.Level = level);
+
+        // Act
+        (int Produced, int Usage) energy = planet.GetEnergyStatus();
+
+        // Assert
+        Assert.Equal(expectedUsage, energy.Usage);
+        Assert.Equal(expectedProduction, energy.Produced);
+    }
+
+    [Fact]
+    public void SetOperatingLevel_InvalidId()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        const int invalidId = 27;
+
+        // Act
+        bool result = planet.SetOperatingLevel(invalidId, 100);
+
+        // Assert
+        Assert.False(result);
+    }
+    
+    [Theory]
+    [InlineData(1)]
+    public void SetOperatingLevel(short buildingId)
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        Array.ForEach(planet.Buildings, b => b.Level = 5);
+        Array.ForEach(planet.Buildings, b => b.OperatingLevel = 0);
+
+        bool eventRaised = false;
+        
+        Action onAction = () => eventRaised = true;
+        planet.OnBlackOut += onAction;
+
+        // Act
+        planet.SetOperatingLevel(buildingId, 100);
+
+        // Assert
+        Assert.True(eventRaised);
+    }
 }
