@@ -175,13 +175,16 @@
                         </div>;
 
             case 7:
+                return @<MudText Typo="Typo.body1">Producing @_planet.Buildings[6].Energy energy</MudText>;
+
+            case 8:
                 if (_planet.BuildingUpgrade is not null)
                 {
                     string upgradeName = _planet.Buildings.Single(b => b.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.Name;
                     return @<MudText Typo="Typo.body1" Color="Color.Info">Working on @upgradeName</MudText>;
                 }
                 goto default;
-                
+
             default:
                 return @<MudText Typo="Typo.body1">Currently idle...</MudText>;
         }

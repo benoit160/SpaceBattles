@@ -2,6 +2,7 @@
 
 @inject NavigationManager NavigationManager
 @inject SaveService SaveService
+@inject BotService BotService
 
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
 <MudSnackbarProvider/>
@@ -100,6 +101,7 @@
 
     private void Logout()
     {
+        BotService.Dispose();
         NavigationManager.LocationChanged -= _locationEvent;
         NavigationManager.NavigateTo("/");
     }
