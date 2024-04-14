@@ -50,7 +50,7 @@
     {
         _planet = GameState.CurrentPlanet;
         _buildings = GameState.CurrentPlanet.Buildings.AsMemory();
-        _displayedBuildings = _buildings.Slice(0, 6);
+        _displayedBuildings = _buildings.Slice(0, 7);
 
         PeriodicTimer timer = new(TimeSpan.FromSeconds(1));
         _ = Task.Run(async () =>
@@ -66,8 +66,8 @@
     private void SwitchDisplays(bool showResources)
     {
         _displayedBuildings = showResources
-            ? _buildings.Slice(0, 6)
-            : _buildings.Slice(6, 5);
+            ? _buildings.Slice(0, 7)
+            : _buildings.Slice(7, 5);
     }
 
     private void OpenDetails(short buildingId)

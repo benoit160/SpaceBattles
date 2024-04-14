@@ -9,9 +9,10 @@ public class BuildingLevelTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
 
         // Act
-        bool allAt100 = planet.Buildings.All(b => b.OperatingLevel == 100);
+        bool allAt100 = Array.TrueForAll(planet.Buildings, b => b.OperatingLevel == 100);
 
         // Assert
         Assert.True(allAt100);
@@ -22,9 +23,10 @@ public class BuildingLevelTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
 
         // Act
-        bool allAtZero = planet.Buildings.All(b => b.Energy == 0);
+        bool allAtZero = Array.TrueForAll(planet.Buildings, b => b.Energy == 0);
         
         // Assert
         Assert.True(allAtZero);

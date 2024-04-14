@@ -1,11 +1,12 @@
-﻿using SpaceBattles.Core.Application.Extensions;
-using SpaceBattles.Core.Domain.Entities.Universe;
+﻿using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
 
 namespace SpaceBattles.Tests.Domain.Universe;
 
 public class PlanetTests
 {
+    const int OutOfRangeIndex = 27;
+    
     [Fact]
     public void PlanetConstructor()
     {
@@ -74,7 +75,7 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        planet.Buildings.ForEach(x => x.Level++);
+        Array.ForEach(planet.Buildings, b => b.Level++);
         Span<long> totals = [0, 0, 0];
         
         // Act
@@ -103,14 +104,14 @@ public class PlanetTests
     [Fact]
     public void OutOfRangeIndexerSet()
     {
+        // Arrange
         Planet planet = new Planet();
         planet.Init();
 
         // Assert
         Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            const int outOfRangeIndex = 27;
-            planet[(Resource)outOfRangeIndex] = 1;
+            planet[(Resource)OutOfRangeIndex] = 1;
         });
     }
     
@@ -120,10 +121,9 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        const int outOfRangeIndex = 27;
 
         // Act
-        var result = planet.ResourceCapacity((Resource)outOfRangeIndex);
+        var result = planet.ResourceCapacity((Resource)OutOfRangeIndex);
         
         // Assert
         Assert.Equal(0, result);
@@ -135,10 +135,9 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        const int outOfRangeIndex = 27;
 
         // Act
-        var result = planet.ResourceProduction((Resource)outOfRangeIndex);
+        var result = planet.ResourceProduction((Resource)OutOfRangeIndex);
         
         // Assert
         Assert.Equal(0, result);

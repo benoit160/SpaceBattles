@@ -1,5 +1,4 @@
-﻿using SpaceBattles.Core.Application.Extensions;
-using SpaceBattles.Core.Domain.Entities.Building;
+﻿using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Records;
 
@@ -72,7 +71,7 @@ public class BuildingRequirementsTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        planet.Buildings.ForEach(x => x.Level++);
+        Array.ForEach(planet.Buildings, x => x.Level++);
         
         Building building = new Building
         {

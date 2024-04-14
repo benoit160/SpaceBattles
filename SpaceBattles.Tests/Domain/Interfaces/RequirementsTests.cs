@@ -61,11 +61,13 @@ public class RequirementsTests
     [InlineData(2, 4e6, 2e6, 4e5)]
     public void CostScaling(short level, int titanium, int silicon, int helium)
     {
+        // Arrange
         Planet planet = new Planet();
         planet.Init();
         BuildingLevel building = planet.Buildings.First(b => b.BuildingId == 11);
         building.Level = level;
         
+        // Assert
         Assert.Equal(titanium, building.TitaniumCost);
         Assert.Equal(silicon, building.SiliconCost);
         Assert.Equal(helium, building.HeliumCost);
