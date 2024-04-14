@@ -40,6 +40,7 @@ public class BuildingLevelTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         planet.Buildings[0].Level = level;
 
         // Act
@@ -59,6 +60,7 @@ public class BuildingLevelTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         planet.Buildings[6].Level = level;
 
         // Act
@@ -75,6 +77,7 @@ public class BuildingLevelTests
     {
         // Arrange
         Planet planet = new Planet();
+        planet.Init();
         planet.Buildings[8].Level = level;
 
         // Act
