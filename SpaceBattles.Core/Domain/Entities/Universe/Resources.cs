@@ -1,7 +1,7 @@
-﻿using SpaceBattles.Core.Domain.Enums;
-using SpaceBattles.Core.Domain.Records;
+﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
-namespace SpaceBattles.Core.Domain.Entities.Universe;
+using SpaceBattles.Core.Domain.Enums;
+using SpaceBattles.Core.Domain.Records;
 
 public static class Resources
 {

@@ -3,25 +3,27 @@
 
 @inject NavigationManager NavigationManager
 @inject GameState GameState
+@inject BotService BotService
+@inject SaveService SaveService
 
 <div class=@(_showCreationScreen? "d-none" : "")>
     <MudContainer MaxWidth="MaxWidth.ExtraSmall">
         <MudPaper Class="pa-4 rounded-xl">
             <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
-                <MudStack>         
+                <MudStack>
                     
                     <MudText Color="Color.Info" Align="Align.Center" Typo="Typo.h6" Style="font-family:TitleFont;">New game settings</MudText>
 
-                    <MudTextField Class="pb-4" Label="Save name" @bind-Value="_model.UniverseName" Required For="@(() => _model.UniverseName)" Immediate />
+                    <MudTextField Class="pb-4 " Label="Commander name" @bind-Value="_model.CommanderName" Required For="@(() => _model.CommanderName)" Immediate />
 
                     <!--
                     <MudSlider Class="pb-4" @bind-Value="_model.UniverseSpeed" Color="Color.Info" Variant="Variant.Filled" TickMarks Min="1" Max="10" Step="1" ValueLabel >Universe speed</MudSlider>
                     -->
                     
-                    @* <MudSlider Color="Color.Info" @bind-Value="_model.NumberOfPlanets" ValueLabel Min="1" Max="10" Step="1" TickMarks>Number of planets</MudSlider> *@
-
-                    <MudSwitch Color="Color.Info" @bind-Value="_model.IsPeacefulMode" Label="Peaceful mode" Class="py-4"/>
+                    <MudSwitch Color="Color.Info" @bind-Value="_model.IsPeacefulMode" Label="Peaceful mode" Class="pb-4"/>
+                    
+                    <MudSwitch Disabled Color="Color.Info" @bind-Value="_model.IncludeBots" Label="Include bots" Class="pb-4"/>
 
                     <MudButton ButtonType="ButtonType.Submit" Class="align-self-center" Variant="Variant.Filled" Color="Color.Info">Start new game</MudButton>
 
@@ -49,8 +51,13 @@
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
         
-        GameState.Initialize(_model);
-
+        if (!await SaveService.LoadFromStorage())
+        {
+            GameState.Initialize(new UniverseCreationModel());
+        }
+        
+        BotService.StartService();
+        
         await waitingScreen;
 
         NavigationManager.NavigateTo("/Overview");

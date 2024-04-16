@@ -1,7 +1,7 @@
-﻿using SpaceBattles.Core.Domain.Interfaces;
-using SpaceBattles.Core.Domain.Records;
+﻿namespace SpaceBattles.Core.Domain.Entities.Building;
 
-namespace SpaceBattles.Core.Domain.Entities.Building;
+using SpaceBattles.Core.Domain.Interfaces;
+using SpaceBattles.Core.Domain.Records;
 
 public sealed class Building : IBuildingRequirements
 {
@@ -19,12 +19,16 @@ public sealed class Building : IBuildingRequirements
     public string ImagePath => $"/images/buildings/{ImageName}";
 
     public int TitaniumCost { get; init; }
-    
+
     public int SiliconCost { get; init; }
-    
+
     public int HeliumCost { get; init; }
 
     public float ScalingFactor { get; init; }
+
+    public ElectricalEntityStatus EnergyStatus { get; init; }
+
+    public int BaseEnergy { get; set; }
 
     public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
         = Enumerable.Empty<BuildingRequirement>();
@@ -42,11 +46,14 @@ public sealed class Building : IBuildingRequirements
                 ImageName = "titanium.webp",
 
                 Name = "Titanium Mine",
-                Description = "Titanium is the primary resource used in the foundation of your Empire. At greater depths, the mines can produce more titanium ore.\nYou can use the available metal for use in the construction of buildings, ships, defense systems, and research.\nAs the mines drill deeper, more energy is required for maximum production. As titanium is the most abundant of all resources available, its value is considered to be the lowest of all resources for trading.",
+                Description = "The basis of your civilization’s growth and might is titanium ore, which is produced in the titanium mine. Titanium ore can be converted into titanium metal, which is the primary material for constructing and enhancing various structures and technologies.\nThe titanium mine has a flexible production, depending on its level and the depth of the drilling. The deeper the mine digs, the more ore it can produce, but also the more energy it needs. Titanium ore is copious and low-cost, but it is also essential for advancing your civilization and competing with other empires.\nThe titanium mine is the first building you should build and upgrade, as it will provide you with the foundation of your empire.",
 
                 ScalingFactor = 1.5f,
                 TitaniumCost = 60,
                 SiliconCost = 15,
+
+                EnergyStatus = ElectricalEntityStatus.Consummer,
+                BaseEnergy = 10,
             },
             new()
             {
@@ -70,6 +77,9 @@ public sealed class Building : IBuildingRequirements
                 ScalingFactor = 1.6f,
                 TitaniumCost = 48,
                 SiliconCost = 24,
+
+                EnergyStatus = ElectricalEntityStatus.Consummer,
+                BaseEnergy = 10,
             },
             new()
             {
@@ -90,10 +100,13 @@ public sealed class Building : IBuildingRequirements
 
                 Name = "³Helium synthesizer",
                 Description = "³Helium is a stable isotope of helium with a natural abundance in the oceans of colonies of approximately one atom in 6500 of helium (~154 PPM). Helium³ thus accounts for approximately 0.015% (on a weight basis, 0.030%) of all water.\nHelium³ is processed by special synthesizers which can separate the water from the Helium³ using specially designed centrifuges. The upgrade of the synthesizer allows for increasing the amount of Helium³ deposits processed.\nHelium³ is used when carrying out sensor phalanx scans, viewing galaxies, as fuel for ships, and performing specialized research upgrades.",
-                
+
                 ScalingFactor = 1.5f,
                 TitaniumCost = 225,
                 SiliconCost = 75,
+
+                EnergyStatus = ElectricalEntityStatus.Consummer,
+                BaseEnergy = 20,
             },
             new()
             {
@@ -110,6 +123,21 @@ public sealed class Building : IBuildingRequirements
             new()
             {
                 Id = 7,
+                ImageName = "solar_plant.webp",
+
+                Name = "Solar plant",
+                Description = "Each mine requires energy to function, which is produced primarily by the Solar Plant.",
+
+                ScalingFactor = 1.5f,
+                TitaniumCost = 75,
+                SiliconCost = 30,
+
+                EnergyStatus = ElectricalEntityStatus.Producer,
+                BaseEnergy = 20,
+            },
+            new()
+            {
+                Id = 8,
                 ImageName = "robotic_factory.webp",
 
                 Name = "Robotics factory",
@@ -122,7 +150,7 @@ public sealed class Building : IBuildingRequirements
             },
             new()
             {
-                Id = 8,
+                Id = 9,
                 ImageName = "shipyard.webp",
 
                 Name = "Shipyard",
@@ -132,20 +160,20 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 400,
                 SiliconCost = 200,
                 HeliumCost = 100,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(7, 2),
                 ],
             },
             new()
             {
-                Id = 9,
+                Id = 10,
                 ImageName = "research_lab.webp",
 
                 Name = "Research lab",
                 Description = "An essential part of any empire, Research Labs are where new technologies are discovered and older technologies are improved upon. With each level of the Research Lab constructed, the speed in which new technologies are researched is increased, while also unlocking newer technologies to research.\nIn order to conduct research as quickly as possible, research scientists are immediately dispatched to the colony to begin work and development. In this way, knowledge about new technologies can easily be disseminated throughout the empire.",
-                
+
                 ScalingFactor = 2f,
                 TitaniumCost = 200,
                 SiliconCost = 400,
@@ -153,7 +181,7 @@ public sealed class Building : IBuildingRequirements
             },
             new()
             {
-                Id = 10,
+                Id = 11,
                 ImageName = "nanite_factory.webp",
 
                 Name = "Nanite factory",
@@ -163,15 +191,15 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 1_000_000,
                 SiliconCost = 500_000,
                 HeliumCost = 100_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(7, 10),
                 ],
             },
             new()
             {
-                Id = 11,
+                Id = 12,
                 ImageName = "missile_silo.webp",
 
                 Name = "Missile silo",
@@ -181,8 +209,8 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 20_000,
                 SiliconCost = 20_000,
                 HeliumCost = 1_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 1),
                 ],

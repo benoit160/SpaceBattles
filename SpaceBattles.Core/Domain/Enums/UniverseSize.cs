@@ -6,5 +6,5 @@ public enum UniverseSize
     Small,
     Medium,
     Large,
-    VeryLarge
+    VeryLarge,
 }

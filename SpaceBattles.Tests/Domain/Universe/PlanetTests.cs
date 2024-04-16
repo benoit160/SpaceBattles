@@ -1,11 +1,12 @@
-﻿using SpaceBattles.Core.Application.Extensions;
-using SpaceBattles.Core.Domain.Entities.Universe;
+﻿using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
 
 namespace SpaceBattles.Tests.Domain.Universe;
 
 public class PlanetTests
 {
+    const int OutOfRangeIndex = 27;
+    
     [Fact]
     public void PlanetConstructor()
     {
@@ -36,7 +37,7 @@ public class PlanetTests
         Assert.NotEqual(default, planet.PlanetType);
         Assert.NotEqual(default, planet.LastUpdated);
         
-        Assert.Equal(11, planet.Buildings.Length);
+        Assert.Equal(12, planet.Buildings.Length);
         Assert.Equal(150, planet.Titanium);
         Assert.Equal(75, planet.Silicon);
         Assert.Equal(0, planet.Helium);
@@ -74,7 +75,7 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        planet.Buildings.ForEach(x => x.Level++);
+        Array.ForEach(planet.Buildings, b => b.Level++);
         Span<long> totals = [0, 0, 0];
         
         // Act
@@ -103,14 +104,14 @@ public class PlanetTests
     [Fact]
     public void OutOfRangeIndexerSet()
     {
+        // Arrange
         Planet planet = new Planet();
         planet.Init();
 
         // Assert
         Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            const int outOfRangeIndex = 27;
-            planet[(Resource)outOfRangeIndex] = 1;
+            planet[(Resource)OutOfRangeIndex] = 1;
         });
     }
     
@@ -120,10 +121,9 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        const int outOfRangeIndex = 27;
 
         // Act
-        var result = planet.ResourceCapacity((Resource)outOfRangeIndex);
+        var result = planet.ResourceCapacity((Resource)OutOfRangeIndex);
         
         // Assert
         Assert.Equal(0, result);
@@ -135,10 +135,9 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        const int outOfRangeIndex = 27;
 
         // Act
-        var result = planet.ResourceProduction((Resource)outOfRangeIndex);
+        var result = planet.ResourceProduction((Resource)OutOfRangeIndex);
         
         // Assert
         Assert.Equal(0, result);
@@ -164,5 +163,78 @@ public class PlanetTests
         advancedTime += TimeSpan.FromSeconds(5);
         
         planet.ResourcesUpdate(advancedTime, totals);
+    }
+
+    [Theory]
+    [InlineData(0, 0, 0)]
+    [InlineData(1, 22, -44)]
+    public void GetEnergyStatus(byte level, int expectedProduction, int expectedUsage)
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        Array.ForEach(planet.Buildings, b => b.Level = level);
+
+        // Act
+        (int Produced, int Usage) energy = planet.GetEnergyStatus();
+
+        // Assert
+        Assert.Equal(expectedUsage, energy.Usage);
+        Assert.Equal(expectedProduction, energy.Produced);
+    }
+
+    [Fact]
+    public void SetOperatingLevel_InvalidId()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        const int invalidId = 27;
+
+        // Act
+        bool result = planet.SetOperatingLevel(invalidId, 100);
+
+        // Assert
+        Assert.False(result);
+    }
+    
+    [Fact]
+    public void SetOperatingLevel()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+
+        bool eventRaised = false;
+        
+        Action onAction = () => eventRaised = true;
+        planet.OnBlackOut += onAction;
+
+        // Act
+        planet.SetOperatingLevel(1, 100);
+
+        // Assert
+        Assert.False(eventRaised);
+    }
+    
+    [Fact]
+    public void SetOperatingLevel_Blackout()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        Array.ForEach(planet.Buildings, b => b.Level = 5);
+        Array.ForEach(planet.Buildings, b => b.OperatingLevel = 0);
+
+        bool eventRaised = false;
+        
+        Action onAction = () => eventRaised = true;
+        planet.OnBlackOut += onAction;
+
+        // Act
+        planet.SetOperatingLevel(1, 100);
+
+        // Assert
+        Assert.True(eventRaised);
     }
 }

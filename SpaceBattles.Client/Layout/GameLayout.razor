@@ -2,6 +2,7 @@
 
 @inject NavigationManager NavigationManager
 @inject SaveService SaveService
+@inject BotService BotService
 
 <MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
 <MudSnackbarProvider/>
@@ -33,6 +34,15 @@
         background: url("images/background.avif") no-repeat;
         background-size: cover;
         height: 100vh;
+    }
+    
+    .mud-paper {
+        backdrop-filter: blur(6px);
+    }
+    
+    .mud-typography, .mud-image {
+        pointer-events: none;
+        user-select: none;
     }
 </style>
 
@@ -91,6 +101,7 @@
 
     private void Logout()
     {
+        BotService.Dispose();
         NavigationManager.LocationChanged -= _locationEvent;
         NavigationManager.NavigateTo("/");
     }

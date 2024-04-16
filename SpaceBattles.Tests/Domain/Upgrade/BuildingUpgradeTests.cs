@@ -4,6 +4,8 @@ namespace SpaceBattles.Tests.Domain.Upgrade;
 
 public class BuildingUpgradeTests
 {
+    const short InvalidId = 17;
+
     [Theory]
     [InlineData(1, true)]
     [InlineData(2, false)]
@@ -28,10 +30,9 @@ public class BuildingUpgradeTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        const short invalidId = 17;
         
         // Act
-        bool succeeded = planet.CanUpgradeBuilding(invalidId);
+        bool succeeded = planet.CanUpgradeBuilding(InvalidId);
         
         // Assert
         Assert.False(succeeded);
@@ -59,10 +60,9 @@ public class BuildingUpgradeTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        const short invalidId = 17;
         
         // Act
-        bool succeeded = planet.TryUpgradeBuilding(invalidId);
+        bool succeeded = planet.TryUpgradeBuilding(InvalidId);
         
         // Assert
         Assert.False(succeeded);

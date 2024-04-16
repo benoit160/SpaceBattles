@@ -1,18 +1,17 @@
-﻿using System.Text;
+﻿namespace SpaceBattles.Core.Application.Services;
+
 using System.Text.Json;
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
-namespace SpaceBattles.Core.Application.Services;
-
 public sealed class SaveService
 {
+    private const string Key = "SaveData";
+
     private readonly GameState _gameState;
     private readonly IBrowserService _browserService;
 
-    private const string Key = "SaveData";
-    
     public SaveService(GameState gameState, IBrowserService browserService)
     {
         _gameState = gameState;
@@ -35,13 +34,13 @@ public sealed class SaveService
         string? data = await _browserService.ReadLocalStorage(Key);
 
         if (data is null) return false;
-        
+
         Universe? universe = JsonSerializer.Deserialize<Universe>(data);
-        
+
         if (universe is null) return false;
 
         RebuildEntityGraph(universe);
-        _gameState.Restore(universe);
+        _gameState.SetState(universe);
         return true;
     }
 
@@ -53,6 +52,8 @@ public sealed class SaveService
 
         foreach (Planet planet in universe.Planets)
         {
+            if (planet.LastUpdated == default) continue;
+
             if (planet.OwnerId is not null)
             {
                 planet.Owner = universe.Players.Find(p => p.Id == planet.OwnerId);
@@ -64,17 +65,17 @@ public sealed class SaveService
                 buildingLevel.Building = buildings.Single(b => b.Id == buildingLevel.BuildingId);
             }
 
-            for (int index = 0; index < planet.Defenses.Length; index++)
+            for (int index = 0; index < planet.BattleUnits.Length; index++)
             {
-                CombatEntityInventory combatEntityInventory = planet.Defenses.Span[index];
-                combatEntityInventory.CombatEntity = defenses.Single(defense => defense.Id == combatEntityInventory.CombatEntityId);
+                CombatEntityInventory entityInventory = planet.BattleUnits[index];
+                CombatEntity? match = Array.Find<CombatEntity>(spaceships, b => b.Id == entityInventory.CombatEntityId)
+                                      ?? Array.Find<CombatEntity>(defenses, b => b.Id == entityInventory.CombatEntityId);
+
+                entityInventory.CombatEntity = match;
             }
-            
-            for (int index = 0; index < planet.Spaceships.Length; index++)
-            {
-                CombatEntityInventory combatEntityInventory = planet.Spaceships.Span[index];
-                combatEntityInventory.CombatEntity = spaceships.Single(spaceship => spaceship.Id == combatEntityInventory.CombatEntityId);
-            }
+
+            planet.Spaceships = planet.BattleUnits.AsMemory(8, 10);
+            planet.Defenses = planet.BattleUnits.AsMemory(0, 8);
         }
     }
 }

@@ -1,13 +1,11 @@
+namespace SpaceBattles.Core.Domain.Entities.Universe;
+
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
 
-namespace SpaceBattles.Core.Domain.Entities.Universe;
-
 public sealed class Universe
 {
-    public required string Name { get; init; }
-
     public DateTime CreationDate { get; init; }
         = DateTime.Now;
 
@@ -16,14 +14,14 @@ public sealed class Universe
     public float UniverseSpeed { get; init; }
 
     public int Galaxies { get; init; }
-    
+
     public int SolarSystems { get; init; }
-    
+
     public int Slots { get; init; }
 
     public Planet[] Planets { get; init; }
         = Array.Empty<Planet>();
-    
+
     public List<Player.Player> Players { get; init; }
         = new();
 
@@ -33,20 +31,12 @@ public sealed class Universe
     public Planet this[int index]
         => Planets[index];
 
-    public Memory<Planet> GetSolarSystemView(int galaxy, int solarSystem)
-    {
-        int totalSlotsPerGalaxy = SolarSystems * Slots;
-        int start = totalSlotsPerGalaxy * (galaxy - 1) + ((solarSystem - 1) * Slots);
-        return Planets.AsMemory().Slice(start, Slots);
-    }
-
     public static Universe CreateUniverse(UniverseCreationModel model)
     {
         (byte galaxies, byte solarSystems, byte slots) = GetSize(model.UniverseSize);
-        
+
         Universe newUniverse = new Universe()
         {
-            Name = model.UniverseName,
             IsPeacefulUniverse = model.IsPeacefulMode,
             UniverseSpeed = model.UniverseSpeed,
             Planets = new Planet[galaxies * solarSystems * slots],
@@ -56,22 +46,59 @@ public sealed class Universe
         };
 
         int index = 0;
-        
+        Span<byte> usedPlanetIndexes = stackalloc byte[slots];
+
         for (byte gal = 1; gal <= galaxies; gal++)
         {
             for (byte sol = 1; sol <= solarSystems; sol++)
             {
                 for (byte slot = 1; slot <= slots; slot++)
                 {
+                    byte newImageIndex = 0;
+
+                    // loop until a new random value is found that doesn't duplicate index for this solar system
+                    while (usedPlanetIndexes.Contains(newImageIndex))
+                    {
+                        newImageIndex = Convert.ToByte(Random.Shared.Next(0, 14));
+                    }
+
                     newUniverse.Planets[index] = new Planet()
                     {
+                        ImageIndex = newImageIndex,
                         Galaxy = gal,
                         SolarSystem = sol,
                         Slot = slot,
                     };
+
+                    usedPlanetIndexes[slot - 1] = newImageIndex;
                     index++;
                 }
             }
+        }
+
+        int botsToAdd = model.NumberOfBots;
+        short playerIndex = 2;
+
+        while (botsToAdd > 0)
+        {
+            Planet random = newUniverse.Planets
+                .Where(p => p.OwnerId is null)
+                .OrderBy(_ => Random.Shared.Next())
+                .First();
+
+            random.Init();
+
+            Player.Player bot = new Player.Player()
+            {
+                Id = playerIndex++,
+                Name = "Pirate captain",
+                IsBot = true,
+            };
+
+            random.DefineOwner(bot);
+            newUniverse.Players.Add(bot);
+
+            botsToAdd--;
         }
 
         Player.Player mainPlayer = new Player.Player()
@@ -80,26 +107,25 @@ public sealed class Universe
             IsBot = false,
             Name = model.CommanderName,
         };
-        
-        Player.Player pirates = new Player.Player()
-        {
-            Id = 2,
-            IsBot = true,
-            Name = "Space pirates",
-        };
-        
+
         newUniverse.Players.Add(mainPlayer);
-        newUniverse.Players.Add(pirates);
-        
+
         Planet startingPlanet = newUniverse.Planets[Random.Shared.Next(0, newUniverse.Planets.Length)];
         startingPlanet.DefineOwner(mainPlayer);
         startingPlanet.Init();
         startingPlanet.Name = model.StartingPlanetName;
-        
+
         return newUniverse;
     }
 
-    private static (byte, byte, byte) GetSize(UniverseSize size)
+    public Memory<Planet> GetSolarSystemView(int galaxy, int solarSystem)
+    {
+        int totalSlotsPerGalaxy = SolarSystems * Slots;
+        int start = (totalSlotsPerGalaxy * (galaxy - 1)) + ((solarSystem - 1) * Slots);
+        return Planets.AsMemory().Slice(start, Slots);
+    }
+
+    private static (byte Slots, byte SolarSystems, byte Galaxies) GetSize(UniverseSize size)
     {
         return size switch
         {
@@ -108,7 +134,7 @@ public sealed class Universe
             UniverseSize.Medium => (2, 4, 4),
             UniverseSize.Large => (3, 5, 5),
             UniverseSize.VeryLarge => (4, 7, 5),
-            _ => throw new ArgumentOutOfRangeException(nameof(size), size, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(size), size, null),
         };
     }
 }

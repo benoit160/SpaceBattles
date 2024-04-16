@@ -27,7 +27,7 @@
             @for (int i = 0; i < _displayedBuildings.Length; i++)
             {
                 int localI = i;
-                @BuildingDisplay(_displayedBuildings.Span[localI]);
+                @BuildingDisplay(_displayedBuildings.Span[localI])
             }
         </MudGrid>
     </MudStack>
@@ -50,7 +50,7 @@
     {
         _planet = GameState.CurrentPlanet;
         _buildings = GameState.CurrentPlanet.Buildings.AsMemory();
-        _displayedBuildings = _buildings.Slice(0, 6);
+        _displayedBuildings = _buildings.Slice(0, 7);
 
         PeriodicTimer timer = new(TimeSpan.FromSeconds(1));
         _ = Task.Run(async () =>
@@ -66,8 +66,8 @@
     private void SwitchDisplays(bool showResources)
     {
         _displayedBuildings = showResources
-            ? _buildings.Slice(0, 6)
-            : _buildings.Slice(6, 5);
+            ? _buildings.Slice(0, 7)
+            : _buildings.Slice(7, 5);
     }
 
     private void OpenDetails(short buildingId)
@@ -175,13 +175,16 @@
                         </div>;
 
             case 7:
+                return @<MudText Typo="Typo.body1">Producing @_planet.Buildings[6].Energy energy</MudText>;
+
+            case 8:
                 if (_planet.BuildingUpgrade is not null)
                 {
                     string upgradeName = _planet.Buildings.Single(b => b.BuildingId == _planet.BuildingUpgrade.BuildingId).Building.Name;
                     return @<MudText Typo="Typo.body1" Color="Color.Info">Working on @upgradeName</MudText>;
                 }
                 goto default;
-                
+
             default:
                 return @<MudText Typo="Typo.body1">Currently idle...</MudText>;
         }

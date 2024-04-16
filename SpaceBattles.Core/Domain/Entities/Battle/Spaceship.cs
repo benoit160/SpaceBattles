@@ -1,7 +1,7 @@
+namespace SpaceBattles.Core.Domain.Entities.Battle;
+
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Records;
-
-namespace SpaceBattles.Core.Domain.Entities.Battle;
 
 public sealed class Spaceship : CombatEntity
 {
@@ -12,8 +12,8 @@ public sealed class Spaceship : CombatEntity
     public int CargoCapacity { get; init; }
 
     public int FuelUsage { get; init; }
-    
-    public static Spaceship[] Spaceships() 
+
+    public static Spaceship[] Spaceships()
     {
         return
         [
@@ -36,8 +36,8 @@ public sealed class Spaceship : CombatEntity
 
                 TitaniumCost = 3_000,
                 SiliconCost = 1_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 1),
                 ],
@@ -58,11 +58,11 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 400,
                 BaseShield = 10,
                 BaseWeaponPower = 5,
-                
+
                 TitaniumCost = 2_000,
                 SiliconCost = 2_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 2),
                 ],
@@ -83,11 +83,11 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 1200,
                 BaseShield = 25,
                 BaseWeaponPower = 5,
-                
+
                 TitaniumCost = 6_000,
                 SiliconCost = 6_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 4),
                 ],
@@ -108,11 +108,11 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 1_000,
                 BaseShield = 25,
                 BaseWeaponPower = 150,
-                
+
                 TitaniumCost = 6_000,
                 SiliconCost = 4_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 3),
                 ],
@@ -133,14 +133,14 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 2_700,
                 BaseShield = 50,
                 BaseWeaponPower = 400,
-                
+
                 TitaniumCost = 20_000,
                 SiliconCost = 7_000,
                 HeliumCost = 2_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
-                    new BuildingRequirement(8,5),
+                    new BuildingRequirement(8, 5),
                 ],
             },
             new Spaceship
@@ -159,11 +159,11 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 6_000,
                 BaseShield = 200,
                 BaseWeaponPower = 1000,
-                
+
                 TitaniumCost = 45_000,
                 SiliconCost = 15_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 7),
                 ],
@@ -184,12 +184,12 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 7_000,
                 BaseShield = 400,
                 BaseWeaponPower = 700,
-                
+
                 TitaniumCost = 30_000,
                 SiliconCost = 40_000,
                 HeliumCost = 15_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 8),
                 ],
@@ -210,12 +210,12 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 7_500,
                 BaseShield = 500,
                 BaseWeaponPower = 1_000,
-                
+
                 TitaniumCost = 50_000,
                 SiliconCost = 25_000,
                 HeliumCost = 15_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 8),
                 ],
@@ -236,12 +236,12 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 11_000,
                 BaseShield = 500,
                 BaseWeaponPower = 2_000,
-                
+
                 TitaniumCost = 60_000,
                 SiliconCost = 50_000,
                 HeliumCost = 15_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 9),
                 ],
@@ -262,12 +262,12 @@ public sealed class Spaceship : CombatEntity
                 BaseArmor = 900_000,
                 BaseShield = 50_000,
                 BaseWeaponPower = 200_000,
-                
+
                 TitaniumCost = 5_000_000,
                 SiliconCost = 4_000_000,
                 HeliumCost = 1_000_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 12),
                 ],
@@ -278,22 +278,22 @@ public sealed class Spaceship : CombatEntity
                 Name = "Recycler",
                 ImageName = "recycler.webp",
                 Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
-            
+
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
-            
+
                 BaseSpeed = 2_000,
                 FuelUsage = 300,
                 CargoCapacity = 20_000,
-            
+
                 BaseArmor = 1_600,
                 BaseShield = 10,
                 BaseWeaponPower = 1,
-                
+
                 TitaniumCost = 10_000,
                 SiliconCost = 6_000,
                 HeliumCost = 2_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 4),
                 ],
@@ -304,20 +304,20 @@ public sealed class Spaceship : CombatEntity
                 Name = "Espionage probe",
                 ImageName = "espionage_probe.webp",
                 Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
-            
+
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
-            
+
                 BaseSpeed = 100_000_000,
                 FuelUsage = 1,
                 CargoCapacity = 5,
-            
+
                 BaseArmor = 100,
                 BaseShield = 0,
                 BaseWeaponPower = 0,
-                
+
                 SiliconCost = 1_000,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 3),
                 ],
@@ -328,21 +328,21 @@ public sealed class Spaceship : CombatEntity
                 Name = "Solar satellite",
                 ImageName = "solar_satellite.webp",
                 Description = "Recyclers are used to harvest resources from debris fields which are created whenever combat resulting in the destruction of ships occurs at a planet.",
-            
+
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
-            
+
                 BaseSpeed = 0,
                 FuelUsage = 0,
                 CargoCapacity = 0,
-            
+
                 BaseArmor = 200,
                 BaseShield = 1,
                 BaseWeaponPower = 1,
-                
+
                 SiliconCost = 2_000,
                 HeliumCost = 500,
-                
-                BuildingRequirements = 
+
+                BuildingRequirements =
                 [
                     new BuildingRequirement(8, 1),
                 ],

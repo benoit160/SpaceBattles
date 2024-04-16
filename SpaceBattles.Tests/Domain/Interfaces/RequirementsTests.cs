@@ -18,10 +18,12 @@ public class RequirementsTests
     [InlineData(4, false)]
     [InlineData(5, false)]
     [InlineData(6, false)]
-    [InlineData(7, false)]
+    [InlineData(7, true)]
     [InlineData(8, false)]
     [InlineData(9, false)]
     [InlineData(10, false)]
+    [InlineData(11, false)]
+    [InlineData(12, false)]
     public void HasEnoughResources_Building(short buildingId, bool expectedResult)
     {
         // Arrange
@@ -59,11 +61,13 @@ public class RequirementsTests
     [InlineData(2, 4e6, 2e6, 4e5)]
     public void CostScaling(short level, int titanium, int silicon, int helium)
     {
+        // Arrange
         Planet planet = new Planet();
         planet.Init();
-        BuildingLevel building = planet.Buildings.First(b => b.BuildingId == 10);
+        BuildingLevel building = planet.Buildings.First(b => b.BuildingId == 11);
         building.Level = level;
         
+        // Assert
         Assert.Equal(titanium, building.TitaniumCost);
         Assert.Equal(silicon, building.SiliconCost);
         Assert.Equal(helium, building.HeliumCost);
