@@ -1,4 +1,5 @@
-﻿using SpaceBattles.Core.Application.Extensions.SuperLinq;
+﻿using System.Text.Json.Serialization;
+using SpaceBattles.Core.Application.Extensions.SuperLinq;
 using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
 
@@ -6,6 +7,7 @@ namespace SpaceBattles.Core.Domain.Entities.Battle;
 
 public class Fleet
 {
+    [JsonIgnore]
     public required Player.Player Owner { get; init; }
 
     public short OwnerId { get; init; }
@@ -37,17 +39,15 @@ public enum FleetActionType
 
 public static class PlanetFleetExtensions
 {
-    public static bool CreateFleet(this Planet planet, Dictionary<short, int> spaceships, int fuel)
+    public static bool CreateFleet(this Planet planet, int fuel)
     {
         planet[Resource.Helium] -= fuel;
 
-        foreach (KeyValuePair<short, int> keyValuePair in spaceships)
+        Fleet fleet = new Fleet()
         {
-            planet.Spaceships.Span.First<CombatEntityInventory>();
-        }
-
-        ReadOnlySpan<Position> truc = stackalloc Position[10];
-
-        truc.First()
+            Owner = planet.Owner,
+            OwnerId = planet.OwnerId.Value,
+            Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
+        };
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace SpaceBattles.Core.Application.Extensions.SuperLinq;
+﻿namespace SpaceBattles.Core.Application.Extensions.SuperLinq;
 
 public static class SuperLinqExtensions
 {
