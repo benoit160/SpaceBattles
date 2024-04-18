@@ -2,18 +2,69 @@
 
 using SpaceBattles.Core.Domain.Entities.Universe;
 
+public interface ITimeProvider
+{
+    public DateTime Now { get; }
+
+    public ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken);
+}
+
+public sealed class TimeProvider : ITimeProvider
+{
+    private readonly PeriodicTimer _timer;
+
+    public TimeProvider(int secondsInterval)
+    {
+        _timer = new(TimeSpan.FromSeconds(secondsInterval));
+    }
+
+    public DateTime Now => DateTime.Now;
+
+    public async ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken)
+        => await _timer.WaitForNextTickAsync(cancellationToken);
+}
+
+public sealed class TestTimeProvider : ITimeProvider
+{
+    private readonly int _secondIncrement;
+    private DateTime _datetime;
+    private int _cyclesLeft;
+
+    public TestTimeProvider(int secondsInterval, int cyclesToSimulate)
+    {
+        _secondIncrement = secondsInterval;
+        _cyclesLeft = cyclesToSimulate;
+        _datetime = DateTime.Now;
+    }
+
+    public DateTime Now
+    {
+        get
+        {
+            _datetime += TimeSpan.FromSeconds(_secondIncrement);
+            return _datetime;
+        }
+    }
+
+    public bool IsFinished => _cyclesLeft == 0;
+
+    public ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken)
+        => ValueTask.FromResult(_cyclesLeft-- > 0);
+}
+
 public sealed class BotService : IDisposable
 {
+    private readonly ITimeProvider _timeProvider;
     private readonly GameState _gameState;
-    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(3));
     private readonly CancellationTokenSource _source = new();
 
     private IEnumerable<Planet> _botsPlanets;
 
-    public BotService(GameState gameState)
+    public BotService(GameState gameState, ITimeProvider timeProvider)
     {
         _botsPlanets = Enumerable.Empty<Planet>();
         _gameState = gameState;
+        _timeProvider = timeProvider;
     }
 
     public bool StartService()
@@ -26,7 +77,7 @@ public sealed class BotService : IDisposable
 
         Task.Run(async () =>
         {
-            while (await _timer.WaitForNextTickAsync(_source.Token))
+            while (await _timeProvider.WaitForNextTickAsync(_source.Token))
             {
                 foreach (Planet planet in _botsPlanets)
                 {
@@ -44,10 +95,10 @@ public sealed class BotService : IDisposable
         _source.Dispose();
     }
 
-    private static void DoAction(Planet planet)
+    private void DoAction(Planet planet)
     {
-        planet.ProcessUpgrades(DateTime.Now);
-        planet.ResourcesUpdate(DateTime.Now, stackalloc long[3]);
+        planet.ProcessUpgrades(_timeProvider.Now);
+        planet.ResourcesUpdate(_timeProvider.Now, stackalloc long[3]);
 
         Span<byte> indexes = stackalloc byte[12];
         for (byte i = 0; i < indexes.Length; i++)
