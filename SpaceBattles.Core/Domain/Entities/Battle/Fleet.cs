@@ -41,6 +41,8 @@ public static class PlanetFleetExtensions
 {
     public static bool CreateFleet(this Planet planet, int fuel)
     {
+        if (planet[Resource.Helium] < fuel) return false;
+
         planet[Resource.Helium] -= fuel;
 
         Fleet fleet = new Fleet()
@@ -49,5 +51,7 @@ public static class PlanetFleetExtensions
             OwnerId = planet.OwnerId.Value,
             Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
         };
+
+        return true;
     }
 }
