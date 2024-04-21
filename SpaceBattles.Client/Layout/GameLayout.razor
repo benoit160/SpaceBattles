@@ -12,16 +12,19 @@
     <MudAppBar Color="Color.Dark" Fixed>
         <MudText Typo="Typo.h4" Color="Color.Info" Style="font-family:TitleFont;font-style:italic;">SpaceBattles</MudText>
 
-        <MudButton Size="Size.Small" Href="/Overview" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" DisableRipple>Overview</MudButton>
-        <MudButton Size="Size.Small" Href="/Buildings" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
-        <MudButton Size="Size.Small" Href="/Shipyard" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
-        <MudButton Size="Size.Small" Href="/Defenses" Variant="_page == CurrentPage.Defenses ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Defenses</MudButton>
-        <MudButton Size="Size.Small" Href="/Universe" Variant="_page == CurrentPage.Universe ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Universe</MudButton>
+        <MudButton Href="/Overview" Size="Size.Small" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" DisableRipple>Overview</MudButton>
+        <MudButton Href="/Buildings" Size="Size.Small" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
+        <MudButton Href="/Shipyard" Size="Size.Small" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
+        <MudButton Href="/Defenses" Size="Size.Small" Variant="_page == CurrentPage.Defenses ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Defenses</MudButton>
+        <MudButton Href="/Universe" Size="Size.Small" Variant="_page == CurrentPage.Universe ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Universe</MudButton>
 
         <MudSpacer />
         
+        <MudButton Href="/Statistics" 
+                   Variant="_page == CurrentPage.Statistics ? Variant.Filled : Variant.Outlined" StartIcon="@Icons.Material.Filled.QueryStats" 
+                   IconColor="_page == CurrentPage.Statistics ? Color.Warning : Color.Info" Color="Color.Info" Size="Size.Small" Class="mx-2">Statistics</MudButton>
         <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" OnClick="SaveGame" Class="mx-2">Save</MudButton>
-        <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Error" OnClick="Logout">Log out</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="Logout">Log out</MudButton>
     </MudAppBar>
     
     <MudMainContent Style="display:flex; flex-direction:column; justify-content:center; height: 100vh;">
@@ -57,6 +60,7 @@
         Shipyard,
         Defenses,
         Universe,
+        Statistics
     }
 
     protected override void OnInitialized()
@@ -85,6 +89,10 @@
                     
                 case "Universe":
                     _page = CurrentPage.Universe;
+                    break;
+                    
+                case "Statistics":
+                    _page = CurrentPage.Statistics;
                     break;
             }
 
