@@ -20,8 +20,8 @@ public sealed class TimeProvider : ITimeProvider
 
     public DateTime Now => DateTime.Now;
 
-    public async ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken)
-        => await _timer.WaitForNextTickAsync(cancellationToken);
+    public ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken)
+        => _timer.WaitForNextTickAsync(cancellationToken);
 }
 
 public sealed class TestTimeProvider : ITimeProvider
