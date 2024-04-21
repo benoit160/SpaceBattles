@@ -1,0 +1,49 @@
+﻿@page "/Statistics"
+
+@inject GameState GameState
+@inject StatisticService Stats
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudPaper Class="pa-4 rounded-xl align-self-center">
+        <MudStack>
+            <MudStack Row Spacing="0">
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+                <MudText Typo="Typo.body1" Color="Color.Info" Style="font-family:TitleFont;">Total resources produced</MudText>
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center" />
+            </MudStack>
+            <MudStack Row Justify="Justify.SpaceAround">
+
+                <MudStack>
+                    <MudTooltip Text="Titanium" Color="Color.Info">
+                        <MudImage Src="/images/items/titanium.avif" Width="128" Height="128"/>
+                    </MudTooltip>
+                    <MudText Class="align-self-center" Typo="Typo.body1">@_stat.TotalTitaniumProduced.ToString("#,##0")</MudText>
+                </MudStack>
+
+                <MudStack>
+                    <MudTooltip Text="Silicon" Color="Color.Info">
+                        <MudImage Src="/images/items/silicon.avif" Width="128" Height="128"/>
+                    </MudTooltip>
+                    <MudText Class="align-self-center" Typo="Typo.body1">@_stat.TotalSiliconProduced.ToString("#,##0")</MudText>
+                </MudStack>
+
+                <MudStack>
+                    <MudTooltip Text="³Helium" Color="Color.Info">
+                        <MudImage Src="/images/items/helium.avif" Width="128" Height="128"/>
+                    </MudTooltip>
+                    <MudText Class="align-self-center" Typo="Typo.body1">@_stat.TotalHeliumProduced.ToString("#,##0")</MudText>
+                </MudStack>
+                
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private PlanetStatistics _stat = default!;
+
+    protected override void OnInitialized()
+    {
+        _stat = Stats[GameState.CurrentPlanet];
+    }
+}
