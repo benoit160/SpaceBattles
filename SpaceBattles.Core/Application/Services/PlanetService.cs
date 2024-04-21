@@ -9,14 +9,17 @@ public sealed class PlanetService
     private readonly StatisticService _statisticService;
     private readonly INotificationService _notificationService;
 
-    public PlanetService(GameState gameState, StatisticService statisticService, INotificationService notificationService)
+    public PlanetService(
+        GameState gameState,
+        StatisticService statisticService,
+        INotificationService notificationService)
     {
         _gameState = gameState;
         _statisticService = statisticService;
         _notificationService = notificationService;
     }
 
-    public void UpdateCurrentPlanet()
+    public void UpdateCurrentPlanet(DateTime now)
     {
         Span<long> totals = stackalloc long[3];
         PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet];
@@ -25,13 +28,13 @@ public sealed class PlanetService
 
         if (planet.BuildingUpgrade is null)
         {
-            planet.ResourcesUpdate(DateTime.Now, totals);
+            planet.ResourcesUpdate(now, totals);
         }
         else
         {
             planet.ResourcesUpdate(planet.BuildingUpgrade.End, totals);
-            result = planet.ProcessUpgrades(DateTime.Now);
-            planet.ResourcesUpdate(DateTime.Now, totals);
+            result = planet.ProcessUpgrades(now);
+            planet.ResourcesUpdate(now, totals);
         }
 
         if (result is not null)

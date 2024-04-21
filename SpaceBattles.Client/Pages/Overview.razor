@@ -89,7 +89,7 @@
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {                
-                PlanetService.UpdateCurrentPlanet();
+                PlanetService.UpdateCurrentPlanet(DateTime.Now);
                 StateHasChanged();
             }
         });
