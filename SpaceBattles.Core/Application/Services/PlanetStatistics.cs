@@ -2,6 +2,8 @@
 
 public sealed class PlanetStatistics
 {
+    public int PlanetId { get; init; }
+
     public long TotalTitaniumProduced { get; set; }
 
     public long TotalSiliconProduced { get; set; }

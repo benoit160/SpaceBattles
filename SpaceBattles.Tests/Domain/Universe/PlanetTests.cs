@@ -7,6 +7,23 @@ public class PlanetTests
 {
     const int OutOfRangeIndex = 27;
     
+    [Theory]
+    [InlineData(1,1,1,0x00010101)]
+    [InlineData(1,2,3,0x00030201)]
+    public void Id(byte slot, byte solar, byte galaxy, int expected)
+    {
+        // Arrange
+        Planet planet = new Planet()
+        {
+            Slot = slot,
+            SolarSystem = solar,
+            Galaxy = galaxy,
+        };
+        
+        // Assert
+        Assert.Equal(expected, planet.Id);
+    }
+    
     [Fact]
     public void PlanetConstructor()
     {

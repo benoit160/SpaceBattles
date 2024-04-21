@@ -28,6 +28,8 @@ public sealed class Planet : IPosition
 
     public event Action? OnBlackOut;
 
+    public int Id => Slot | SolarSystem << 8 | Galaxy << 16;
+
     [JsonIgnore]
     public Player.Player? Owner { get; set; }
 

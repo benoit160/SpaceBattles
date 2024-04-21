@@ -18,4 +18,9 @@ public sealed class StatisticService
     {
         get => _statistics[p];
     }
+
+    public PlanetStatistics this[int id]
+    {
+        get => _statistics.Values.First(p => p.PlanetId == id);
+    }
 }
