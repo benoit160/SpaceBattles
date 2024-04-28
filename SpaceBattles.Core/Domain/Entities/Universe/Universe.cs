@@ -1,6 +1,4 @@
-﻿using SpaceBattles.Core.Application.Services;
-
-namespace SpaceBattles.Core.Domain.Entities.Universe;
+﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
@@ -22,9 +20,6 @@ public sealed class Universe
 
     public Planet[] Planets { get; init; }
         = Array.Empty<Planet>();
-
-    public List<PlanetStatistics> PlanetStatistics { get; init; }
-        = new List<PlanetStatistics>();
 
     public List<Player.Player> Players { get; init; }
         = new();
@@ -78,43 +73,9 @@ public sealed class Universe
         }
 
         int botsToAdd = model.NumberOfBots;
-        short playerIndex = 2;
 
-        while (botsToAdd > 0)
-        {
-            Planet random = newUniverse.Planets
-                .Where(p => p.OwnerId is null)
-                .OrderBy(_ => Random.Shared.Next())
-                .First();
-
-            random.Init();
-
-            Player.Player bot = new Player.Player()
-            {
-                Id = playerIndex++,
-                Name = "Pirate captain",
-                IsBot = true,
-            };
-
-            random.DefineOwner(bot);
-            newUniverse.Players.Add(bot);
-
-            botsToAdd--;
-        }
-
-        Player.Player mainPlayer = new Player.Player()
-        {
-            Id = 1,
-            IsBot = false,
-            Name = model.CommanderName,
-        };
-
-        newUniverse.Players.Add(mainPlayer);
-
-        Planet startingPlanet = newUniverse.Planets[Random.Shared.Next(0, newUniverse.Planets.Length)];
-        startingPlanet.DefineOwner(mainPlayer);
-        startingPlanet.Init();
-        startingPlanet.Name = model.StartingPlanetName;
+        newUniverse.AddBots(botsToAdd);
+        newUniverse.AddPlayer(model.CommanderName, model.StartingPlanetName);
 
         return newUniverse;
     }
@@ -137,5 +98,49 @@ public sealed class Universe
             UniverseSize.VeryLarge => (4, 7, 5),
             _ => throw new ArgumentOutOfRangeException(nameof(size), size, null),
         };
+    }
+
+    private void AddPlayer(string name, string planetName)
+    {
+        Player.Player mainPlayer = new Player.Player()
+        {
+            Id = 1,
+            IsBot = false,
+            Name = name,
+        };
+
+        Players.Add(mainPlayer);
+
+        Planet startingPlanet = Planets[Random.Shared.Next(0, Planets.Length)];
+        startingPlanet.DefineOwner(mainPlayer);
+        startingPlanet.Init();
+        startingPlanet.Name = planetName;
+    }
+
+    private void AddBots(int botsToAdd)
+    {
+        short playerIndex = 2;
+
+        while (botsToAdd > 0)
+        {
+            Planet random = Planets
+                .Where(p => p.OwnerId is null)
+                .OrderBy(_ => Random.Shared.Next())
+                .First();
+
+            random.Init();
+
+            Player.Player bot = new Player.Player()
+            {
+                Id = playerIndex++,
+                Name = "Pirate captain",
+                IsBot = true,
+            };
+
+            random.DefineOwner(bot);
+            Players.Add(bot);
+
+            botsToAdd--;
+        }
     }
 }

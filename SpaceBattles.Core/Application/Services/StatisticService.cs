@@ -1,29 +1,43 @@
-﻿using SpaceBattles.Core.Domain.Entities.Player;
+﻿namespace SpaceBattles.Core.Application.Services;
 
-namespace SpaceBattles.Core.Application.Services;
-
-using System.Collections.Frozen;
+using SpaceBattles.Core.Domain.Entities.Player;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class StatisticService
 {
-    private readonly FrozenDictionary<Planet, PlanetStatistics> _statistics;
-    private readonly FrozenDictionary<Player, PlayerStatistics> _statistics;
+    private readonly Dictionary<Planet, PlanetStatistics> _planetStatistics;
+    private readonly Dictionary<Player, PlayerStatistics> _playerStatistics;
 
     public StatisticService(GameState gameState)
     {
-        _statistics = gameState.CurrentUniverse.Planets
-            .Select(planet => (Planet: planet, stats: new PlanetStatistics()))
-            .ToFrozenDictionary(tuple => tuple.Planet, tuple => tuple.stats);
+        _planetStatistics = gameState.CurrentUniverse.Planets
+            .Select(planet => (Planet: planet, stats: new PlanetStatistics(planet.Id)))
+            .ToDictionary(tuple => tuple.Planet, tuple => tuple.stats);
+
+        _playerStatistics = gameState.CurrentUniverse.Players
+            .Select(player => (Player: player, stats: new PlayerStatistics(player.Id)))
+            .ToDictionary(tuple => tuple.Player, tuple => tuple.stats);
     }
 
-    public PlanetStatistics this[Planet p]
+    public PlanetStatistics this[Planet planet]
     {
-        get => _statistics[p];
+        get => _planetStatistics[planet];
+        set => _planetStatistics[planet] = value;
     }
 
-    public PlanetStatistics this[int id]
+    public PlayerStatistics this[Player player]
     {
-        get => _statistics.Values.First(p => p.PlanetId == id);
+        get => _playerStatistics[player];
+        set => _playerStatistics[player] = value;
+    }
+
+    public void StartNewPlanetStatistics(Planet planet)
+    {
+        _planetStatistics.Add(planet, new PlanetStatistics(planet.Id));
+    }
+
+    public void StartNewPlayerStatistics(Player player)
+    {
+        _playerStatistics.Add(player, new PlayerStatistics(player.Id));
     }
 }
