@@ -24,7 +24,7 @@ public class StatisticServiceTests
         StatisticService service = new StatisticService();
 
         // Act
-        PlanetStatistics statistics = service[state.CurrentPlanet];
+        PlanetStatistics statistics = service[state.CurrentPlanet.Id];
 
         // Assert
         Assert.Equal(0, statistics.TotalTitaniumProduced);
@@ -41,7 +41,7 @@ public class StatisticServiceTests
         state.Initialize(model);
         
         StatisticService service = new StatisticService();
-        PlanetStatistics statistics = service[state.CurrentPlanet];
+        PlanetStatistics statistics = service[state.CurrentPlanet.Id];
         DateTime timeBeforeUpdated = state.CurrentPlanet.LastUpdated;
 
         PlanetService planetService = new PlanetService(state, service, _notificationService);
@@ -64,7 +64,7 @@ public class StatisticServiceTests
         state.Initialize(model);
         
         StatisticService service = new StatisticService();
-        PlanetStatistics statistics = service[state.CurrentPlanet];
+        PlanetStatistics statistics = service[state.CurrentPlanet.Id];
         DateTime timeBeforeUpdated = state.CurrentPlanet.LastUpdated;
 
         PlanetService planetService = new PlanetService(state, service, _notificationService);

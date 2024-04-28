@@ -1,6 +1,6 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
-public sealed class PlanetStatistics
+public sealed record PlanetStatistics
 {
     public PlanetStatistics(int planetId)
     {

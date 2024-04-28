@@ -7,8 +7,7 @@ using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class SaveService
 {
-    private const string GameKey = "SaveData";
-    private const string StatsKey = "Stats";
+    private const string Key = "SaveData";
 
     private readonly GameState _gameState;
     private readonly StatisticService _statistics;
@@ -31,17 +30,13 @@ public sealed class SaveService
     public async Task SaveToStorage()
     {
         string game = JsonSerializer.Serialize(_gameState.CurrentUniverse, _options);
-        string stats = JsonSerializer.Serialize(_statistics.GetValues(), _options);
 
-        Task t1 = _browserService.WriteToLocalStorage(GameKey, game);
-        Task t2 = _browserService.WriteToLocalStorage(StatsKey, stats);
-
-        await Task.WhenAll(t1, t2);
+        await _browserService.WriteToLocalStorage(Key, game);
     }
 
     public async Task<bool> LoadFromStorage()
     {
-        string? data = await _browserService.ReadLocalStorage(GameKey);
+        string? data = await _browserService.ReadLocalStorage(Key);
 
         if (data is null) return false;
 
@@ -49,18 +44,9 @@ public sealed class SaveService
 
         if (universe is null) return false;
 
-        string? stats = await _browserService.ReadLocalStorage(StatsKey);
-
-        if (stats is null) return false;
-
-        PlanetStatistics[]? statistics = JsonSerializer.Deserialize<PlanetStatistics[]>(stats);
-
-        if (statistics is null) return false;
-
         RebuildEntityGraph(universe);
         _gameState.SetState(universe);
-
-        Array.ForEach(statistics, stat => _statistics[stat.PlanetId] = stat);
+        _statistics[_gameState.CurrentPlanet.Id] = universe.Statistics;
 
         return true;
     }

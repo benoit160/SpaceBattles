@@ -1,5 +1,6 @@
 ﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
+using SpaceBattles.Core.Application.Services;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
 
@@ -21,6 +22,8 @@ public sealed class Universe
     public Planet[] Planets { get; init; }
         = Array.Empty<Planet>();
 
+    public required PlanetStatistics Statistics { get; set; }
+
     public List<Player.Player> Players { get; init; }
         = new();
 
@@ -39,6 +42,7 @@ public sealed class Universe
             Galaxies = galaxies,
             SolarSystems = solarSystems,
             Slots = slots,
+            Statistics = default!,
         };
 
         int index = 0;
@@ -48,6 +52,8 @@ public sealed class Universe
         {
             for (byte sol = 1; sol <= solarSystems; sol++)
             {
+                usedPlanetIndexes.Fill(0);
+
                 for (byte slot = 1; slot <= slots; slot++)
                 {
                     byte newImageIndex = 0;
@@ -115,6 +121,7 @@ public sealed class Universe
         startingPlanet.DefineOwner(mainPlayer);
         startingPlanet.Init();
         startingPlanet.Name = planetName;
+        Statistics = new PlanetStatistics(startingPlanet.Id);
     }
 
     private void AddBots(int botsToAdd)

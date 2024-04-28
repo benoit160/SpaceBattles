@@ -22,7 +22,7 @@ public sealed class PlanetService
     public void UpdateCurrentPlanet(DateTime now)
     {
         Span<long> totals = stackalloc long[3];
-        PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet];
+        PlanetStatistics stat = _statisticService[_gameState.CurrentPlanet.Id];
         Planet planet = _gameState.CurrentPlanet;
         BuildingLevel? result = null;
 
