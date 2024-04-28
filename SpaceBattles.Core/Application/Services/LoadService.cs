@@ -29,13 +29,13 @@ public sealed class LoadService
         return JsonSerializer.Deserialize<Manifest>(subset.Span);
     }
 
+    public record struct Asset(
+        [property:JsonPropertyName("hash")]string Hash,
+        [property:JsonPropertyName("url")]string Url);
+
     public class Manifest
     {
         [JsonPropertyName("assets")]
         public required Asset[] Assets { get; set; }
     }
-
-    public record struct Asset(
-        [property:JsonPropertyName("hash")]string Hash,
-        [property:JsonPropertyName("url")]string Url);
 }

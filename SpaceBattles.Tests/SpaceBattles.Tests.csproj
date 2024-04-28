@@ -23,4 +23,16 @@
       <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
     </ItemGroup>
 
+<!--    <ItemGroup>-->
+<!--      <None Update="TestFiles\manifest.txt">-->
+<!--        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+<!--      </None>-->
+<!--    </ItemGroup>-->
+
+    <ItemGroup>
+        <None   Include="TestFiles\**"
+                CopyToOutputDirectory="PreserveNewest"
+                LinkBase="TestFiles\" />
+    </ItemGroup>
+
 </Project>
