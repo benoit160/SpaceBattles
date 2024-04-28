@@ -5,6 +5,8 @@
 @inject GameState GameState
 @inject SaveService SaveService
 
+@inject LoadService LoadService
+
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
 <div class=@(_showCreationScreen? "d-none" : "")>
@@ -23,6 +25,11 @@
     private UniverseCreationWaiter? _universeCreationWaiter;
 
     private bool _showCreationScreen;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadService.GetAndReadManifest();
+    }
 
     private async Task StartGame()
     {
