@@ -31,7 +31,7 @@ public sealed class Universe
     {
         (byte galaxies, byte solarSystems, byte slots) = GetSize(model.UniverseSize);
 
-        Universe newUniverse = new Universe()
+        Universe newUniverse = new Universe
         {
             IsPeacefulUniverse = model.IsPeacefulMode,
             UniverseSpeed = model.UniverseSpeed,
