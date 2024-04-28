@@ -163,7 +163,7 @@ public sealed class Building : IBuildingRequirements
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(7, 2),
+                    new BuildingRequirement(8, 2),
                 ],
             },
             new()
@@ -194,7 +194,7 @@ public sealed class Building : IBuildingRequirements
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(7, 10),
+                    new BuildingRequirement(8, 10),
                 ],
             },
             new()
@@ -212,7 +212,7 @@ public sealed class Building : IBuildingRequirements
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             }
         ];
