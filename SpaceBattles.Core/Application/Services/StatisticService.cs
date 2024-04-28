@@ -1,4 +1,6 @@
-﻿namespace SpaceBattles.Core.Application.Services;
+﻿using SpaceBattles.Core.Domain.Entities.Player;
+
+namespace SpaceBattles.Core.Application.Services;
 
 using System.Collections.Frozen;
 using SpaceBattles.Core.Domain.Entities.Universe;
@@ -6,6 +8,7 @@ using SpaceBattles.Core.Domain.Entities.Universe;
 public sealed class StatisticService
 {
     private readonly FrozenDictionary<Planet, PlanetStatistics> _statistics;
+    private readonly FrozenDictionary<Player, PlayerStatistics> _statistics;
 
     public StatisticService(GameState gameState)
     {

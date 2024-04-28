@@ -1,4 +1,6 @@
-﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
+﻿using SpaceBattles.Core.Application.Services;
+
+namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
@@ -20,6 +22,9 @@ public sealed class Universe
 
     public Planet[] Planets { get; init; }
         = Array.Empty<Planet>();
+
+    public List<PlanetStatistics> PlanetStatistics { get; init; }
+        = new List<PlanetStatistics>();
 
     public List<Player.Player> Players { get; init; }
         = new();

@@ -9,6 +9,12 @@ public sealed class PlanetStatistics
     public long TotalSiliconProduced { get; set; }
 
     public long TotalHeliumProduced { get; set; }
+}
+
+
+public sealed class PlayerStatistics
+{
+    public int PlayerId { get; init; }
 
     public int NumberOfAttackLaunched { get; set; }
 
