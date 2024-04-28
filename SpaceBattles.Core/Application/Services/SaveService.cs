@@ -7,31 +7,41 @@ using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class SaveService
 {
-    private const string Key = "SaveData";
+    private const string GameKey = "SaveData";
+    private const string StatsKey = "Stats";
 
     private readonly GameState _gameState;
+    private readonly StatisticService _statistics;
     private readonly IBrowserService _browserService;
 
-    public SaveService(GameState gameState, IBrowserService browserService)
+    private readonly JsonSerializerOptions _options;
+
+    public SaveService(GameState gameState, StatisticService statisticService, IBrowserService browserService)
     {
         _gameState = gameState;
+        _statistics = statisticService;
         _browserService = browserService;
-    }
-
-    public async Task SaveToStorage()
-    {
-        JsonSerializerOptions options = new JsonSerializerOptions()
+        _options = new JsonSerializerOptions
         {
             IgnoreReadOnlyProperties = true,
             IgnoreReadOnlyFields = true,
         };
-        string json = JsonSerializer.Serialize(_gameState.CurrentUniverse, options);
-        await _browserService.WriteToLocalStorage(Key, json);
+    }
+
+    public async Task SaveToStorage()
+    {
+        string game = JsonSerializer.Serialize(_gameState.CurrentUniverse, _options);
+        string stats = JsonSerializer.Serialize(_statistics.GetValues(), _options);
+
+        Task t1 = _browserService.WriteToLocalStorage(GameKey, game);
+        Task t2 = _browserService.WriteToLocalStorage(StatsKey, stats);
+
+        await Task.WhenAll(t1, t2);
     }
 
     public async Task<bool> LoadFromStorage()
     {
-        string? data = await _browserService.ReadLocalStorage(Key);
+        string? data = await _browserService.ReadLocalStorage(GameKey);
 
         if (data is null) return false;
 
@@ -39,8 +49,20 @@ public sealed class SaveService
 
         if (universe is null) return false;
 
+        string? stats = await _browserService.ReadLocalStorage(StatsKey);
+
+        if (stats is null) return false;
+
+        PlanetStatistics[]? statistics = JsonSerializer.Deserialize<PlanetStatistics[]>(stats);
+
+        if (statistics is null) return false;
+
         RebuildEntityGraph(universe);
         _gameState.SetState(universe);
+        
+        Array.ForEach(statistics, stat => _statistics[]);
+        
+        _statistics.
         return true;
     }
 
