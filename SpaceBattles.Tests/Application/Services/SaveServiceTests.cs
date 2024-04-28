@@ -16,9 +16,9 @@ public class SaveServiceTests
     public SaveServiceTests()
     {
         _browserService = new Mock<IBrowserService>();
-        _gameState = new GameState();
         _statisticService = new StatisticService();
-        
+        _gameState = new GameState(_statisticService);
+
         UniverseCreationModel model = new UniverseCreationModel
         {
             CommanderName = "Ben",
