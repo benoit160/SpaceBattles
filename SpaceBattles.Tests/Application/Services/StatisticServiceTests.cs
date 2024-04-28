@@ -21,7 +21,7 @@ public class StatisticServiceTests
         GameState state = new GameState();
         state.Initialize(model);
         
-        StatisticService service = new StatisticService(state);
+        StatisticService service = new StatisticService();
 
         // Act
         PlanetStatistics statistics = service[state.CurrentPlanet];
@@ -40,7 +40,7 @@ public class StatisticServiceTests
         GameState state = new GameState();
         state.Initialize(model);
         
-        StatisticService service = new StatisticService(state);
+        StatisticService service = new StatisticService();
         PlanetStatistics statistics = service[state.CurrentPlanet];
         DateTime timeBeforeUpdated = state.CurrentPlanet.LastUpdated;
 
@@ -63,7 +63,7 @@ public class StatisticServiceTests
         GameState state = new GameState();
         state.Initialize(model);
         
-        StatisticService service = new StatisticService(state);
+        StatisticService service = new StatisticService();
         PlanetStatistics statistics = service[state.CurrentPlanet];
         DateTime timeBeforeUpdated = state.CurrentPlanet.LastUpdated;
 

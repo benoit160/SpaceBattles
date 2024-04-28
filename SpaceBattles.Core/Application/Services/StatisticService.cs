@@ -6,17 +6,21 @@ public sealed class StatisticService
 {
     private readonly Dictionary<int, PlanetStatistics> _planetStatistics;
 
-    public StatisticService(GameState gameState)
+    public StatisticService()
     {
-        _planetStatistics = gameState.CurrentUniverse.Planets
-            .Select(planet => (Planet: planet, stats: new PlanetStatistics(planet.Id)))
-            .ToDictionary(tuple => tuple.Planet.Id, tuple => tuple.stats);
+        _planetStatistics = new Dictionary<int, PlanetStatistics>();
     }
 
     public PlanetStatistics this[Planet planet]
     {
         get => _planetStatistics[planet.Id];
         set => _planetStatistics[planet.Id] = value;
+    }
+
+    public PlanetStatistics this[int id]
+    {
+        get => _planetStatistics[id];
+        set => _planetStatistics[id] = value;
     }
 
     public void StartNewPlanetStatistics(Planet planet)

@@ -59,10 +59,9 @@ public sealed class SaveService
 
         RebuildEntityGraph(universe);
         _gameState.SetState(universe);
-        
-        Array.ForEach(statistics, stat => _statistics[]);
-        
-        _statistics.
+
+        Array.ForEach(statistics, stat => _statistics[stat.PlanetId] = stat);
+
         return true;
     }
 
