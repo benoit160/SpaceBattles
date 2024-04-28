@@ -35,4 +35,11 @@
                 LinkBase="TestFiles\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="TestFiles\image.avif">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

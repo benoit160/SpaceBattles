@@ -1,5 +1,8 @@
-﻿namespace SpaceBattles.Core.Application.Services;
+﻿using SkiaSharp;
 
+namespace SpaceBattles.Core.Application.Services;
+
+using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -12,6 +15,55 @@ public sealed class LoadService
     public LoadService(HttpClient httpClient)
     {
         _httpClient = httpClient;
+    }
+
+    public async Task GetImages()
+    {
+        Manifest manifest = await GetAndReadManifest()
+                            ?? throw new JsonException("Could not deserialize manifest.json");
+
+        IEnumerable<Asset> images = manifest.Assets.Where(asset => asset.Url.Contains("images", StringComparison.OrdinalIgnoreCase));
+
+        foreach (Asset asset in images)
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(asset.Url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                MemoryStream content = new MemoryStream();
+
+                await response.Content.CopyToAsync(content);
+                ResizeWithSkiaSharp(content);
+            }
+        }
+    }
+
+    public static void ResizeWithSkiaSharp(Stream stream)
+    {
+        using SKData? skData = SKData.Create(stream);
+        using SKCodec? codec = SKCodec.Create(skData);
+
+        var supportedScale = codec
+            .GetScaledDimensions((float)150 / codec.Info.Width);
+
+        var nearest = new SKImageInfo(supportedScale.Width, supportedScale.Height);
+        using var destinationImage = SKBitmap.Decode(codec, nearest);
+        using var resizedImage = destinationImage.Resize(new SKImageInfo(150, 150), SKFilterQuality.High);
+
+        var format = SKEncodedImageFormat.Avif;
+        using var outputImage = SKImage.FromBitmap(resizedImage);
+        using var data = outputImage.Encode(format, 90);
+        using var outputStream = GetOutputStream("skiasharp");
+        data.SaveTo(outputStream);
+
+        outputStream.Close();
+        stream.Close();
+    }
+
+    private static Stream GetOutputStream(string name)
+    {
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        return File.Open(path + $"output_{name}.avif", FileMode.OpenOrCreate);
     }
 
     public async Task<Manifest?> GetAndReadManifest()

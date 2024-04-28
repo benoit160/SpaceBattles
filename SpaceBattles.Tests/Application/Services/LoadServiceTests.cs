@@ -36,6 +36,7 @@ public class LoadServiceTests
         {
             BaseAddress = new Uri("http://www.spacebattles.azurewebsites.net"),
         };
+        
         LoadService service = new LoadService(client);
         
         // Act
@@ -43,5 +44,18 @@ public class LoadServiceTests
 
         // Assert
         Assert.NotNull(manifest);
+        Assert.NotEmpty(manifest.Assets);
+    }
+
+    [Fact]
+    public async Task ResizeImage()
+    {
+        // Arrange
+        using FileStream file = File.OpenRead("./TestFiles/image.avif");
+
+        // Act
+        LoadService.ResizeWithSkiaSharp(file);
+
+        // Assert
     }
 }
