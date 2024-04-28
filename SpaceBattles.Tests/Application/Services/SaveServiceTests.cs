@@ -11,12 +11,14 @@ public class SaveServiceTests
 {
     private readonly Mock<IBrowserService> _browserService;
     private readonly GameState _gameState;
+    private readonly StatisticService _statisticService;
 
     public SaveServiceTests()
     {
         _browserService = new Mock<IBrowserService>();
-        _gameState = new GameState();
-        
+        _statisticService = new StatisticService();
+        _gameState = new GameState(_statisticService);
+
         UniverseCreationModel model = new UniverseCreationModel
         {
             CommanderName = "Ben",
@@ -31,7 +33,7 @@ public class SaveServiceTests
     public async Task SaveToStorage()
     {
         // Arrange
-        SaveService service = new SaveService(_gameState, _browserService.Object);
+        SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
         _browserService.Setup(bs => bs.WriteToLocalStorage(
                 It.Is<string>(key => key == "SaveData"),
                 It.IsAny<string>()));
@@ -48,7 +50,7 @@ public class SaveServiceTests
     public async Task LoadFromStorage()
     {
         // Arrange
-        SaveService service = new SaveService(_gameState, _browserService.Object);
+        SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
 
         string returnedJson = JsonSerializer.Serialize(_gameState.CurrentUniverse);
         
@@ -89,7 +91,7 @@ public class SaveServiceTests
     public async Task LoadFromStorage_InvalidKey_Or_NoData()
     {
         // Arrange
-        SaveService service = new SaveService(_gameState, _browserService.Object);
+        SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
         _browserService.Setup(bs => bs.ReadLocalStorage(It.IsAny<string>()))
             .ReturnsAsync(null as string);
 

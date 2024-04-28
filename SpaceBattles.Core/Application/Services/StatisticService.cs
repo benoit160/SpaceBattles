@@ -1,21 +1,19 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
-using System.Collections.Frozen;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class StatisticService
 {
-    private readonly FrozenDictionary<Planet, PlanetStatistics> _statistics;
+    private readonly Dictionary<int, PlanetStatistics> _planetStatistics;
 
-    public StatisticService(GameState gameState)
+    public StatisticService()
     {
-        _statistics = gameState.CurrentUniverse.Planets
-            .Select(planet => (Planet: planet, stats: new PlanetStatistics()))
-            .ToFrozenDictionary(tuple => tuple.Planet, tuple => tuple.stats);
+        _planetStatistics = new Dictionary<int, PlanetStatistics>();
     }
 
-    public PlanetStatistics this[Planet p]
+    public PlanetStatistics this[int id]
     {
-        get => _statistics[p];
+        get => _planetStatistics[id];
+        set => _planetStatistics[id] = value;
     }
 }
