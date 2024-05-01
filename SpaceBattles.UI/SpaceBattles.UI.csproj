@@ -15,4 +15,8 @@
       <Folder Include="Pages\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
+    </ItemGroup>
+
 </Project>
