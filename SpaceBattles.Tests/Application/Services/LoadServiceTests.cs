@@ -54,7 +54,7 @@ public class LoadServiceTests
         using FileStream file = File.OpenRead("./TestFiles/image.avif");
 
         // Act
-        LoadService.ResizeWithSkiaSharp(file);
+        LoadService.ResizeWithImageSharp(file);
 
         // Assert
     }

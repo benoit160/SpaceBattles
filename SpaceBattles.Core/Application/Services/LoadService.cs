@@ -1,10 +1,12 @@
-﻿using SkiaSharp;
+﻿using SixLabors.ImageSharp;
 
 namespace SpaceBattles.Core.Application.Services;
 
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Processing;
 
 public sealed class LoadService
 {
@@ -33,28 +35,31 @@ public sealed class LoadService
                 MemoryStream content = new MemoryStream();
 
                 await response.Content.CopyToAsync(content);
-                ResizeWithSkiaSharp(content);
+                ResizeWithImageSharp(content);
             }
         }
     }
 
-    public static void ResizeWithSkiaSharp(Stream stream)
+    public static void ResizeWithImageSharp(Stream stream)
     {
-        using SKData? skData = SKData.Create(stream);
-        using SKCodec? codec = SKCodec.Create(skData);
+        Image image;
 
-        var supportedScale = codec
-            .GetScaledDimensions((float)150 / codec.Info.Width);
+        try
+        {
+            image = Image.Load(stream);
+        }
+        catch (NotSupportedException e)
+        {
+            Console.WriteLine(e.Message);
+            return;
+        }
 
-        var nearest = new SKImageInfo(supportedScale.Width, supportedScale.Height);
-        using var destinationImage = SKBitmap.Decode(codec, nearest);
-        using var resizedImage = destinationImage.Resize(new SKImageInfo(150, 150), SKFilterQuality.High);
+        int width = image.Width;
+        int height = image.Height;
+        image.Mutate(x => x.Resize(width, height));
 
-        var format = SKEncodedImageFormat.Avif;
-        using var outputImage = SKImage.FromBitmap(resizedImage);
-        using var data = outputImage.Encode(format, 90);
-        using var outputStream = GetOutputStream("skiasharp");
-        data.SaveTo(outputStream);
+        using var outputStream = GetOutputStream("imagesharp");
+        image.Save(outputStream, new PngEncoder());
 
         outputStream.Close();
         stream.Close();
