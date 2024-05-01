@@ -13,11 +13,14 @@
       <Folder Include="Components\" />
       <Folder Include="Layouts\" />
       <Folder Include="Pages\" />
-      <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
     </ItemGroup>
+    
+    <PropertyGroup>
+        <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    </PropertyGroup>
 
 </Project>
