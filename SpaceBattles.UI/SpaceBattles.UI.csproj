@@ -13,6 +13,7 @@
       <Folder Include="Components\" />
       <Folder Include="Layouts\" />
       <Folder Include="Pages\" />
+      <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <ItemGroup>
