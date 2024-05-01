@@ -301,7 +301,7 @@ public sealed class Planet : IPosition
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            Duration = level.Duration,
+            Duration = level.Duration(Buildings.First(b => b.BuildingId == 8).Level),
         };
 
         BuildingUpgrade = upgrade;
@@ -328,7 +328,7 @@ public sealed class Planet : IPosition
             Start = DateTime.Now,
             CombatEntityId = combatEntityId,
             Quantity = quantity,
-            Duration = (entity as IRequirements).Duration * quantity,
+            Duration = (entity as IRequirements).Duration(Buildings.First(b => b.BuildingId == 9).Level) * quantity,
         };
 
         ShipyardConstruction = construction;

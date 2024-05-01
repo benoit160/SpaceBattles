@@ -21,12 +21,10 @@ public interface IRequirements
         }
     }
 
-    public TimeSpan Duration
+    public TimeSpan Duration(int buildingLevel)
     {
-        get
-        {
-            double durationHours = (TitaniumCost + SiliconCost) / 2500d;
-            return TimeSpan.FromHours(durationHours);
-        }
+        double reductionFactor = 2500d * (1 + buildingLevel);
+        double durationHours = (TitaniumCost + SiliconCost) / reductionFactor;
+        return TimeSpan.FromHours(durationHours);
     }
 }
