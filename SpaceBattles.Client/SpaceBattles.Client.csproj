@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
+    <ProjectReference Include="..\SpaceBattles.UI\SpaceBattles.UI.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
