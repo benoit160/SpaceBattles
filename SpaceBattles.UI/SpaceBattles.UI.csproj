@@ -6,7 +6,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4" />
-        <PackageReference Include="MudBlazor" Version="6.19.1" />
+        <PackageReference Include="MudBlazor" Version="6.17.0" />
     </ItemGroup>
 
     <ItemGroup>
