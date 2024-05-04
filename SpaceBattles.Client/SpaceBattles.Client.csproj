@@ -24,10 +24,6 @@
     <_ContentIncludedByDefault Remove="Components\Progress.razor" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
   <PropertyGroup>
     <!-- Those remove some unused framework feature to reduce transfered payload -->
     <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
