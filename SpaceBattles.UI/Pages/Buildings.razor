@@ -6,6 +6,7 @@
 
 @inject GameState GameState
 @inject PlanetService PlanetService
+@inject NavigationManager NavigationManager
 
 @implements IDisposable
 
@@ -111,14 +112,30 @@
                                 {
                                     @GetBuildingStatus(building.BuildingId)
                                     <MudSpacer/>
-                                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(building.BuildingId)">Details</MudButton>
+                                    <MudStack Row Justify="Justify.SpaceEvenly">
+                                        <MudButton 
+                                            Class="align-self-center"
+                                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                                            OnClick="@(() => OpenDetails(building.BuildingId))">Details</MudButton>
+
+                                        <MudButton 
+                                            Class="align-self-center"
+                                            StartIcon="@Icons.Material.Filled.OpenInNew"
+                                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                                            OnClick="@(() => Goto(building.Building.Name.Replace(' ', '-')))">To page</MudButton>
+                                    </MudStack>
                                 }
                             </MudStack>
                         </MudStack>
                     </MudPaper>
                 </MudItem>;
     }
-
+    
+    private void Goto(string name)
+    {
+        NavigationManager.NavigateTo($"Building/{name}");
+    }
+    
     private RenderFragment GetBuildingStatus(short buildingId)
     {
         long current, max;

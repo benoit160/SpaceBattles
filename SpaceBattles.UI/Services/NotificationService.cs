@@ -1,7 +1,7 @@
 ﻿using MudBlazor;
 using SpaceBattles.Core.Application.Services;
 
-namespace SpaceBattles.Client.Services;
+namespace SpaceBattles.UI.Services;
 
 public sealed class NotificationService  : INotificationService
 {
