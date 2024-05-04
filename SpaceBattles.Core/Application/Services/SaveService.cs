@@ -11,11 +11,11 @@ public sealed class SaveService
 
     private readonly GameState _gameState;
     private readonly StatisticService _statistics;
-    private readonly IBrowserService _browserService;
+    private readonly BrowserService _browserService;
 
     private readonly JsonSerializerOptions _options;
 
-    public SaveService(GameState gameState, StatisticService statisticService, IBrowserService browserService)
+    public SaveService(GameState gameState, StatisticService statisticService, BrowserService browserService)
     {
         _gameState = gameState;
         _statistics = statisticService;
