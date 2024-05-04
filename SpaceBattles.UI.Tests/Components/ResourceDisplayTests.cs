@@ -45,8 +45,9 @@ public class ResourceDisplayTests : TestContext
             parameters.Add(p => p.CurrentQuantity,  currentQuantity);
         });
         
-        cut.Instance.CurrentQuantity = 200;
-        cut.Render();
+        cut.SetParametersAndRender(parameters => parameters
+            .Add(p => p.CurrentQuantity, 200)
+        );
 
         // Assert
         Assert.Contains($"200 / 150", cut.Markup);
