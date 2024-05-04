@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.Tests", "Space
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.UI", "SpaceBattles.UI\SpaceBattles.UI.csproj", "{2C0FAC10-8BA9-46A9-A76F-6231EE2D2F74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.UI.Tests", "SpaceBattles.UI.Tests\SpaceBattles.UI.Tests.csproj", "{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{2C0FAC10-8BA9-46A9-A76F-6231EE2D2F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C0FAC10-8BA9-46A9-A76F-6231EE2D2F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C0FAC10-8BA9-46A9-A76F-6231EE2D2F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

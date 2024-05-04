@@ -9,11 +9,11 @@
 </MudStack>
 
 @code {
-    [Parameter]
-    public ResourceCost Cost { get; init; }
+    [Parameter, EditorRequired]
+    public ResourceCost Cost { get; set; }
 
-    [Parameter]
-    public long CurrentQuantity { get; init; }
+    [Parameter, EditorRequired]
+    public long CurrentQuantity { get; set; }
 
     private Color _color;
     private ResourceInfo _resourceInfo;
