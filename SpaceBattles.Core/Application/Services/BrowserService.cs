@@ -1,9 +1,8 @@
+namespace SpaceBattles.Core.Application.Services;
+
 using Microsoft.JSInterop;
-using SpaceBattles.Core.Application.Services;
 
-namespace SpaceBattles.Client.Services;
-
-public sealed class BrowserService : IBrowserService
+public sealed class BrowserService
 {
     private readonly IJSRuntime _jsRuntime;
 

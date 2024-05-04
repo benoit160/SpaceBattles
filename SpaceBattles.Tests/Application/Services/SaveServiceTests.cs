@@ -9,13 +9,13 @@ namespace SpaceBattles.Tests.Application.Services;
 
 public class SaveServiceTests
 {
-    private readonly Mock<IBrowserService> _browserService;
+    private readonly Mock<BrowserService> _browserService;
     private readonly GameState _gameState;
     private readonly StatisticService _statisticService;
 
     public SaveServiceTests()
     {
-        _browserService = new Mock<IBrowserService>();
+        _browserService = new Mock<BrowserService>();
         _statisticService = new StatisticService();
         _gameState = new GameState(_statisticService);
 
