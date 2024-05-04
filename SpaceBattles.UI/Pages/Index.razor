@@ -1,4 +1,10 @@
 ﻿@page "/"
+
+@using SpaceBattles.Core.Application.Services
+@using SpaceBattles.Core.Domain.Models
+@using SpaceBattles.UI.Components
+@using SpaceBattles.UI.Layouts
+
 @layout MainLayout
 
 @inject NavigationManager NavigationManager
@@ -7,15 +13,15 @@
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
-<div class=@(_showCreationScreen? "d-none" : "")>
+<div class=@(_showCreationScreen? "d-none" : string.Empty)>
     <MudStack AlignItems="AlignItems.Center">
         <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
 
-        <MudButton OnClick="StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
     </MudStack>
 </div>
 
-<div class=@(_showCreationScreen? "" : "d-none")>
+<div class=@(_showCreationScreen? string.Empty : "d-none")>
     <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
 </div>
 

@@ -37,7 +37,7 @@
 
             <MudStack Row Justify="Justify.SpaceAround">
                 
-                @foreach (var display in Resources.ResourcesDisplay())
+                @foreach (var display in Resources.ResourceInfos)
                 {
                     <MudStack>
                         <MudTooltip Text="@display.Name" Color="Color.Info">
@@ -62,7 +62,7 @@
                     <th>per day</th>
                 </tr>
                 
-                @foreach (ResourceInfo display in Resources.ResourcesDisplay())
+                @foreach (ResourceInfo display in Resources.ResourceInfos)
                 {
                     <tr>
                         <td>@display.Name</td>

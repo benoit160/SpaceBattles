@@ -76,6 +76,7 @@ public class ResourceDisplayTests : TestContext
     [Theory]
     [InlineData(Resource.Titanium, "/images/items/titanium.avif")]
     [InlineData(Resource.Silicon, "/images/items/silicon.avif")]
+    [InlineData(Resource.Helium, "/images/items/helium.avif")]
     public void Component_Render_ResourcesImages(Resource resource, string expectedSrc)
     {
         // Arrange
