@@ -36,7 +36,7 @@ public class TotalCostDisplayTests : TestContext
     [Theory]
     [InlineData(0, "~ 1 minute")]
     [InlineData(1, "~ 2 minutes")]
-    [InlineData(10, "~ 1 hour")]
+    [InlineData(11, "~ 2 hour")]
     public void Component_Render_DurationText(short level, string expectedText)
     {
         // Arrange

@@ -3,7 +3,7 @@
 using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Models;
 
-public sealed class GameState
+public class GameState
 {
     private readonly StatisticService _statistic;
 

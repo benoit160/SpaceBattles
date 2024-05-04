@@ -12,5 +12,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<StatisticService>();
         services.AddScoped<SaveService>();
         services.AddScoped<BotService>();
+        services.AddScoped<IBrowserService, BrowserService>();
     }
 }

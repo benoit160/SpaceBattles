@@ -16,7 +16,7 @@ public class MainLayoutTests : TestContext
         // Arrange
         
         // Act
-        IRenderedComponent<MainLayout> cut = RenderComponent<MainLayout>();
+        RenderComponent<MainLayout>();
         
         // Assert
         Assert.True(true);

@@ -40,7 +40,16 @@ public sealed class SaveService
 
         if (data is null) return false;
 
-        Universe? universe = JsonSerializer.Deserialize<Universe>(data);
+        Universe? universe;
+
+        try
+        {
+            universe = JsonSerializer.Deserialize<Universe>(data);
+        }
+        catch
+        {
+            return false;
+        }
 
         if (universe is null) return false;
 

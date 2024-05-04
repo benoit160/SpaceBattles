@@ -5,7 +5,6 @@ public class UniverseCreationWaiterTests  : TestContext
     public UniverseCreationWaiterTests()
     {
         Services.AddMudServices();
-        JSInterop.SetupVoid("mudPopover.initialize", _ => true);
     }
     
     [Fact]

@@ -6,5 +6,7 @@ public interface IBrowserService
 
     public Task WriteToLocalStorage(string key, string value);
 
+    public Task DeleteFromLocalStorage(string key);
+
     public Task SetBadge(int? number = null);
 }

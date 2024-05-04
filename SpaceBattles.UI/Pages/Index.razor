@@ -17,11 +17,11 @@
     <MudStack AlignItems="AlignItems.Center">
         <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
 
-        <MudButton OnClick="StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
     </MudStack>
 </div>
 
-<div class=@(_showCreationScreen? "" : "d-none")>
+<div class=@(_showCreationScreen? "waiter" : "waiter d-none")>
     <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
 </div>
 
