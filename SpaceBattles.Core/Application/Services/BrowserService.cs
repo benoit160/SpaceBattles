@@ -21,11 +21,6 @@ public sealed class BrowserService : IBrowserService
         await _jsRuntime.InvokeAsync<string>("localStorage.setItem", key, value);
     }
 
-    public async Task DeleteFromLocalStorage(string key)
-    {
-        await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", key);
-    }
-
     public async Task SetBadge(int? number = null)
     {
         if (number is null)
