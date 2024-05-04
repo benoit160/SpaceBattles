@@ -188,7 +188,7 @@ public sealed class Planet : IPosition
 
         const double secondsToMinuteFraction = 1d / 60d;
 
-        var resources = Enum.GetValues<Resource>();
+        Span<Resource> resources = Enum.GetValues<Resource>();
         for (int i = 0; i < resources.Length; i++)
         {
             Resource loopResource = resources[i];
