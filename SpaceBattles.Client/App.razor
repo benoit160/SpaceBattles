@@ -1,4 +1,6 @@
-﻿<Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="@([typeof(SpaceBattles.UI.Pages.Index).Assembly])">
+﻿@using SpaceBattles.UI.Layouts
+
+<Router AppAssembly="@typeof(SpaceBattles.UI.Pages.Index).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(GameLayout)" />
     </Found>

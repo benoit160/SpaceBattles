@@ -1,12 +1,12 @@
-﻿@page "/Overview"
+﻿@using SpaceBattles.Core.Domain.Entities.Universe
+@using SpaceBattles.Core.Domain.Records
+
+@page "/Overview"
 
 @inject GameState GameState
 @inject PlanetService PlanetService
 
 @implements IDisposable
-
-@using SpaceBattles.Core.Domain.Entities.Universe
-@using SpaceBattles.Core.Domain.Records
 
 @{
     Planet planet = GameState.CurrentPlanet;
@@ -43,7 +43,7 @@
                         <MudTooltip Text="@display.Name" Color="Color.Info">
                             <MudImage Src="@display.ImagePath" Width="128" Height="128"/>
                         </MudTooltip>
-                        <MudText Class="align-self-center" Typo="Typo.body1">@planet[@display.Resource].ToString("#,##0")</MudText>
+                        <MudText Class="align-self-center" Typo="Typo.body1">@planet[display.Resource].ToString("#,##0")</MudText>
                     </MudStack>
                 }
             </MudStack>
