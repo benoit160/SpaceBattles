@@ -1,47 +1,47 @@
-﻿@page "/Shipyard"
-@using SpaceBattles.Core.Domain.Entities.Battle
-@layout GameLayout
+﻿@using SpaceBattles.Core.Domain.Entities.Battle
+
+@page "/Defenses"
 
 @inject GameState GameState
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height);">
     <MudGrid Class="py-3" Spacing="0" Justify="Justify.Center">
-        @for (int i = 0; i < _spaceships.Length; i++)
+        @for (int i = 0; i < _defenses.Length; i++)
         {
             int localIndex = i;
-            @SpaceshipCard(localIndex)
+            @DefenseCard(localIndex)
         }
     </MudGrid>
 </MudContainer>
 
 @code {
-    private ReadOnlyMemory<CombatEntityInventory> _spaceships;
-    
+    private ReadOnlyMemory<CombatEntityInventory> _defenses;
+
     protected override void OnInitialized()
     {
-        _spaceships = GameState.CurrentPlanet.Spaceships;
+        _defenses = GameState.CurrentPlanet.Defenses;
     }
-    
+
     private string GetImageStyle(CombatEntityInventory inv)
     {
         return !GameState.CurrentPlanet.MeetsBuildingRequirements(inv.CombatEntity) ? "filter: grayscale(1)" : "";
     }
 
-    private RenderFragment SpaceshipCard(int index)
+    private RenderFragment DefenseCard(int index)
     {
         return
         @<MudItem xs="12" md="5">
             <MudPaper Class="pa-2 ma-1">
                 <MudStack Row>
-                    <MudImage Src="@_spaceships.Span[index].CombatEntity.ImagePath"
-                              Alt="a visual representation of this spaceship"
+                    <MudImage Src="@_defenses.Span[index].CombatEntity.ImagePath"
+                              Alt="a visual representation of this defense"
                               Class="align-self-center rounded-lg"
-                              Width="150" Height="150" Style="@(GetImageStyle(_spaceships.Span[index]))"/>
+                              Width="150" Height="150" Style="@(GetImageStyle(_defenses.Span[index]))"/>
 
                     <MudStack Class="flex-grow-1">
-                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_spaceships.Span[index].CombatEntity.Name</MudText>
+                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_defenses.Span[index].CombatEntity.Name</MudText>
                         <MudDivider/>
-                        <MudText Color="Color.Info" Typo="Typo.h6">@_spaceships.Span[index].Quantity available</MudText>
+                        <MudText Color="Color.Info" Typo="Typo.h6">@_defenses.Span[index].Quantity available</MudText>
 
                         <MudSpacer/>
                     </MudStack>

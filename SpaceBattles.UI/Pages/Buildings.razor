@@ -1,12 +1,13 @@
-﻿@page "/Buildings"
+﻿@using SpaceBattles.Core.Domain.Entities.Universe
+@using SpaceBattles.Core.Domain.Entities.Building
+@using SpaceBattles.Core.Domain.Enums
+
+@page "/Buildings"
 
 @inject GameState GameState
 @inject PlanetService PlanetService
 
 @implements IDisposable
-
-@using SpaceBattles.Core.Domain.Entities.Universe
-@using SpaceBattles.Core.Domain.Entities.Building
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
     <MudStack AlignItems="AlignItems.Center">

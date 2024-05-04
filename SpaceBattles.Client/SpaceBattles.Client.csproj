@@ -19,6 +19,11 @@
     <ProjectReference Include="..\SpaceBattles.UI\SpaceBattles.UI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\BuildingDetails.razor" />
+    <_ContentIncludedByDefault Remove="Components\Progress.razor" />
+  </ItemGroup>
+
   <PropertyGroup>
     <!-- Those remove some unused framework feature to reduce transfered payload -->
     <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
