@@ -12,6 +12,6 @@ public static class ServicesExtensions
         serviceCollection.AddScoped<SaveService>();
         serviceCollection.AddScoped<BotService>();
         serviceCollection.AddScoped<INotificationService, NotificationService>();
-        serviceCollection.AddScoped<BrowserService>();
+        serviceCollection.AddScoped<IBrowserService,  BrowserService>();
     }
 }
