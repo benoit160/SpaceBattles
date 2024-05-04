@@ -16,7 +16,7 @@ public class ResourceDisplayTests : TestContext
     public void Component_Render()
     {
         // Arrange
-        ResourceCost cost = new ResourceCost(Resource.Helium, 150);
+        ResourceCost cost = new ResourceCost(Resource.Titanium, 150);
         long currentQuantity = 175;
         
         // Act
@@ -76,6 +76,7 @@ public class ResourceDisplayTests : TestContext
     [Theory]
     [InlineData(Resource.Titanium, "/images/items/titanium.avif")]
     [InlineData(Resource.Silicon, "/images/items/silicon.avif")]
+    [InlineData(Resource.Helium, "/images/items/helium.avif")]
     public void Component_Render_ResourcesImages(Resource resource, string expectedSrc)
     {
         // Arrange
