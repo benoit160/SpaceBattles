@@ -48,11 +48,11 @@
 </MudContainer>
 
 @code {
-    [Parameter]
-    public BuildingLevel Building { get; init; } = default!;
+    [Parameter, EditorRequired]
+    public required BuildingLevel Building { get; set; }
     
-    [Parameter]
-    public Planet Planet { get; init; } = default!;
+    [Parameter, EditorRequired]
+    public required Planet Planet { get; set; }
 
     string _style = string.Empty;
 

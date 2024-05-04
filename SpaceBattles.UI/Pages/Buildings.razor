@@ -13,12 +13,12 @@
     <MudStack AlignItems="AlignItems.Center">
         <MudStack Row Style="width: 40%;">
             <div style="width: 50%; display: flex; justify-content: center">
-                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Info" Style="font-family:TitleFont;" OnClick="() => SwitchDisplays(true)">
+                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Info" Style="font-family:TitleFont;" OnClick="@(() => SwitchDisplays(true))">
                     <h3>Resources</h3>
                 </MudButton>
             </div>
             <div style="width: 50%; display: flex; justify-content: center">
-                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Warning" Style="font-family:TitleFont;" OnClick="() => SwitchDisplays(false)">
+                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Warning" Style="font-family:TitleFont;" OnClick="@(() => SwitchDisplays(false))">
                     <h3>Facilities</h3>
                 </MudButton>
             </div>

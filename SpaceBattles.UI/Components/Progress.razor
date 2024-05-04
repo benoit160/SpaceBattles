@@ -16,15 +16,15 @@
 </MudContainer>
 
 @code {
-    [Parameter]
-    public string Display { get; init; } = string.Empty;
+    [Parameter, EditorRequired]
+    public required string Display { get; set; }
 
-    [Parameter]
-    public string DisplaySecondary { get; init; } = string.Empty;
+    [Parameter, EditorRequired]
+    public required string DisplaySecondary { get; set; }
 
-    [Parameter]
-    public string Image { get; init; } = string.Empty;
+    [Parameter, EditorRequired]
+    public required string Image { get; set; }
 
-    [Parameter]
-    public Upgrade Process { get; init; } = default!;
+    [Parameter, EditorRequired]
+    public required Upgrade Process { get; set; }
 }
