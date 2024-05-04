@@ -7,9 +7,8 @@ public class UniverseCreatorTests : TestContext
     public UniverseCreatorTests()
     {
         Services.AddMudServices();
-        JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
-
         Services.AddCoreSpaceBattlesServices();
+        JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
     }
     
     [Fact]
