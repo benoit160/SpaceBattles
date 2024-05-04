@@ -20,7 +20,7 @@
 
     protected override void OnInitialized()
     {
-        _resourceInfo = Resources.ResourcesDisplay().Single(x => x.Resource == Cost.Resource);
+        _resourceInfo = Resources.ResourceInfos[(int)Cost.Resource - 1];
         _color = CurrentQuantity < Cost.RequiredQuantity ? Color.Error : Color.Success;
     }
 
