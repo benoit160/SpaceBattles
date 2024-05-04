@@ -13,7 +13,7 @@
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
-<div class=@(_showCreationScreen? "d-none" : "")>
+<div class=@(_showCreationScreen? "d-none" : string.Empty)>
     <MudStack AlignItems="AlignItems.Center">
         <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
 
@@ -21,7 +21,7 @@
     </MudStack>
 </div>
 
-<div class=@(_showCreationScreen? "waiter" : "waiter d-none")>
+<div class=@(_showCreationScreen? string.Empty : "d-none")>
     <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
 </div>
 
