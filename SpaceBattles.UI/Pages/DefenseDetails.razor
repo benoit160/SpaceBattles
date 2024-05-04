@@ -1,0 +1,26 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Battle
+
+@page "/Defense/{DefenseName}"
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Class="pa-4 rounded-xl">
+        <MudStack>
+            <MudStack>
+                <MudStack Row ></MudStack>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [Parameter]
+    public required string DefenseName { get; set; }
+
+    private Defense _defense;
+    
+    protected override void OnParametersSet()
+    {
+        _defense = Defense.Defenses()
+            .Single(d => d.Name.Replace(" ", string.Empty) == DefenseName);
+    }
+}
