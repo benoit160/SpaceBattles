@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
 using MudBlazor.Services;
 using SpaceBattles.Client.Services;
+using SpaceBattles.Core.Application.Extensions;
 
 namespace SpaceBattles.Client
 {
@@ -16,6 +17,7 @@ namespace SpaceBattles.Client
 
             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             
+            builder.Services.AddCoreSpaceBattlesServices();
             builder.Services.AddSpaceBattlesServices();
             
             builder.Services.AddMudServices(config =>
