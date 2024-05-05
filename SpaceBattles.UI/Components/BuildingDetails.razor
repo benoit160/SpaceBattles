@@ -17,7 +17,6 @@
                     <MudImage Style="@_style" Src="@Building.Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="256" Height="256"/>
                     @ParagraphDisplay(@Building.Building.Description)
                 </MudStack>
-
             </MudStack>
             
             <MudStack Row Spacing="0" Class="py-4">
@@ -38,7 +37,7 @@
             }
             else if (Planet.HasEnoughResource(Building))
             {
-                <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="() => Upgrade()">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
+                <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
             }
             else
             {
