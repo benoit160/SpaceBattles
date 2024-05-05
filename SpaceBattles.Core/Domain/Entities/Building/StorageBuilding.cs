@@ -2,7 +2,7 @@
 
 using SpaceBattles.Core.Domain.Enums;
 
-public class StorageBuilding : Building
+public sealed class StorageBuilding : Building
 {
     public StorageBuilding()
     {

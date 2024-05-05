@@ -2,7 +2,7 @@
 
 using SpaceBattles.Core.Domain.Enums;
 
-public class ProducerBuilding : Building
+public sealed class ProducerBuilding : Building
 {
     public ProducerBuilding()
     {
