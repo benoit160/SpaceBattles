@@ -45,5 +45,7 @@ public sealed class PlanetService
         stat.TotalTitaniumProduced += totals[0];
         stat.TotalSiliconProduced += totals[1];
         stat.TotalHeliumProduced += totals[2];
+
+        planet.ProcessShipyard(now);
     }
 }
