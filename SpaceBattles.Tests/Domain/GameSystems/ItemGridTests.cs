@@ -6,24 +6,16 @@ public class ItemGridTests
 {
     sealed class TestItem : IGridItem
     {
-        public bool CanBeRemoved => true;
+        public TestItem(bool removable = true)
+        {
+            CanBeRemoved = removable;
+        }
+        
+        public bool CanBeRemoved { get; set; }
     }
     
     [Fact]
-    public void ItemCount()
-    {
-        // Arrange
-        const int width = 8;
-        const int height = 6;
-        
-        // Act
-        ItemGrid<TestItem> grid = new ItemGrid<TestItem>(width, height);
-        
-        Assert.Equal(width * height, grid.GetItems().Count());
-    }
-    
-    [Fact]
-    public void GridDimensions()
+    public void GridCreation()
     {
         // Arrange
         const int width = 8;
@@ -33,22 +25,11 @@ public class ItemGridTests
         ItemGrid<TestItem> grid = new ItemGrid<TestItem>(width, height);
         
         // Assert
+        Assert.All(grid.GetItems(), cell => Assert.True(cell.IsEmpty));
+        
+        Assert.Equal(48, grid.GetItems().Count());
         Assert.Equal(height, grid.Height);
         Assert.Equal(width, grid.Width);
-    }
-    
-    [Fact]
-    public void CreatedEmpty()
-    {
-        // Arrange
-        const int width = 8;
-        const int height = 6;
-        
-        // Act
-        ItemGrid<TestItem> grid = new ItemGrid<TestItem>(width, height);
-        
-        // Assert
-        Assert.True(grid.GetItems().All(item => item.IsEmpty));
     }
     
     [Fact]
@@ -103,13 +84,13 @@ public class ItemGridTests
             }
         }
         
-        Assert.Equal(8 * 6, grid.GetItems().Count(item => !item.IsEmpty));
+        Assert.Equal(48, grid.GetItems().Count(item => !item.IsEmpty));
         
         // Act
         grid.Clear();
         
         // Assert
-        Assert.Equal(8 * 6, grid.GetItems().Count(item => item.IsEmpty));
+        Assert.Equal(48, grid.GetItems().Count(item => item.IsEmpty));
     }
     
     [Fact]
