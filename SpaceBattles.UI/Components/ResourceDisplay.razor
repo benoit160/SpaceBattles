@@ -2,7 +2,7 @@
 @using SpaceBattles.Core.Domain.Entities.Universe
 
 <MudStack Row>
-    <MudTooltip Text="@_resourceInfo.Name" Color="Color.Info" Placement="Placement.Left" Arrow>
+    <MudTooltip Text="@_resourceInfo.Name" Color="Color.Info" Placement="Placement.Bottom" Arrow>
         <MudImage Src="@_resourceInfo.ImagePath" Width="48" Height="48" />
     </MudTooltip>
     <MudText Class="align-self-center" Color="@_color">@CurrentQuantity.ToString("#,##0") / @Cost.RequiredQuantity.ToString("#,##0")</MudText>

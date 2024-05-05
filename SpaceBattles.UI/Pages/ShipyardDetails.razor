@@ -1,0 +1,69 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Battle
+@using SpaceBattles.Core.Domain.Entities.Universe
+
+@page "/Defense/{EntityName}"
+@page "/Spaceship/{EntityName}"
+
+@inject GameState GameState
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Class="pa-4 rounded-xl">
+        <MudStack>
+            <MudStack AlignItems="AlignItems.Stretch">
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudText Typo="Typo.h5" Style="font-family:TitleFont;">@_combatEntity.CombatEntity.Name</MudText>
+                    <MudText Color="Color.Info" Typo="Typo.h6">@_combatEntity.Quantity available</MudText>
+                </MudStack>
+                <MudDivider DividerType="DividerType.Middle"/>
+                <MudStack Row>
+                    <MudImage Style="@_style" Src="@_combatEntity.CombatEntity.ImagePath" Class="align-self-center rounded-lg" Width="256" Height="256"/>
+                    @ParagraphDisplay(_combatEntity.CombatEntity.Description)
+                </MudStack>
+            </MudStack>
+        </MudStack>
+        
+        <MudStack Row Spacing="0" Class="py-4">
+            <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+            <MudText Typo="Typo.body1">Construction costs</MudText>
+            <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+        </MudStack>
+
+        <TotalCostDisplay Planet="@GameState.CurrentPlanet" Upgrade="@_combatEntity.CombatEntity"/>
+
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [Parameter]
+    public required string EntityName { get; set; }
+
+    private Planet _planet;
+    private CombatEntityInventory _combatEntity;
+    
+    string _style = string.Empty;
+    
+    protected override void OnParametersSet()
+    {
+        _planet = GameState.CurrentPlanet;
+        
+        _combatEntity = _planet.BattleUnits.First(b => b.CombatEntity.Name.Replace(" ", "-") == EntityName);
+        
+        _style = GameState.CurrentPlanet.MeetsBuildingRequirements(_combatEntity.CombatEntity)
+            ? string.Empty
+            : "filter: grayscale(1)";
+    }
+    
+    private static RenderFragment ParagraphDisplay(string text)
+    {
+        string[] paragraphs = text.Split(Environment.NewLine);
+
+        return
+            @<div  style="overflow-y: auto; max-height: 256px">
+                @for(int i = 0; i < paragraphs.Length; i++)
+                {
+                    int localI = i;
+                    <MudText Typo="Typo.body1" Style="@(localI == paragraphs.Length - 1 ? string.Empty : "margin-bottom: 0.5em")">@paragraphs[localI]</MudText>
+                }
+            </div>;
+    }
+}
