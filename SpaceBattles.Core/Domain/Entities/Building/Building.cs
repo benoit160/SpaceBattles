@@ -45,7 +45,7 @@ public sealed class Building : IBuildingRequirements
                 Id = 1,
                 ImageName = "titanium.webp",
 
-                Name = "Titanium Mine",
+                Name = "Titanium mine",
                 Description = "The basis of your civilization’s growth and might is titanium ore, which is produced in the titanium mine. Titanium ore can be converted into titanium metal, which is the primary material for constructing and enhancing various structures and technologies.\nThe titanium mine has a flexible production, depending on its level and the depth of the drilling. The deeper the mine digs, the more ore it can produce, but also the more energy it needs. Titanium ore is copious and low-cost, but it is also essential for advancing your civilization and competing with other empires.\nThe titanium mine is the first building you should build and upgrade, as it will provide you with the foundation of your empire.",
 
                 ScalingFactor = 1.5f,
