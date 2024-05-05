@@ -1,4 +1,5 @@
 ﻿@using SpaceBattles.Core.Domain.Entities.Building
+@using SpaceBattles.Core.Domain.Entities.Universe
 @using SpaceBattles.Core.Domain.Entities.Upgrade
 
 @page "/Building/{BuildingName}"
@@ -21,7 +22,17 @@
 
 @if (_building is not null)
 {
-    <BuildingDetails Planet="@GameState.CurrentPlanet" Building="@_building"/>
+    <MudStack>
+        <BuildingDetails Planet="@GameState.CurrentPlanet" Building="@_building"/>
+        <MudContainer MaxWidth="MaxWidth.ExtraSmall">
+            <MudPaper Class="pa-2 rounded-lg">
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudButton OnClick="@Previous" StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowLeft" Color="Color.Info" Variant="Variant.Outlined">Previous</MudButton>
+                    <MudButton OnClick="@Next" EndIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Color="Color.Info" Variant="Variant.Outlined">Next</MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudContainer>
+    </MudStack>
 }
 
 @code {
@@ -31,7 +42,45 @@
     private readonly CancellationTokenSource _source = new();
     private BuildingLevel? _building;
     
-    protected override void OnInitialized()
+    private void Next()
+    {
+        Planet planet = GameState.CurrentPlanet;
+        
+        int index = Array.IndexOf(planet.Buildings, _building);
+
+        string target;
+        if (index == planet.Buildings.Length - 1)
+        {
+            target = planet.Buildings[0].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");
+        }
+        else
+        {
+            target = planet.Buildings[index + 1].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");        
+        }
+    }
+    
+    private void Previous()
+    {
+        Planet planet = GameState.CurrentPlanet;
+        
+        int index = Array.IndexOf(planet.Buildings, _building);
+
+        string target;
+        if (index == 0)
+        {
+            target = planet.Buildings[^1].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");
+        }
+        else
+        {
+            target = planet.Buildings[index - 1].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");        
+        }
+    }
+    
+    protected override void OnParametersSet()
     {
         _building = GameState.CurrentPlanet.Buildings
             .FirstOrDefault(b => b.Building.Name.Replace(" ", "-") == BuildingName);

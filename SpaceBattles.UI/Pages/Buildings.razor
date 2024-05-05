@@ -35,16 +35,9 @@
     </MudStack>
 </MudContainer>
 
-<MudOverlay @bind-Visible="_overlayVisible" DarkBackground AutoClose>
-    <BuildingDetails Planet="GameState.CurrentPlanet" Building="_planet.Buildings[_selectedIndex]" />
-</MudOverlay>
-
 @code {
-
     private Planet _planet = default!;
     private readonly CancellationTokenSource _source = new();
-    private int _selectedIndex;
-    private bool _overlayVisible;
     private Memory<BuildingLevel> _buildings;
     private Memory<BuildingLevel> _displayedBuildings;
 
@@ -70,12 +63,6 @@
         _displayedBuildings = showResources
             ? _buildings.Slice(0, 7)
             : _buildings.Slice(7, 5);
-    }
-
-    private void OpenDetails(short buildingId)
-    {
-        _selectedIndex = buildingId - 1;
-        _overlayVisible = true;
     }
     
     public void Dispose()
@@ -112,18 +99,10 @@
                                 {
                                     @GetBuildingStatus(building.BuildingId)
                                     <MudSpacer/>
-                                    <MudStack Row Justify="Justify.SpaceEvenly">
-                                        <MudButton 
-                                            Class="align-self-center"
-                                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
-                                            OnClick="@(() => OpenDetails(building.BuildingId))">Details</MudButton>
-
-                                        <MudButton 
-                                            Class="align-self-center"
-                                            StartIcon="@Icons.Material.Filled.OpenInNew"
-                                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
-                                            OnClick="@(() => Goto(building.Building.Name.Replace(' ', '-')))">To page</MudButton>
-                                    </MudStack>
+                                    <MudButton 
+                                        Class="align-self-center"
+                                        Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                                        OnClick="@(() => Goto(building.Building.Name.Replace(' ', '-')))">Details</MudButton>
                                 }
                             </MudStack>
                         </MudStack>

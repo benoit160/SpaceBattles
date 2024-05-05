@@ -69,6 +69,13 @@
 
         _locationEvent = (_, e) =>
         {
+            string target = e.Location;
+            if (target.Contains("/Building/"))
+            {
+                _page = CurrentPage.Buildings;
+                return;
+            }
+
             switch (e.Location.Split('/').Last())
             {
                 case "Overview":
