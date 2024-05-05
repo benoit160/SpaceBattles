@@ -1,6 +1,6 @@
 ﻿@using SpaceBattles.Core.Domain.Entities.Battle
 
-@page "/Defense/{DefenseName}"
+@page "/Spaceship/{SpaceshipName}"
 
 @inject GameState GameState
 
@@ -9,41 +9,41 @@
         <MudStack>
             <MudStack AlignItems="AlignItems.Stretch">
                 <MudStack Row>
-                    <MudText Typo="Typo.h5" Style="font-family:TitleFont;">@_defense.Name</MudText>
+                    <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_spaceship.Name</MudText>
                 </MudStack>
                 <MudDivider DividerType="DividerType.Middle"/>
                 <MudStack Row>
-                    <MudImage Style="@_style" Src="@_defense.ImagePath" Alt="a visual representation of this defense" Class="align-self-center rounded-lg" Width="256" Height="256"/>
-                    @ParagraphDisplay(_defense.Description)
+                    <MudImage Style="@_style" Src="@_spaceship.ImagePath" Alt="a visual representation of this defense" Class="align-self-center rounded-lg" Width="256" Height="256"/>
+                    @ParagraphDisplay(_spaceship.Description)
                 </MudStack>
             </MudStack>
         </MudStack>
         
         <MudStack Row Spacing="0" Class="pt-2">
-            <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+            @* <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/> *@
             <MudText Typo="Typo.body1">Construction costs</MudText>
             <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
         </MudStack>
 
-        <TotalCostDisplay Planet="@GameState.CurrentPlanet" Upgrade="@_defense"/>
+        <TotalCostDisplay Planet="@GameState.CurrentPlanet" Upgrade="@_spaceship"/>
 
     </MudPaper>
 </MudContainer>
 
 @code {
     [Parameter]
-    public required string DefenseName { get; set; }
+    public required string SpaceshipName { get; set; }
 
-    private Defense _defense;
+    private Spaceship _spaceship;
     
     string _style = string.Empty;
     
     protected override void OnParametersSet()
     {
-        _defense = Defense.Defenses()
-            .First(d => d.Name.Replace(" ", "-") == DefenseName);
+        _spaceship = Spaceship.Spaceships()
+            .First(d => d.Name.Replace(" ", "-") == SpaceshipName);
         
-        _style = GameState.CurrentPlanet.MeetsBuildingRequirements(_defense)
+        _style = GameState.CurrentPlanet.MeetsBuildingRequirements(_spaceship)
             ? string.Empty
             : "filter: grayscale(1)";
     }

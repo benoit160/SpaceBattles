@@ -25,7 +25,7 @@
                 <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
             </MudStack>
             
-            <TotalCostDisplay Planet="Planet" Upgrade="Building"/>
+            <TotalCostDisplay Planet="@Planet" Upgrade="@Building"/>
 
             @if (Planet.BuildingUpgrade is not null)
             {
