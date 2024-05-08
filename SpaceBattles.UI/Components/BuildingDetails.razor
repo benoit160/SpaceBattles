@@ -1,8 +1,9 @@
 ﻿@using SpaceBattles.Core.Domain.Entities.Building
 @using SpaceBattles.Core.Domain.Entities.Universe
 
+@inject NavigationManager NavigationManager
+
 <MudContainer Style="max-width: 760px;">
-    
     <MudPaper Class="pa-4 rounded-xl" >
         <MudStack AlignItems="AlignItems.Stretch">
             <MudStack>
@@ -16,16 +17,15 @@
                     <MudImage Style="@_style" Src="@Building.Building.ImagePath" Alt="a visual representation of this building" Class="align-self-center rounded-lg" Width="256" Height="256"/>
                     @ParagraphDisplay(@Building.Building.Description)
                 </MudStack>
-
             </MudStack>
             
-            <MudStack Row Spacing="0" Class="pt-2">
+            <MudStack Row Spacing="0" Class="py-4">
                 <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
                 <MudText Typo="Typo.body1">@(Building.Level == 0 ? "Construction" : "Upgrade") costs</MudText>
                 <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
             </MudStack>
             
-            <TotalCostDisplay Planet="Planet" Upgrade="Building"/>
+            <TotalCostDisplay Planet="@Planet" Upgrade="@Building"/>
 
             @if (Planet.BuildingUpgrade is not null)
             {
@@ -37,7 +37,7 @@
             }
             else if (Planet.HasEnoughResource(Building))
             {
-                <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="() => Upgrade()">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
+                <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">@(Building.Level == 0 ? "Build" : "Upgrade")</MudButton>
             }
             else
             {
@@ -48,11 +48,11 @@
 </MudContainer>
 
 @code {
-    [Parameter]
-    public BuildingLevel Building { get; init; } = default!;
+    [Parameter, EditorRequired]
+    public required BuildingLevel Building { get; set; }
     
-    [Parameter]
-    public Planet Planet { get; init; } = default!;
+    [Parameter, EditorRequired]
+    public required Planet Planet { get; set; }
 
     string _style = string.Empty;
 

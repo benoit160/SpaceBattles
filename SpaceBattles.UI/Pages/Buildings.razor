@@ -1,23 +1,25 @@
-﻿@page "/Buildings"
+﻿@using SpaceBattles.Core.Domain.Entities.Universe
+@using SpaceBattles.Core.Domain.Entities.Building
+@using SpaceBattles.Core.Domain.Enums
+
+@page "/Buildings"
 
 @inject GameState GameState
 @inject PlanetService PlanetService
+@inject NavigationManager NavigationManager
 
 @implements IDisposable
-
-@using SpaceBattles.Core.Domain.Entities.Universe
-@using SpaceBattles.Core.Domain.Entities.Building
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height));">
     <MudStack AlignItems="AlignItems.Center">
         <MudStack Row Style="width: 40%;">
             <div style="width: 50%; display: flex; justify-content: center">
-                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Info" Style="font-family:TitleFont;" OnClick="() => SwitchDisplays(true)">
+                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Info" Style="font-family:TitleFont;" OnClick="@(() => SwitchDisplays(true))">
                     <h3>Resources</h3>
                 </MudButton>
             </div>
             <div style="width: 50%; display: flex; justify-content: center">
-                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Warning" Style="font-family:TitleFont;" OnClick="() => SwitchDisplays(false)">
+                <MudButton Class="border-2" Size="Size.Large" Variant="Variant.Outlined" Color="Color.Warning" Style="font-family:TitleFont;" OnClick="@(() => SwitchDisplays(false))">
                     <h3>Facilities</h3>
                 </MudButton>
             </div>
@@ -33,16 +35,9 @@
     </MudStack>
 </MudContainer>
 
-<MudOverlay @bind-Visible="_overlayVisible" DarkBackground AutoClose>
-    <BuildingDetails Planet="GameState.CurrentPlanet" Building="_planet.Buildings[_selectedIndex]" />
-</MudOverlay>
-
 @code {
-
     private Planet _planet = default!;
     private readonly CancellationTokenSource _source = new();
-    private int _selectedIndex;
-    private bool _overlayVisible;
     private Memory<BuildingLevel> _buildings;
     private Memory<BuildingLevel> _displayedBuildings;
 
@@ -57,7 +52,7 @@
         {
             while (await timer.WaitForNextTickAsync(_source.Token))
             {
-                PlanetService.UpdateCurrentPlanet();
+                PlanetService.UpdateCurrentPlanet(DateTime.Now);
                 StateHasChanged();
             }
         });
@@ -68,12 +63,6 @@
         _displayedBuildings = showResources
             ? _buildings.Slice(0, 7)
             : _buildings.Slice(7, 5);
-    }
-
-    private void OpenDetails(short buildingId)
-    {
-        _selectedIndex = buildingId - 1;
-        _overlayVisible = true;
     }
     
     public void Dispose()
@@ -110,14 +99,22 @@
                                 {
                                     @GetBuildingStatus(building.BuildingId)
                                     <MudSpacer/>
-                                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" OnClick="() => OpenDetails(building.BuildingId)">Details</MudButton>
+                                    <MudButton 
+                                        Class="align-self-center"
+                                        Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                                        OnClick="@(() => Goto(building.Building.Name.Replace(' ', '-')))">Details</MudButton>
                                 }
                             </MudStack>
                         </MudStack>
                     </MudPaper>
                 </MudItem>;
     }
-
+    
+    private void Goto(string name)
+    {
+        NavigationManager.NavigateTo($"Building/{name}");
+    }
+    
     private RenderFragment GetBuildingStatus(short buildingId)
     {
         long current, max;

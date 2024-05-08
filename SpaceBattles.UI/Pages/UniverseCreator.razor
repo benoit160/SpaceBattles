@@ -1,4 +1,8 @@
-﻿@page "/UniverseCreator"
+﻿@using SpaceBattles.Core.Domain.Models
+@using SpaceBattles.UI.Layouts
+
+@page "/UniverseCreator"
+
 @layout MainLayout
 
 @inject NavigationManager NavigationManager
@@ -39,7 +43,6 @@
 </div>
 
 @code {
-
     private UniverseCreationModel _model = new();
 
     private UniverseCreationWaiter? _universeCreationWaiter;

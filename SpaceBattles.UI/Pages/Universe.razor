@@ -1,6 +1,6 @@
-﻿@page "/Universe"
-@using SpaceBattles.Core.Domain.Entities.Universe
-@layout GameLayout
+﻿@using SpaceBattles.Core.Domain.Entities.Universe
+
+@page "/Universe"
 
 @inject GameState GameState
 
@@ -73,9 +73,9 @@
 
         return 
         @<MudButtonGroup Color="Color.Info" Variant="Variant.Outlined">
-            <MudButton StartIcon="@Icons.Material.Filled.FastRewind" Disabled="!previousEnabled" OnClick="() => SwitchGalaxy(_galaxy - 1)">Previous</MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.FastRewind" Disabled="!previousEnabled" OnClick="@(() => SwitchGalaxy(_galaxy - 1))">Previous</MudButton>
             <MudButton Class="pointer-events-none">Galaxy @_galaxy</MudButton>
-            <MudButton EndIcon="@Icons.Material.Filled.FastForward" Disabled="!nextEnabled" OnClick="() => SwitchGalaxy(_galaxy + 1)">Next</MudButton>
+            <MudButton EndIcon="@Icons.Material.Filled.FastForward" Disabled="!nextEnabled" OnClick="@(() => SwitchGalaxy(_galaxy + 1))">Next</MudButton>
         </MudButtonGroup>;
     }
     
@@ -86,9 +86,9 @@
 
         return 
         @<MudButtonGroup Color="Color.Info" Variant="Variant.Outlined">
-            <MudButton StartIcon="@Icons.Material.Filled.FastRewind" Disabled="!previousEnabled" OnClick="() => SwitchSolarSystem(_solarSystem - 1)">Previous</MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.FastRewind" Disabled="!previousEnabled" OnClick="@(() => SwitchSolarSystem(_solarSystem - 1))">Previous</MudButton>
             <MudButton Class="pointer-events-none">Solar System @_solarSystem</MudButton>
-            <MudButton EndIcon="@Icons.Material.Filled.FastForward" Disabled="!nextEnabled" OnClick="() => SwitchSolarSystem(_solarSystem + 1)">Next</MudButton>
+            <MudButton EndIcon="@Icons.Material.Filled.FastForward" Disabled="!nextEnabled" OnClick="@(() => SwitchSolarSystem(_solarSystem + 1))">Next</MudButton>
         </MudButtonGroup>;
     }
 }

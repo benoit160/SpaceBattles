@@ -1,9 +1,10 @@
 ﻿namespace SpaceBattles.Core.Domain.Entities.Building;
 
+using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
 
-public sealed class Building : IBuildingRequirements
+public class Building : IBuildingRequirements
 {
     public short Id { get; init; }
 
@@ -40,13 +41,16 @@ public sealed class Building : IBuildingRequirements
     {
         return
         [
-            new()
+            new ProducerBuilding
             {
                 Id = 1,
                 ImageName = "titanium.webp",
 
-                Name = "Titanium Mine",
+                Name = "Titanium mine",
                 Description = "The basis of your civilization’s growth and might is titanium ore, which is produced in the titanium mine. Titanium ore can be converted into titanium metal, which is the primary material for constructing and enhancing various structures and technologies.\nThe titanium mine has a flexible production, depending on its level and the depth of the drilling. The deeper the mine digs, the more ore it can produce, but also the more energy it needs. Titanium ore is copious and low-cost, but it is also essential for advancing your civilization and competing with other empires.\nThe titanium mine is the first building you should build and upgrade, as it will provide you with the foundation of your empire.",
+
+                Resource = Resource.Titanium,
+                ProductionFactor = 30,
 
                 ScalingFactor = 1.5f,
                 TitaniumCost = 60,
@@ -55,24 +59,28 @@ public sealed class Building : IBuildingRequirements
                 EnergyStatus = ElectricalEntityStatus.Consummer,
                 BaseEnergy = 10,
             },
-            new()
+            new StorageBuilding
             {
                 Id = 2,
                 ImageName = "titanium_storage.webp",
 
+                Resource = Resource.Titanium,
                 Name = "Titanium storage",
                 Description = "Titanium Storage structures provide huge storage containment for raw unprocessed titanium from metal mines. The higher the level, the more titanium can be held.\nOnce the capacity is used up, no more titanium can be harvested by the metal mines.",
 
                 ScalingFactor = 2f,
                 TitaniumCost = 1000,
             },
-            new()
+            new ProducerBuilding
             {
                 Id = 3,
                 ImageName = "silicon.webp",
 
+                Resource = Resource.Silicon,
                 Name = "Silicon refinery",
                 Description = "Silicon refineries supply the main resource used to produce electronic circuits and form certain alloy compounds.\nMining silicon crystals consumes some one and half times more energy than a mining titanium, making crystals more valuable.\nAlmost all ships and all buildings require silicon. Most silicon crystals required to build spaceships, however, are very rare, and like titanium can only be found at a certain depth. Therefore, building mines in deeper strata will increase the amount of silicon produced.",
+
+                ProductionFactor = 20,
 
                 ScalingFactor = 1.6f,
                 TitaniumCost = 48,
@@ -81,11 +89,12 @@ public sealed class Building : IBuildingRequirements
                 EnergyStatus = ElectricalEntityStatus.Consummer,
                 BaseEnergy = 10,
             },
-            new()
+            new StorageBuilding
             {
                 Id = 4,
                 ImageName = "silicon_storage.webp",
 
+                Resource = Resource.Silicon,
                 Name = "Silicon storage",
                 Description = "Silicon storage structures provide huge storage containment for unprocessed silicon crystals. The higher the level, the more silicon can be held.\nOnce the capacity is used up, no more silicon can be harvested by the mines.",
 
@@ -93,13 +102,16 @@ public sealed class Building : IBuildingRequirements
                 TitaniumCost = 1000,
                 SiliconCost = 500,
             },
-            new()
+            new ProducerBuilding
             {
                 Id = 5,
                 ImageName = "helium.webp",
 
+                Resource = Resource.Helium,
                 Name = "³Helium synthesizer",
                 Description = "³Helium is a stable isotope of helium with a natural abundance in the oceans of colonies of approximately one atom in 6500 of helium (~154 PPM). Helium³ thus accounts for approximately 0.015% (on a weight basis, 0.030%) of all water.\nHelium³ is processed by special synthesizers which can separate the water from the Helium³ using specially designed centrifuges. The upgrade of the synthesizer allows for increasing the amount of Helium³ deposits processed.\nHelium³ is used when carrying out sensor phalanx scans, viewing galaxies, as fuel for ships, and performing specialized research upgrades.",
+
+                ProductionFactor = 11,
 
                 ScalingFactor = 1.5f,
                 TitaniumCost = 225,
@@ -108,11 +120,12 @@ public sealed class Building : IBuildingRequirements
                 EnergyStatus = ElectricalEntityStatus.Consummer,
                 BaseEnergy = 20,
             },
-            new()
+            new StorageBuilding
             {
                 Id = 6,
                 ImageName = "helium_storage.webp",
 
+                Resource = Resource.Helium,
                 Name = "³Helium storage",
                 Description = "³Helium Storage structures provide huge storage containment for ³He from the synthesizer. The higher the level, the more ³He can be held.\nOnce the capacity is used up, no more ³He can be refined by the synthesizer.",
 
@@ -163,7 +176,7 @@ public sealed class Building : IBuildingRequirements
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(7, 2),
+                    new BuildingRequirement(8, 2),
                 ],
             },
             new()
@@ -194,7 +207,7 @@ public sealed class Building : IBuildingRequirements
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(7, 10),
+                    new BuildingRequirement(8, 10),
                 ],
             },
             new()
@@ -212,7 +225,7 @@ public sealed class Building : IBuildingRequirements
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             }
         ];

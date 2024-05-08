@@ -1,8 +1,9 @@
-﻿@page "/Shipyard"
-@using SpaceBattles.Core.Domain.Entities.Battle
-@layout GameLayout
+﻿@using SpaceBattles.Core.Domain.Entities.Battle
+
+@page "/Shipyard"
 
 @inject GameState GameState
+@inject NavigationManager NavigationManager
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height);">
     <MudGrid Class="py-3" Spacing="0" Justify="Justify.Center">
@@ -26,7 +27,12 @@
     {
         return !GameState.CurrentPlanet.MeetsBuildingRequirements(inv.CombatEntity) ? "filter: grayscale(1)" : "";
     }
-
+    
+    private void Goto(string name)
+    {
+        NavigationManager.NavigateTo($"Spaceship/{name}");
+    }
+    
     private RenderFragment SpaceshipCard(int index)
     {
         return
@@ -39,11 +45,15 @@
                               Width="150" Height="150" Style="@(GetImageStyle(_spaceships.Span[index]))"/>
 
                     <MudStack Class="flex-grow-1">
-                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_spaceships.Span[index].CombatEntity.Name</MudText>
+                        <MudText Typo="Typo.h5">@_spaceships.Span[index].CombatEntity.Name</MudText>
                         <MudDivider/>
                         <MudText Color="Color.Info" Typo="Typo.h6">@_spaceships.Span[index].Quantity available</MudText>
 
                         <MudSpacer/>
+                        <MudButton
+                            Class="align-self-center"
+                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                            OnClick="@(() => Goto(_spaceships.Span[index].CombatEntity.Name.Replace(' ', '-')))">Details</MudButton>
                     </MudStack>
                 </MudStack>
             </MudPaper>

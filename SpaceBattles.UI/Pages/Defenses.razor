@@ -1,8 +1,9 @@
-﻿@page "/Defenses"
-@using SpaceBattles.Core.Domain.Entities.Battle
-@layout GameLayout
+﻿@using SpaceBattles.Core.Domain.Entities.Battle
+
+@page "/Defenses"
 
 @inject GameState GameState
+@inject NavigationManager NavigationManager
 
 <MudContainer MaxWidth="MaxWidth.Large" Style="overflow-y:scroll; max-height:calc(100vh - var(--mud-appbar-height);">
     <MudGrid Class="py-3" Spacing="0" Justify="Justify.Center">
@@ -24,9 +25,16 @@
 
     private string GetImageStyle(CombatEntityInventory inv)
     {
-        return !GameState.CurrentPlanet.MeetsBuildingRequirements(inv.CombatEntity) ? "filter: grayscale(1)" : "";
+        return !GameState.CurrentPlanet.MeetsBuildingRequirements(inv.CombatEntity)
+            ? "filter: grayscale(1)"
+            : string.Empty;
     }
 
+    private void Goto(string name)
+    {
+        NavigationManager.NavigateTo($"Defense/{name}");
+    }
+    
     private RenderFragment DefenseCard(int index)
     {
         return
@@ -39,11 +47,15 @@
                               Width="150" Height="150" Style="@(GetImageStyle(_defenses.Span[index]))"/>
 
                     <MudStack Class="flex-grow-1">
-                        <MudText Typo="Typo.h5" Style="font-family:TitleFont">@_defenses.Span[index].CombatEntity.Name</MudText>
+                        <MudText Typo="Typo.h5">@_defenses.Span[index].CombatEntity.Name</MudText>
                         <MudDivider/>
                         <MudText Color="Color.Info" Typo="Typo.h6">@_defenses.Span[index].Quantity available</MudText>
 
                         <MudSpacer/>
+                        <MudButton
+                            Class="align-self-center"
+                            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info"
+                            OnClick="@(() => Goto(_defenses.Span[index].CombatEntity.Name.Replace(' ', '-')))">Details</MudButton>
                     </MudStack>
                 </MudStack>
             </MudPaper>

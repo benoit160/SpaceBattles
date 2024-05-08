@@ -1,27 +1,35 @@
-﻿@using SpaceBattles.Core.Domain.Interfaces
+﻿@using SpaceBattles.Core.Domain.Entities.Building
+@using SpaceBattles.Core.Domain.Interfaces
 @using SpaceBattles.Core.Domain.Entities.Universe
 @using SpaceBattles.Core.Domain.Records
 
 <MudStack Row Justify="Justify.SpaceAround">
     @foreach(ResourceCost requirement in Upgrade.Costs.Where(cost => cost.RequiredQuantity > 0))
     {
-        <RessourceDisplay 
+        <ResourceDisplay 
             Cost="requirement"
-            CurrentQuantity = "Planet[requirement.Resource]"/>
+            CurrentQuantity = "@Planet[requirement.Resource]"/>
     }
         <MudStack Row AlignItems="AlignItems.Center">
             <MudIcon Icon="@Icons.Material.Filled.AccessTime" />
-            <MudText>@GetDurationText(Upgrade.Duration)</MudText>
+            @if (Upgrade is BuildingLevel)
+            {
+                <MudText>@GetDurationText(Upgrade.Duration(Planet.Buildings.First(b => b.BuildingId == 8).Level))</MudText>
+            }
+            else
+            {
+                <MudText>@GetDurationText(Upgrade.Duration(Planet.Buildings.First(b => b.BuildingId == 9).Level))</MudText>
+            }
         </MudStack>
 </MudStack>
 
 @code {
-    [Parameter]
-    public IRequirements Upgrade { get; init; } = default!;
+    [Parameter, EditorRequired]
+    public required IRequirements Upgrade { get; set; }
 
-    [Parameter]
-    public Planet Planet { get; init; } = default!;
-    
+    [Parameter, EditorRequired]
+    public required Planet Planet { get; set; }
+
     private string GetDurationText(TimeSpan span)
     {
         if (span.TotalDays > 1)

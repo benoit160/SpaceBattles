@@ -5,8 +5,11 @@ using SpaceBattles.Core.Domain.Models;
 
 public sealed class GameState
 {
-    public GameState()
+    private readonly StatisticService _statistic;
+
+    public GameState(StatisticService statistic)
     {
+        _statistic = statistic;
         CurrentPlanet = default!;
         CurrentUniverse = default!;
     }
@@ -25,5 +28,6 @@ public sealed class GameState
     {
         CurrentUniverse = Universe.CreateUniverse(model);
         CurrentPlanet = CurrentUniverse.Planets.Single(planet => !planet.Owner?.IsBot ?? false);
+        _statistic[CurrentPlanet.Id] = CurrentUniverse.Statistics;
     }
 }

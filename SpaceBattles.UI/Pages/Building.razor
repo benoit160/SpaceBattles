@@ -1,0 +1,103 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Building
+@using SpaceBattles.Core.Domain.Entities.Universe
+@using SpaceBattles.Core.Domain.Entities.Upgrade
+
+@page "/Building/{BuildingName}"
+
+@inject NavigationManager NavigationManager
+@inject GameState GameState
+@inject PlanetService PlanetService
+
+@if (GameState.CurrentPlanet.BuildingUpgrade is not null)
+{
+    BuildingUpgrade upgrade = GameState.CurrentPlanet.BuildingUpgrade;
+    BuildingLevel level = GameState.CurrentPlanet.Buildings.First(b => b.BuildingId == upgrade.BuildingId);
+
+    <Progress Image="@level.Building.ImagePath"
+              Display="@level.Building.Name"
+              DisplaySecondary=@($"Upgrading to level {level.Level + 1}")
+              Process="@upgrade">
+    </Progress>
+}
+
+@if (_building is not null)
+{
+    <MudStack>
+        <BuildingDetails Planet="@GameState.CurrentPlanet" Building="@_building"/>
+        <MudContainer MaxWidth="MaxWidth.ExtraSmall">
+            <MudPaper Class="pa-2 rounded-lg">
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudButton OnClick="@Previous" StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowLeft" Color="Color.Info" Variant="Variant.Outlined">Previous</MudButton>
+                    <MudButton OnClick="@Next" EndIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Color="Color.Info" Variant="Variant.Outlined">Next</MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudContainer>
+    </MudStack>
+}
+
+@code {
+    [Parameter]
+    public required string BuildingName { get; set; }
+    
+    private readonly CancellationTokenSource _source = new();
+    private BuildingLevel? _building;
+    
+    private void Next()
+    {
+        Planet planet = GameState.CurrentPlanet;
+        
+        int index = Array.IndexOf(planet.Buildings, _building);
+
+        string target;
+        if (index == planet.Buildings.Length - 1)
+        {
+            target = planet.Buildings[0].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");
+        }
+        else
+        {
+            target = planet.Buildings[index + 1].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");        
+        }
+    }
+    
+    private void Previous()
+    {
+        Planet planet = GameState.CurrentPlanet;
+        
+        int index = Array.IndexOf(planet.Buildings, _building);
+
+        string target;
+        if (index == 0)
+        {
+            target = planet.Buildings[^1].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");
+        }
+        else
+        {
+            target = planet.Buildings[index - 1].Building.Name.Replace(" ", "-");
+            NavigationManager.NavigateTo($"/Building/{target}");        
+        }
+    }
+    
+    protected override void OnParametersSet()
+    {
+        _building = GameState.CurrentPlanet.Buildings
+            .FirstOrDefault(b => b.Building.Name.Replace(" ", "-") == BuildingName);
+        
+        if (_building is null)
+        {
+            NavigationManager.NavigateTo("/Buildings");
+        }
+        
+        PeriodicTimer timer = new(TimeSpan.FromSeconds(1));
+        _ = Task.Run(async () =>
+        {
+            while (await timer.WaitForNextTickAsync(_source.Token))
+            {
+                PlanetService.UpdateCurrentPlanet(DateTime.Now);
+                StateHasChanged();
+            }
+        });
+    }
+}

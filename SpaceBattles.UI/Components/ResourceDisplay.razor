@@ -2,25 +2,25 @@
 @using SpaceBattles.Core.Domain.Entities.Universe
 
 <MudStack Row>
-    <MudTooltip Text="@_resourceInfo.Name" Color="Color.Info" Placement="Placement.Left" Arrow>
+    <MudTooltip Text="@_resourceInfo.Name" Color="Color.Info" Placement="Placement.Bottom" Arrow>
         <MudImage Src="@_resourceInfo.ImagePath" Width="48" Height="48" />
     </MudTooltip>
     <MudText Class="align-self-center" Color="@_color">@CurrentQuantity.ToString("#,##0") / @Cost.RequiredQuantity.ToString("#,##0")</MudText>
 </MudStack>
 
 @code {
-    [Parameter]
-    public ResourceCost Cost { get; init; }
+    [Parameter, EditorRequired]
+    public ResourceCost Cost { get; set; }
 
-    [Parameter]
-    public long CurrentQuantity { get; init; }
+    [Parameter, EditorRequired]
+    public long CurrentQuantity { get; set; }
 
     private Color _color;
     private ResourceInfo _resourceInfo;
 
     protected override void OnInitialized()
     {
-        _resourceInfo = Resources.ResourcesDisplay().Single(x => x.Resource == Cost.Resource);
+        _resourceInfo = Resources.ResourceInfos[(int)Cost.Resource - 1];
         _color = CurrentQuantity < Cost.RequiredQuantity ? Color.Error : Color.Success;
     }
 

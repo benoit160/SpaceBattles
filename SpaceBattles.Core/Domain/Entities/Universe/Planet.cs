@@ -28,6 +28,8 @@ public sealed class Planet : IPosition
 
     public event Action? OnBlackOut;
 
+    public int Id => Slot | SolarSystem << 8 | Galaxy << 16;
+
     [JsonIgnore]
     public Player.Player? Owner { get; set; }
 
@@ -72,6 +74,8 @@ public sealed class Planet : IPosition
     public ReadOnlyMemory<CombatEntityInventory> Spaceships { get; set; }
 
     public BuildingUpgrade? BuildingUpgrade { get; set; }
+
+    public ShipyardConstruction? ShipyardConstruction { get; set; }
 
     public DateTime LastUpdated { get; set; }
 
@@ -184,7 +188,7 @@ public sealed class Planet : IPosition
 
         const double secondsToMinuteFraction = 1d / 60d;
 
-        var resources = Enum.GetValues<Resource>();
+        Span<Resource> resources = Enum.GetValues<Resource>();
         for (int i = 0; i < resources.Length; i++)
         {
             Resource loopResource = resources[i];
@@ -233,14 +237,14 @@ public sealed class Planet : IPosition
     public bool MeetsBuildingRequirements(IBuildingRequirements requirements)
         => requirements.BuildingRequirements.All(x => Buildings.Single(b => b.BuildingId == x.BuildingId).Level >= x.RequiredLevel);
 
-    public bool HasEnoughResource(IRequirements requirements)
-        => requirements.Costs.All(cost => this[cost.Resource] >= cost.RequiredQuantity);
+    public bool HasEnoughResource(IRequirements requirements, int quantity = 1)
+        => requirements.Costs.All(cost => this[cost.Resource] >= cost.RequiredQuantity * quantity);
 
-    public void ConsumeResources(IRequirements requirements)
+    public void ConsumeResources(IRequirements requirements, int quantity = 1)
     {
         foreach (ResourceCost cost in requirements.Costs)
         {
-            this[cost.Resource] -= cost.RequiredQuantity;
+            this[cost.Resource] -= cost.RequiredQuantity * quantity;
         }
     }
 
@@ -255,6 +259,19 @@ public sealed class Planet : IPosition
         }
 
         return null;
+    }
+
+    public bool ProcessShipyard(DateTime now)
+    {
+        if (ShipyardConstruction is not null && ShipyardConstruction.End <= now)
+        {
+            CombatEntityInventory construction = BattleUnits.Single(x => x.CombatEntityId == ShipyardConstruction.CombatEntityId);
+            construction.Quantity += ShipyardConstruction.Quantity;
+            ShipyardConstruction = null;
+            return true;
+        }
+
+        return false;
     }
 
     public bool CanUpgradeBuilding(short buildingId)
@@ -284,10 +301,37 @@ public sealed class Planet : IPosition
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            Duration = level.Duration,
+            Duration = level.Duration(Buildings.First(b => b.BuildingId == 8).Level),
         };
 
         BuildingUpgrade = upgrade;
+
+        return true;
+    }
+
+    public bool TryConstructShipyard(short combatEntityId, short quantity)
+    {
+        CombatEntity? entity = Array.Find(BattleUnits, unit => unit.CombatEntityId == combatEntityId)?.CombatEntity;
+
+        if (entity is null) return false;
+
+        if (!MeetsBuildingRequirements(entity)) return false;
+
+        if (!HasEnoughResource(entity, quantity)) return false;
+
+        if (ShipyardConstruction is not null) return false;
+
+        ConsumeResources(entity, quantity);
+
+        ShipyardConstruction construction = new ShipyardConstruction()
+        {
+            Start = DateTime.Now,
+            CombatEntityId = combatEntityId,
+            Quantity = quantity,
+            Duration = (entity as IRequirements).Duration(Buildings.First(b => b.BuildingId == 9).Level) * quantity,
+        };
+
+        ShipyardConstruction = construction;
 
         return true;
     }

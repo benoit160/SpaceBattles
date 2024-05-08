@@ -6,7 +6,7 @@ public sealed class BotService : IDisposable
 {
     private readonly GameState _gameState;
     private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(3));
-    private readonly CancellationTokenSource _source = new();
+    private CancellationTokenSource? _source;
 
     private IEnumerable<Planet> _botsPlanets;
 
@@ -20,6 +20,8 @@ public sealed class BotService : IDisposable
     {
         _botsPlanets = _gameState.CurrentUniverse.Planets
             .Where(planet => planet.Owner?.IsBot ?? false);
+
+        _source = new CancellationTokenSource();
 
         // no bots
         if (!_botsPlanets.Any()) return false;
@@ -40,8 +42,8 @@ public sealed class BotService : IDisposable
 
     public void Dispose()
     {
-        _source.Cancel();
-        _source.Dispose();
+        _source?.Cancel();
+        _source?.Dispose();
     }
 
     private static void DoAction(Planet planet)
