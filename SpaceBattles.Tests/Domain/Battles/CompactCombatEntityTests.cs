@@ -16,6 +16,7 @@ public class CompactCombatEntityTests
 
         // Assert
         Assert.True(fighter.IsAlive);
+        Assert.Equal(lightFighter.Id, fighter.CombatEntityId);
     }
     
     [Theory]
