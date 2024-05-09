@@ -1,9 +1,8 @@
-﻿using System.Text.Json.Serialization;
-using SpaceBattles.Core.Application.Extensions.SuperLinq;
+﻿namespace SpaceBattles.Core.Domain.Entities.Battle;
+
+using System.Text.Json.Serialization;
 using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
-
-namespace SpaceBattles.Core.Domain.Entities.Battle;
 
 public class Fleet
 {
@@ -25,17 +24,6 @@ public class Fleet
 public record struct FleetAction(DateTime Start, TimeSpan Duration, FleetActionType ActionType, Position Target);
 
 public record struct Position(int Galaxy, int SolarSystem, int Slot);
-
-public enum FleetActionType
-{
-    Idle,
-    Moving,
-    Attacking,
-    Transporting,
-    Recycling,
-    Spying,
-    Recall,
-}
 
 public static class PlanetFleetExtensions
 {
