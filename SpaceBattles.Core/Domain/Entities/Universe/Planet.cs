@@ -8,7 +8,7 @@ using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
 
-public sealed class Planet : IPosition
+public sealed class Planet : IPosition, IBattleUnitProvider
 {
     // stores fractional leftover value of resources
     private readonly double[] _decimalResourcesLeft = new double[3];
