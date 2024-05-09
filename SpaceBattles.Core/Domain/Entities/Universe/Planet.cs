@@ -123,12 +123,13 @@ public sealed class Planet : IPosition, IBattleUnitProvider
     {
         LastUpdated = DateTime.Now;
 
-        Titanium = 150;
-        Silicon = 75;
+        Titanium = 15000;
+        Silicon = 7500;
 
         Buildings = Building.Buildings()
             .Select(building => new BuildingLevel
             {
+                Level = 5,
                 BuildingId = building.Id,
                 Building = building,
                 OperatingLevel = 100,

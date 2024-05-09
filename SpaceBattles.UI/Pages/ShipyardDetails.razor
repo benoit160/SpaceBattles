@@ -44,7 +44,7 @@
                 <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
             </MudStack>
 
-            <TotalCostDisplay Planet="@GameState.CurrentPlanet" Upgrade="@_combatEntity.CombatEntity"/>
+            <TotalCostDisplay Planet="@GameState.CurrentPlanet" Upgrade="@_combatEntity.CombatEntity" Quantity="@_quantityToBuild"/>
 
             @if (_planet.ShipyardConstruction is not null)
             {
@@ -56,7 +56,10 @@
             }
             else if (_planet.HasEnoughResource(_combatEntity.CombatEntity))
             {
-                <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">Build</MudButton>
+                <MudStack Row Justify="Justify.SpaceAround">
+                    <MudNumericField Style="max-width: 200px" @bind-Value="_quantityToBuild" Label="Quantity" Variant="Variant.Text" Min="1" Max="100" />
+                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">Build</MudButton>
+                </MudStack>
             }
             else
             {
@@ -72,6 +75,7 @@
 
     private Planet _planet;
     private CombatEntityInventory _combatEntity;
+    private int _quantityToBuild = 1;
     
     string _style = string.Empty;
     
