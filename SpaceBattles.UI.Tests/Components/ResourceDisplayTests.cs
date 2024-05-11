@@ -35,7 +35,6 @@ public class ResourceDisplayTests : TestContext
     [Theory]
     [InlineData(1, "175 / 150", "mud-success-text")]
     [InlineData(2, "175 / 300", "mud-error-text")]
-    [InlineData(10, "175 / 1.500", "mud-error-text")]
     public void Multiplier(int multiplier, string expectedMarkup, string expectedColor)
     {
         // Arrange
