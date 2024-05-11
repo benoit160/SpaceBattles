@@ -56,9 +56,9 @@
             }
             else if (_planet.HasEnoughResource(_combatEntity.CombatEntity))
             {
-                <MudStack Row Justify="Justify.SpaceAround">
-                    <MudNumericField Style="max-width: 200px" @bind-Value="_quantityToBuild" Label="Quantity" Variant="Variant.Text" Min="1" Max="100" />
-                    <MudButton Class="align-self-center" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">Build</MudButton>
+                <MudStack Row Justify="Justify.SpaceAround" AlignItems="AlignItems.End" Style="max-width: 60%">
+                    <MudNumericField @bind-Value="_quantityToBuild" Label="Quantity" Variant="Variant.Text" Min="1" Max="100" />
+                    <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">Build</MudButton>
                 </MudStack>
             }
             else
