@@ -6,9 +6,10 @@
 <MudStack Row Justify="Justify.SpaceAround">
     @foreach(ResourceCost requirement in Upgrade.Costs.Where(cost => cost.RequiredQuantity > 0))
     {
-        <ResourceDisplay 
+        <ResourceDisplay
             Cost="requirement"
-            CurrentQuantity = "@Planet[requirement.Resource]"/>
+            Multiplier="@Quantity"
+            CurrentQuantity="@Planet[requirement.Resource]"/>
     }
         <MudStack Row AlignItems="AlignItems.Center">
             <MudIcon Icon="@Icons.Material.Filled.AccessTime" />
@@ -30,8 +31,13 @@
     [Parameter, EditorRequired]
     public required Planet Planet { get; set; }
 
+    [Parameter]
+    public int Quantity { get; set; } = 1;
+
     private string GetDurationText(TimeSpan span)
     {
+        span *= Quantity;
+        
         if (span.TotalDays > 1)
         {
             int days = (int)span.TotalDays;

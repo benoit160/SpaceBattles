@@ -3,13 +3,13 @@
 <MudContainer MaxWidth="MaxWidth.Small" Class="pb-3">
     <MudPaper Class="pa-2 rounded-lg">
         <MudStack Row>
-            <MudImage Src="@Image" Width="96" Alt="a visual representation of the building being upgraded" Class="rounded-lg" />
+            <MudImage Src="@Image" Width="96" Class="rounded-lg" />
             <MudStack Class="flex-grow-1" Spacing="1">
-                <MudText>@Display</MudText>
+                <MudText Typo="Typo.body1">@Display</MudText>
                 <MudSpacer />
-                <MudText>@DisplaySecondary</MudText>
+                <MudText Typo="Typo.body2">@DisplaySecondary</MudText>
                 <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="Process.PercentFinished" />
-                <MudText>@Process.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
+                <MudText Typo="Typo.body2">@Process.RemainingTime.ToString("hh\\:mm\\:ss") remaining</MudText>
             </MudStack>
         </MudStack>
     </MudPaper>

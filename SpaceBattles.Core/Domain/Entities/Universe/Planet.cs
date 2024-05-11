@@ -336,6 +336,9 @@ public sealed class Planet : IPosition, IBattleUnitProvider
         return true;
     }
 
+    public long MaximumAffordableQuantity(IRequirements requirements)
+        => requirements.NonZeroCosts.Min(x => this[x.Resource] / x.RequiredQuantity);
+
     public override int GetHashCode()
     {
         return HashCode.Combine(ImageIndex, Galaxy, SolarSystem, Slot, PlanetType, OrbitalPeriod, AverageSurfaceTemp, Gravity);
