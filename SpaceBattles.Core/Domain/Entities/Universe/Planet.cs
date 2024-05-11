@@ -94,7 +94,7 @@ public sealed class Planet : IPosition, IBattleUnitProvider
 
         set
         {
-            long max = Math.Min(value, ResourceCapacity(resource));
+            long max = Math.Min(Math.Abs(value), ResourceCapacity(resource));
 
             switch (resource)
             {
