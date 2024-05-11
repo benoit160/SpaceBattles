@@ -16,7 +16,7 @@
 
     <Progress Image=@level.ImagePath
               Display=@level.Name
-              DisplaySecondary=@(string.Empty)
+              DisplaySecondary=@($"Quantity : {construction.Quantity}")
               Process=@construction>
     </Progress>
 }
@@ -56,8 +56,8 @@
             }
             else if (_planet.HasEnoughResource(_combatEntity.CombatEntity))
             {
-                <MudStack Row Justify="Justify.SpaceAround" AlignItems="AlignItems.End" Style="max-width: 60%">
-                    <MudNumericField @bind-Value="_quantityToBuild" Label="Quantity" Variant="Variant.Text" Min="1" Max="100" />
+                <MudStack Row Justify="Justify.SpaceAround" AlignItems="AlignItems.End" Class="align-self-center">
+                    <MudNumericField @bind-Value="@_quantityToBuild" Label="Quantity" Variant="Variant.Text" Min="1" Max="@MaxBuildableQuantity()"/>
                     <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="@Upgrade">Build</MudButton>
                 </MudStack>
             }
@@ -81,7 +81,12 @@
     
     private readonly CancellationTokenSource _source = new();
 
-    
+    private int MaxBuildableQuantity()
+    {
+        int maxAffordable = Convert.ToInt32(_planet.MaximumAffordableQuantity(_combatEntity.CombatEntity));
+        return Math.Min(maxAffordable, 100);
+    }
+
     protected override void OnParametersSet()
     {
         _planet = GameState.CurrentPlanet;
@@ -105,7 +110,8 @@
     
     private void Upgrade()
     {
-        _planet.TryConstructShipyard(_combatEntity.CombatEntityId, 1);
+        _planet.TryConstructShipyard(_combatEntity.CombatEntityId, Convert.ToInt16(_quantityToBuild));
+        _quantityToBuild = 1;
     }
     
     private static RenderFragment ParagraphDisplay(string text)
@@ -113,7 +119,7 @@
         string[] paragraphs = text.Split(Environment.NewLine);
 
         return
-            @<div  style="overflow-y: auto; max-height: 256px">
+            @<div style="overflow-y: auto; max-height: 256px">
                 @for(int i = 0; i < paragraphs.Length; i++)
                 {
                     int localI = i;
