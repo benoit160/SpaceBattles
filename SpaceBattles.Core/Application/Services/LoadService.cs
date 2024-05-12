@@ -18,10 +18,9 @@ public sealed class LoadService
     {
         string response = await _httpClient.GetStringAsync(ManifestFile);
 
-        int first, last;
+        int first = response.IndexOf('{');
+        int last = response.LastIndexOf('}');
 
-        first = response.IndexOf('{');
-        last = response.LastIndexOf('}');
         int length = response.Length - first - (response.Length - last);
 
         ReadOnlyMemory<char> subset = response.AsMemory().Slice(first, length + 1);

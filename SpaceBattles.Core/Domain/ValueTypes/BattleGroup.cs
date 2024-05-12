@@ -29,9 +29,9 @@ public struct BattleGroup
 
     public int Length => _units.Length;
 
-    public CompactCombatEntity this[int i] => _units[i];
-
     public bool IsAlive => _units.Any(x => x.IsAlive);
 
     public ref CompactCombatEntity RandomUnit => ref _units[Random.Shared.Next(Length)];
+
+    public CompactCombatEntity this[int i] => _units[i];
 }
