@@ -62,10 +62,10 @@ public sealed class Planet : IPosition, IBattleUnitProvider
     public long Helium { get; set; }
 
     public BuildingLevel[] Buildings { get; set; }
-        = Array.Empty<BuildingLevel>();
+        = [];
 
     public CombatEntityInventory[] BattleUnits { get; set; }
-        = Array.Empty<CombatEntityInventory>();
+        = [];
 
     [JsonIgnore]
     public ReadOnlyMemory<CombatEntityInventory> Defenses { get; set; }

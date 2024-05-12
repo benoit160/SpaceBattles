@@ -7,12 +7,7 @@ namespace SpaceBattles.Tests.Application.Services;
 
 public class LoadServiceTests
 {
-    private readonly Mock<HttpMessageHandler> _msgHandler;
-
-    public LoadServiceTests()
-    {
-        _msgHandler = new Mock<HttpMessageHandler>();
-    }
+    private readonly Mock<HttpMessageHandler> _msgHandler = new();
 
     [Fact]
     public async Task GetManifest()

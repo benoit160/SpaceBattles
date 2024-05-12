@@ -223,9 +223,9 @@ public class PlanetTests
         planet.Init();
 
         bool eventRaised = false;
-        
-        Action onAction = () => eventRaised = true;
-        planet.OnBlackOut += onAction;
+
+        void OnAction() => eventRaised = true;
+        planet.OnBlackOut += OnAction;
 
         // Act
         planet.SetOperatingLevel(1, 100);
@@ -244,9 +244,9 @@ public class PlanetTests
         Array.ForEach(planet.Buildings, b => b.OperatingLevel = 0);
 
         bool eventRaised = false;
-        
-        Action onAction = () => eventRaised = true;
-        planet.OnBlackOut += onAction;
+
+        void OnAction() => eventRaised = true;
+        planet.OnBlackOut += OnAction;
 
         // Act
         planet.SetOperatingLevel(1, 100);

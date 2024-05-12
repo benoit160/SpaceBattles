@@ -8,7 +8,6 @@
 @inject GameState GameState
 @inject PlanetService PlanetService
 
-
 @if (GameState.CurrentPlanet.ShipyardConstruction is not null)
 {
     ShipyardConstruction construction = GameState.CurrentPlanet.ShipyardConstruction;
@@ -76,6 +75,11 @@
     private Planet _planet;
     private CombatEntityInventory _combatEntity;
     private int _quantityToBuild = 1;
+
+    public ShipyardDetails()
+    {
+        _planet = GameState.CurrentPlanet;
+    }
     
     string _style = string.Empty;
     

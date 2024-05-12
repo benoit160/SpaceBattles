@@ -28,7 +28,7 @@ public class ResourceDisplayTests : TestContext
         });
 
         // Assert
-        Assert.Contains($"175 / 150", cut.Markup);
+        Assert.Contains("175 / 150", cut.Markup);
         Assert.Contains("mud-success-text", cut.Markup);
     }
     
@@ -74,7 +74,7 @@ public class ResourceDisplayTests : TestContext
         );
 
         // Assert
-        Assert.Contains($"200 / 150", cut.Markup);
+        Assert.Contains("200 / 150", cut.Markup);
         Assert.Contains("mud-success-text", cut.Markup);
     }
     
@@ -94,7 +94,7 @@ public class ResourceDisplayTests : TestContext
         });
 
         // Assert
-        Assert.Contains($"100 / 150", cut.Markup);
+        Assert.Contains("100 / 150", cut.Markup);
         Assert.Contains("mud-error-text", cut.Markup);
     }
 

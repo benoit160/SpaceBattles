@@ -1,15 +1,8 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
-using SpaceBattles.Core.Domain.Entities.Universe;
-
 public sealed class StatisticService
 {
-    private readonly Dictionary<int, PlanetStatistics> _planetStatistics;
-
-    public StatisticService()
-    {
-        _planetStatistics = new Dictionary<int, PlanetStatistics>();
-    }
+    private readonly Dictionary<int, PlanetStatistics> _planetStatistics = new();
 
     public PlanetStatistics this[int id]
     {

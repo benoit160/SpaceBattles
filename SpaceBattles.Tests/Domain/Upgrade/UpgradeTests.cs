@@ -4,7 +4,7 @@ namespace SpaceBattles.Tests.Domain.Upgrade;
 
 public class UpgradeTests
 {
-    public DateTime TestDate => new DateTime(1970, 1, 1, 0, 0, 0);
+    public DateTime TestDate => new(1970, 1, 1, 0, 0, 0);
 
     [Fact]
     public void UpgradeEnd()

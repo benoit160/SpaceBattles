@@ -8,7 +8,6 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
-    
     <MudAppBar Color="Color.Dark" Fixed>
         <MudText Typo="Typo.h4" Color="Color.Info" Style="font-family:TitleFont;font-style:italic;">SpaceBattles</MudText>
 
@@ -23,8 +22,8 @@
         <MudButton Href="/Statistics" 
                    Variant="_page == CurrentPage.Statistics ? Variant.Filled : Variant.Outlined" StartIcon="@Icons.Material.Filled.QueryStats" 
                    IconColor="_page == CurrentPage.Statistics ? Color.Warning : Color.Info" Color="Color.Info" Size="Size.Small" Class="mx-2">Statistics</MudButton>
-        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" OnClick="SaveGame" Class="mx-2">Save</MudButton>
-        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="Logout">Log out</MudButton>
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" OnClick="@SaveGame" Class="mx-2">Save</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@Logout">Log out</MudButton>
     </MudAppBar>
     
     <MudMainContent Style="display:flex; flex-direction:column; justify-content:center; height: 100vh;">
