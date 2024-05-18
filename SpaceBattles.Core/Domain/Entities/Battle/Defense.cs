@@ -23,7 +23,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             },
             new Defense
@@ -42,7 +42,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 2),
+                    new BuildingRequirement(9, 2),
                 ],
             },
             new Defense
@@ -61,7 +61,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 4),
+                    new BuildingRequirement(9, 4),
                 ],
             },
             new Defense
@@ -80,7 +80,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 4),
+                    new BuildingRequirement(9, 4),
                 ],
             },
             new Defense
@@ -100,7 +100,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 6),
+                    new BuildingRequirement(9, 6),
                 ],
             },
             new Defense
@@ -120,7 +120,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 8),
+                    new BuildingRequirement(9, 8),
                 ],
             },
             new Defense
@@ -139,7 +139,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             },
             new Defense
@@ -158,7 +158,7 @@ public sealed class Defense : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 6),
+                    new BuildingRequirement(9, 6),
                 ],
             }
         ];
