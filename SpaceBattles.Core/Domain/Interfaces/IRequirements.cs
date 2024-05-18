@@ -21,6 +21,16 @@ public interface IRequirements
         }
     }
 
+    IEnumerable<ResourceCost> NonZeroCosts
+    {
+        get
+        {
+            if (TitaniumCost != 0) yield return new ResourceCost(Resource.Titanium, TitaniumCost);
+            if (SiliconCost != 0) yield return new ResourceCost(Resource.Silicon, SiliconCost);
+            if (HeliumCost != 0) yield return new ResourceCost(Resource.Helium, HeliumCost);
+        }
+    }
+
     public TimeSpan Duration(int buildingLevel)
     {
         double reductionFactor = 2500d * (1 + buildingLevel);

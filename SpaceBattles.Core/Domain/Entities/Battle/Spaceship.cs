@@ -39,7 +39,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             },
             new Spaceship
@@ -64,7 +64,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 2),
+                    new BuildingRequirement(9, 2),
                 ],
             },
             new Spaceship
@@ -89,7 +89,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 4),
+                    new BuildingRequirement(9, 4),
                 ],
             },
             new Spaceship
@@ -114,7 +114,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 3),
+                    new BuildingRequirement(9, 3),
                 ],
             },
             new Spaceship
@@ -140,7 +140,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 5),
+                    new BuildingRequirement(9, 5),
                 ],
             },
             new Spaceship
@@ -165,7 +165,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 7),
+                    new BuildingRequirement(9, 7),
                 ],
             },
             new Spaceship
@@ -191,7 +191,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 8),
+                    new BuildingRequirement(9, 8),
                 ],
             },
             new Spaceship
@@ -217,7 +217,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 8),
+                    new BuildingRequirement(9, 8),
                 ],
             },
             new Spaceship
@@ -243,7 +243,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 9),
+                    new BuildingRequirement(9, 9),
                 ],
             },
             new Spaceship
@@ -269,7 +269,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 12),
+                    new BuildingRequirement(9, 12),
                 ],
             },
             new Spaceship
@@ -295,7 +295,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 4),
+                    new BuildingRequirement(9, 4),
                 ],
             },
             new Spaceship
@@ -319,7 +319,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 3),
+                    new BuildingRequirement(9, 3),
                 ],
             },
             new Spaceship
@@ -344,7 +344,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             },
         ];

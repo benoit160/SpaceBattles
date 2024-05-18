@@ -181,6 +181,14 @@
                     return @<MudText Typo="Typo.body1" Color="Color.Info">Working on @upgradeName</MudText>;
                 }
                 goto default;
+                
+            case 9:
+                if (_planet.ShipyardConstruction is not null)
+                {
+                    string upgradeName = _planet.BattleUnits.Single(b => b.CombatEntityId == _planet.ShipyardConstruction.CombatEntityId).CombatEntity.Name;
+                    return @<MudText Typo="Typo.body1" Color="Color.Info">Working on @upgradeName</MudText>;
+                }
+                goto default;
 
             default:
                 return @<MudText Typo="Typo.body1">Currently idle...</MudText>;

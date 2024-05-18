@@ -7,7 +7,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
-    <PackageReference Include="MudBlazor" Version="6.17.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,11 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
     <ProjectReference Include="..\SpaceBattles.UI\SpaceBattles.UI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\BuildingDetails.razor" />
-    <_ContentIncludedByDefault Remove="Components\Progress.razor" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -23,12 +23,35 @@ public class ResourceDisplayTests : TestContext
         IRenderedComponent<ResourceDisplay> cut = RenderComponent<ResourceDisplay>(parameters =>
         {
             parameters.Add(p => p.Cost, cost);
+            parameters.Add(p => p.Multiplier, 1);
             parameters.Add(p => p.CurrentQuantity,  currentQuantity);
         });
 
         // Assert
-        Assert.Contains($"175 / 150", cut.Markup);
+        Assert.Contains("175 / 150", cut.Markup);
         Assert.Contains("mud-success-text", cut.Markup);
+    }
+    
+    [Theory]
+    [InlineData(1, "175 / 150", "mud-success-text")]
+    [InlineData(2, "175 / 300", "mud-error-text")]
+    public void Multiplier(int multiplier, string expectedMarkup, string expectedColor)
+    {
+        // Arrange
+        ResourceCost cost = new ResourceCost(Resource.Titanium, 150);
+        long currentQuantity = 175;
+        
+        // Act
+        IRenderedComponent<ResourceDisplay> cut = RenderComponent<ResourceDisplay>(parameters =>
+        {
+            parameters.Add(p => p.Cost, cost);
+            parameters.Add(p => p.Multiplier, multiplier);
+            parameters.Add(p => p.CurrentQuantity,  currentQuantity);
+        });
+
+        // Assert
+        Assert.Contains(expectedMarkup, cut.Markup);
+        Assert.Contains(expectedColor, cut.Markup);
     }
     
     [Fact]
@@ -42,6 +65,7 @@ public class ResourceDisplayTests : TestContext
         IRenderedComponent<ResourceDisplay> cut = RenderComponent<ResourceDisplay>(parameters =>
         {
             parameters.Add(p => p.Cost, cost);
+            parameters.Add(p => p.Multiplier, 1);
             parameters.Add(p => p.CurrentQuantity,  currentQuantity);
         });
         
@@ -50,7 +74,7 @@ public class ResourceDisplayTests : TestContext
         );
 
         // Assert
-        Assert.Contains($"200 / 150", cut.Markup);
+        Assert.Contains("200 / 150", cut.Markup);
         Assert.Contains("mud-success-text", cut.Markup);
     }
     
@@ -65,11 +89,12 @@ public class ResourceDisplayTests : TestContext
         IRenderedComponent<ResourceDisplay> cut = RenderComponent<ResourceDisplay>(parameters =>
         {
             parameters.Add(p => p.Cost, cost);
+            parameters.Add(p => p.Multiplier, 1);
             parameters.Add(p => p.CurrentQuantity,  currentQuantity);
         });
 
         // Assert
-        Assert.Contains($"100 / 150", cut.Markup);
+        Assert.Contains("100 / 150", cut.Markup);
         Assert.Contains("mud-error-text", cut.Markup);
     }
 

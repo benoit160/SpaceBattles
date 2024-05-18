@@ -21,7 +21,7 @@ public sealed class Universe
     public int Slots { get; init; }
 
     public Planet[] Planets { get; init; }
-        = Array.Empty<Planet>();
+        = [];
 
     public required PlanetStatistics Statistics { get; set; }
 

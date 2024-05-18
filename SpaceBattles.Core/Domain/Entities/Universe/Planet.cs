@@ -8,7 +8,7 @@ using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
 
-public sealed class Planet : IPosition
+public sealed class Planet : IPosition, IBattleUnitProvider
 {
     // stores fractional leftover value of resources
     private readonly double[] _decimalResourcesLeft = new double[3];
@@ -62,10 +62,10 @@ public sealed class Planet : IPosition
     public long Helium { get; set; }
 
     public BuildingLevel[] Buildings { get; set; }
-        = Array.Empty<BuildingLevel>();
+        = [];
 
     public CombatEntityInventory[] BattleUnits { get; set; }
-        = Array.Empty<CombatEntityInventory>();
+        = [];
 
     [JsonIgnore]
     public ReadOnlyMemory<CombatEntityInventory> Defenses { get; set; }
@@ -94,7 +94,7 @@ public sealed class Planet : IPosition
 
         set
         {
-            long max = Math.Min(value, ResourceCapacity(resource));
+            long max = Math.Min(Math.Abs(value), ResourceCapacity(resource));
 
             switch (resource)
             {
@@ -335,6 +335,9 @@ public sealed class Planet : IPosition
 
         return true;
     }
+
+    public long MaximumAffordableQuantity(IRequirements requirements)
+        => requirements.NonZeroCosts.Min(x => this[x.Resource] / x.RequiredQuantity);
 
     public override int GetHashCode()
     {
