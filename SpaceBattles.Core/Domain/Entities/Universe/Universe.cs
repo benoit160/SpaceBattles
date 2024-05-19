@@ -26,11 +26,11 @@ public sealed class Universe
     public required PlanetStatistics Statistics { get; set; }
 
     public List<Player.Player> Players { get; init; }
-        = new();
+        = [];
 
     public List<Fleet> Fleets { get; init; }
-        = new();
-    
+        = [];
+
     public Planet this[int index]
         => Planets[index];
 
@@ -88,6 +88,15 @@ public sealed class Universe
         newUniverse.AddPlayer(model.CommanderName, model.StartingPlanetName);
 
         return newUniverse;
+    }
+
+    public Fleet? FleetOrbitingPlanet(Planet planet)
+    {
+        return Fleets.Find(Search);
+
+        bool Search(Fleet f) => f.Position.Galaxy == planet.Galaxy
+                                && f.Position.SolarSystem == planet.SolarSystem
+                                && f.Position.Slot == planet.Slot;
     }
 
     public Memory<Planet> GetSolarSystemView(int galaxy, int solarSystem)

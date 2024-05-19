@@ -24,4 +24,15 @@ public class UniverseTests
             Assert.Equal(grouping.Select(x => x.ImageIndex).Count(), images.Count);
         }
     }
+
+    [Fact]
+    public void FleetOrbitingPlanet()
+    {
+        // Arrange
+        Core.Domain.Entities.Universe.Universe universe = Core.Domain.Entities.Universe.Universe.CreateUniverse(new UniverseCreationModel());
+
+        // Act
+
+        // Assert
+    }
 }

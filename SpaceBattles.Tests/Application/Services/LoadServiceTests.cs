@@ -29,7 +29,7 @@ public class LoadServiceTests
 
         HttpClient client = new HttpClient(_msgHandler.Object)
         {
-            BaseAddress = new Uri("http://www.spacebattles.azurewebsites.net"),
+            BaseAddress = new Uri("https://www.spacebattles.azurewebsites.net"),
         };
 
         LoadService service = new LoadService(client);
