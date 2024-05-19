@@ -42,4 +42,10 @@ public static class PlanetFleetExtensions
 
         return true;
     }
+
+    public bool TransferAllSpaceshipToFleet(this Planet planet, Fleet fleet)
+    {
+        if (fleet.Position != planet.SolarSystem 
+            || fleet.Position.Galaxy != gala)
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace SpaceBattles.Core.Domain.Interfaces;
+﻿using SpaceBattles.Core.Domain.Entities.Battle;
+
+namespace SpaceBattles.Core.Domain.Interfaces;
 
 public interface IPosition
 {
