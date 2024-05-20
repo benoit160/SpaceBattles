@@ -34,12 +34,34 @@ public sealed class SaveService
         await _browserService.WriteToLocalStorage(Key, game);
     }
 
-    public async Task<bool> LoadFromStorage()
+    public async ValueTask<bool> ReadAndLoadFromStorage(string? data = null)
     {
-        string? data = await _browserService.ReadLocalStorage(Key);
+        data ??= await _browserService.ReadLocalStorage(Key);
 
         if (data is null) return false;
 
+        Universe? universe;
+
+        try
+        {
+            universe = JsonSerializer.Deserialize<Universe>(data);
+        }
+        catch
+        {
+            return false;
+        }
+
+        if (universe is null) return false;
+
+        RebuildEntityGraph(universe);
+        _gameState.SetState(universe);
+        _statistics[_gameState.CurrentPlanet.Id] = universe.Statistics;
+
+        return true;
+    }
+
+    public bool LoadFromStorage(string data)
+    {
         Universe? universe;
 
         try

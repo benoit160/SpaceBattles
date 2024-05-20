@@ -1,4 +1,5 @@
-﻿@using SpaceBattles.Core.Domain.Models
+﻿@using Microsoft.JSInterop
+@using SpaceBattles.Core.Domain.Models
 @using SpaceBattles.UI.Layouts
 
 @page "/"
@@ -8,6 +9,7 @@
 @inject NavigationManager NavigationManager
 @inject GameState GameState
 @inject SaveService SaveService
+@inject IBrowserService BrowserService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -22,18 +24,31 @@
 </div>
 
 <div class=@(_showCreationScreen? string.Empty : "d-none")>
-    <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
+    <UniverseCreationWaiter @ref="@_universeCreationWaiter"/>
 </div>
 
 @code {
-    private UniverseCreationWaiter? _universeCreationWaiter;
+    private UniverseCreationWaiter _universeCreationWaiter = default!;
 
     private bool _showCreationScreen;
 
+    private Task<string?> CheckSaveDataTask = Task.FromResult<string?>(null);
+
+    protected override void OnInitialized()
+    {
+        CheckSaveDataTask = BrowserService.ReadLocalStorage("SaveData");
+    }
+
     private async Task StartGame()
     {
+        string? saveData = await CheckSaveDataTask;
+        if (saveData is not null)
+        {
+            bool success = SaveService.LoadFromStorage(saveData);
+        }
+
         _showCreationScreen = true;
-        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
+        Task waitingScreen = _universeCreationWaiter.ShowWaitingScreen();
 
         if (!await SaveService.LoadFromStorage())
         {
