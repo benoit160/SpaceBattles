@@ -35,7 +35,7 @@
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
 
-        if (!await SaveService.LoadFromStorage())
+        if (!SaveService.LoadFromStorage())
         {
             GameState.Initialize(new UniverseCreationModel());
         }

@@ -2,9 +2,9 @@
 
 public interface IBrowserService
 {
-    public Task<string?> ReadLocalStorage(string key);
+    public string? ReadLocalStorage(string key);
 
-    public Task WriteToLocalStorage(string key, string value);
+    public void WriteToLocalStorage(string key, string value);
 
-    public Task SetBadge(int? number = null);
+    public void SetBadge(int? number = null);
 }

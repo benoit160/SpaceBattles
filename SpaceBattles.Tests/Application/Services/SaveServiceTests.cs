@@ -39,7 +39,7 @@ public class SaveServiceTests
                 It.IsAny<string>()));
 
         // Act
-        Task action = service.SaveToStorage();
+        Task action = Task.Run(() => service.SaveToStorage());
         await action;
 
         // Assert
@@ -47,7 +47,7 @@ public class SaveServiceTests
     }
 
     [Fact]
-    public async Task LoadFromStorage()
+    public void LoadFromStorage()
     {
         // Arrange
         SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
@@ -55,12 +55,12 @@ public class SaveServiceTests
         string returnedJson = JsonSerializer.Serialize(_gameState.CurrentUniverse);
         
         _browserService.Setup(bs => bs.ReadLocalStorage(It.Is<string>(key => key == "SaveData")))
-            .ReturnsAsync(returnedJson);
+            .Returns(returnedJson);
 
         Universe uni = _gameState.CurrentUniverse;
         
         // Act
-        bool result = await service.LoadFromStorage();
+        bool result = service.LoadFromStorage();
 
         // Assert
         Universe uni2 = _gameState.CurrentUniverse;
@@ -88,15 +88,15 @@ public class SaveServiceTests
     }
     
     [Fact]
-    public async Task LoadFromStorage_InvalidKey_Or_NoData()
+    public void LoadFromStorage_InvalidKey_Or_NoData()
     {
         // Arrange
         SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
         _browserService.Setup(bs => bs.ReadLocalStorage(It.IsAny<string>()))
-            .ReturnsAsync(null as string);
+            .Returns(null as string);
 
         // Act
-        bool result = await service.LoadFromStorage();
+        bool result = service.LoadFromStorage();
 
         // Assert
         Assert.False(result);
