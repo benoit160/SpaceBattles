@@ -4,31 +4,32 @@ using Microsoft.JSInterop;
 
 public sealed class BrowserService : IBrowserService
 {
-    private readonly IJSRuntime _jsRuntime;
+    private readonly IJSInProcessRuntime _jsRuntime;
 
     public BrowserService(IJSRuntime jsRuntime)
     {
-        _jsRuntime = jsRuntime;
+        _jsRuntime = (jsRuntime as IJSInProcessRuntime)
+                     ?? throw new Exception("Could not convert IJSRuntime to IJSInProcessRuntime");
     }
 
-    public async Task<string?> ReadLocalStorage(string key)
+    public string? ReadLocalStorage(string key)
     {
-        return await _jsRuntime.InvokeAsync<string>("localStorage.getItem", key);
+        return _jsRuntime.Invoke<string?>("localStorage.getItem", key);
     }
 
-    public async Task WriteToLocalStorage(string key, string value)
+    public void WriteToLocalStorage(string key, string value)
     {
-        await _jsRuntime.InvokeAsync<string>("localStorage.setItem", key, value);
+        _jsRuntime.Invoke<string>("localStorage.setItem", key, value);
     }
 
-    public async Task SetBadge(int? number = null)
+    public void SetBadge(int? number = null)
     {
         if (number is null)
         {
-            await _jsRuntime.InvokeAsync<string>("navigator.setAppBadge");
+            _jsRuntime.Invoke<string>("navigator.setAppBadge");
             return;
         }
 
-        await _jsRuntime.InvokeAsync<string>("navigator.setAppBadge", number);
+        _jsRuntime.Invoke<string>("navigator.setAppBadge", number);
     }
 }
