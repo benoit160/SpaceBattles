@@ -1,6 +1,7 @@
-﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
+namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 using SpaceBattles.Core.Application.Services;
+using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Models;
 
@@ -25,7 +26,10 @@ public sealed class Universe
     public required PlanetStatistics Statistics { get; set; }
 
     public List<Player.Player> Players { get; init; }
-        = new();
+        = [];
+
+    public List<Fleet> Fleets { get; init; }
+        = [];
 
     public Planet this[int index]
         => Planets[index];
@@ -84,6 +88,15 @@ public sealed class Universe
         newUniverse.AddPlayer(model.CommanderName, model.StartingPlanetName);
 
         return newUniverse;
+    }
+
+    public Fleet? FleetOrbitingPlanet(Planet planet)
+    {
+        return Fleets.Find(Search);
+
+        bool Search(Fleet f) => f.Position.Galaxy == planet.Galaxy
+                                && f.Position.SolarSystem == planet.SolarSystem
+                                && f.Position.Slot == planet.Slot;
     }
 
     public Memory<Planet> GetSolarSystemView(int galaxy, int solarSystem)

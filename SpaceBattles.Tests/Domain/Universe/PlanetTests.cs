@@ -1,4 +1,7 @@
-﻿using SpaceBattles.Core.Domain.Entities.Universe;
+﻿using SpaceBattles.Core.Application.Extensions;
+using SpaceBattles.Core.Domain.Entities.Battle;
+using SpaceBattles.Core.Domain.Entities.Player;
+using SpaceBattles.Core.Domain.Entities.Universe;
 using SpaceBattles.Core.Domain.Enums;
 
 namespace SpaceBattles.Tests.Domain.Universe;
@@ -253,5 +256,104 @@ public class PlanetTests
 
         // Assert
         Assert.True(eventRaised);
+    }
+
+    [Fact]
+    public void TransferAllSpaceshipToFleet()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        
+        Array.ForEach(planet.BattleUnits, bu => bu.Quantity = 10);
+
+        Player player = new Player
+        {
+            Name = "Test",
+        };
+
+        planet.DefineOwner(player);
+
+        Fleet fleet = new Fleet
+        {
+            OwnerId = player.Id,
+            Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
+        };
+
+        // Act
+        planet.TransferAllSpaceshipToFleet(fleet);
+
+        //Assert
+        Assert.Equal(planet.Spaceships.Length, fleet.Spaceships.Count);
+        Assert.True(fleet.Spaceships.All(s => s.Quantity == 10));
+        
+        Assert.True(planet.Spaceships.Span.All(s => s.Quantity == 0));
+        Assert.False(planet.Defenses.Span.Any(s => s.Quantity == 0));
+    }
+    
+    [Theory]
+    [InlineData(666, 10)]
+    [InlineData(11, 500)]
+    public void TransferSpaceshipToFleet_Invalid(short id, short quantity)
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        
+        Array.ForEach(planet.BattleUnits, bu => bu.Quantity = 10);
+
+        Player player = new Player
+        {
+            Name = "Test",
+        };
+
+        planet.DefineOwner(player);
+
+        Fleet fleet = new Fleet
+        {
+            OwnerId = player.Id,
+            Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
+        };
+
+        // Act
+        bool result = planet.TransferSpaceshipToFleet(fleet, id, quantity);
+
+        //Assert
+        Assert.False(result);
+        Assert.Empty(fleet.Spaceships);
+        
+        Assert.True(planet.BattleUnits.All(s => s.Quantity == 10));
+    }
+    
+    [Fact]
+    public void TransferSpaceshipToFleet()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        
+        Array.ForEach(planet.BattleUnits, bu => bu.Quantity = 10);
+
+        Player player = new Player
+        {
+            Name = "Test",
+        };
+
+        planet.DefineOwner(player);
+
+        Fleet fleet = new Fleet
+        {
+            OwnerId = player.Id,
+            Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
+        };
+
+        // Act
+        bool result = planet.TransferSpaceshipToFleet(fleet, 11, 3);
+
+        //Assert
+        Assert.True(result);
+        Assert.Single(fleet.Spaceships);
+        
+        Assert.Equal(1, planet.BattleUnits.Count(s => s.Quantity == 7));
     }
 }

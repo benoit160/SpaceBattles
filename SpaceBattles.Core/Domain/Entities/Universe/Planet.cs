@@ -1,6 +1,7 @@
 ﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 using System.Text.Json.Serialization;
+using SpaceBattles.Core.Application.Extensions;
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
@@ -338,6 +339,60 @@ public sealed class Planet : IPosition, IBattleUnitProvider
 
     public long MaximumAffordableQuantity(IRequirements requirements)
         => requirements.NonZeroCosts.Min(x => this[x.Resource] / x.RequiredQuantity);
+
+    public bool TransferAllSpaceshipToFleet(Fleet fleet)
+    {
+        if (fleet.Position.Galaxy != Galaxy
+            || fleet.Position.SolarSystem != SolarSystem
+            || fleet.Position.Slot != Slot) return false;
+
+        ReadOnlySpan<CombatEntityInventory> planetUnits = Spaceships.Span;
+
+        for (int i = 0; i < planetUnits.Length; i++)
+        {
+            fleet.Spaceships.Add(new CombatEntityInventory
+            {
+                CombatEntityId = planetUnits[i].CombatEntityId,
+                CombatEntity = planetUnits[i].CombatEntity,
+                Quantity = planetUnits[i].Quantity,
+            });
+
+            planetUnits[i].Quantity = 0;
+        }
+
+        return true;
+    }
+
+    public bool TransferSpaceshipToFleet(Fleet fleet, short spaceshipId, short quantity)
+    {
+        if (fleet.Position.Galaxy != Galaxy
+            || fleet.Position.SolarSystem != SolarSystem
+            || fleet.Position.Slot != Slot) return false;
+
+        CombatEntityInventory? inventory = Spaceships.Span.Find(ce => ce.CombatEntityId == spaceshipId);
+
+        if (inventory is null || inventory.Quantity < quantity) return false;
+
+        CombatEntityInventory? fleetInventory = fleet.Spaceships.Find(ce => ce.CombatEntityId == spaceshipId);
+
+        if (fleetInventory is null)
+        {
+            fleet.Spaceships.Add(new CombatEntityInventory
+            {
+                CombatEntityId = spaceshipId,
+                CombatEntity = inventory.CombatEntity,
+                Quantity = quantity,
+            });
+        }
+        else
+        {
+            fleetInventory.Quantity += quantity;
+        }
+
+        inventory.Quantity -= quantity;
+
+        return true;
+    }
 
     public override int GetHashCode()
     {
