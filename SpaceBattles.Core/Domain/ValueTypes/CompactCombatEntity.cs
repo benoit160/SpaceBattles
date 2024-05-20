@@ -1,6 +1,6 @@
-﻿using SpaceBattles.Core.Domain.Entities.Battle;
+﻿namespace SpaceBattles.Core.Domain.ValueTypes;
 
-namespace SpaceBattles.Core.Domain.ValueTypes;
+using SpaceBattles.Core.Domain.Entities.Battle;
 
 public struct CompactCombatEntity
 {
