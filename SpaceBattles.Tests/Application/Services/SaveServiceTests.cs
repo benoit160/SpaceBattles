@@ -30,7 +30,7 @@ public class SaveServiceTests
     }
 
     [Fact]
-    public async Task SaveToStorage()
+    public void SaveToStorage()
     {
         // Arrange
         SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
@@ -39,11 +39,12 @@ public class SaveServiceTests
                 It.IsAny<string>()));
 
         // Act
-        Task action = Task.Run(() => service.SaveToStorage());
-        await action;
+        service.SaveToStorage();
 
         // Assert
-        Assert.True(action.IsCompletedSuccessfully);
+        _browserService.Verify(bs => bs.WriteToLocalStorage(
+            It.Is<string>(key => key == "SaveData"),
+            It.IsAny<string>()));
     }
 
     [Fact]
