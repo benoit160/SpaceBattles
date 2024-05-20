@@ -21,24 +21,6 @@ public sealed class PlanetService
         _notificationService = notificationService;
     }
 
-    public bool CreateFleet([NotNullWhen(true)]out Fleet? fleet)
-    {
-        Planet planet = _gameState.CurrentPlanet;
-        fleet = default;
-
-        if (planet.Owner is null) return false;
-
-        fleet = new Fleet
-        {
-            OwnerId = planet.Owner.Id,
-            Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
-        };
-
-        _gameState.CurrentUniverse.Fleets.Add(fleet);
-
-        return true;
-    }
-
     public void UpdateCurrentPlanet(DateTime now)
     {
         Span<long> totals = stackalloc long[3];
