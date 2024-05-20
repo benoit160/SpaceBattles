@@ -324,4 +324,36 @@ public class PlanetTests
         
         Assert.True(planet.BattleUnits.All(s => s.Quantity == 10));
     }
+    
+    [Fact]
+    public void TransferSpaceshipToFleet()
+    {
+        // Arrange
+        Planet planet = new Planet();
+        planet.Init();
+        
+        Array.ForEach(planet.BattleUnits, bu => bu.Quantity = 10);
+
+        Player player = new Player
+        {
+            Name = "Test",
+        };
+
+        planet.DefineOwner(player);
+
+        Fleet fleet = new Fleet
+        {
+            OwnerId = player.Id,
+            Position = new Position(planet.Galaxy, planet.SolarSystem, planet.Slot),
+        };
+
+        // Act
+        bool result = planet.TransferSpaceshipToFleet(fleet, 11, 3);
+
+        //Assert
+        Assert.True(result);
+        Assert.Single(fleet.Spaceships);
+        
+        Assert.Equal(1, planet.BattleUnits.Count(s => s.Quantity == 7));
+    }
 }
