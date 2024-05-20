@@ -1,7 +1,5 @@
 ﻿namespace SpaceBattles.Core.Application.Services;
 
-using System.Diagnostics.CodeAnalysis;
-using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Universe;
 
