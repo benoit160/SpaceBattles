@@ -14,8 +14,10 @@
 <div class=@(_showCreationScreen? "d-none" : string.Empty)>
     <MudStack AlignItems="AlignItems.Center">
         <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
-
-        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+        
+        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Info" Size="Size.Large">
+            <MudText Typo="Typo.h5" Style="font-family:TitleFont;">Play</MudText>
+        </MudButton>
     </MudStack>
 </div>
 
