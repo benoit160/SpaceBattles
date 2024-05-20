@@ -8,6 +8,8 @@
 @inject GameState GameState
 @inject PlanetService PlanetService
 
+@implements IDisposable
+
 @if (GameState.CurrentPlanet.BuildingUpgrade is not null)
 {
     BuildingUpgrade upgrade = GameState.CurrentPlanet.BuildingUpgrade;
@@ -99,5 +101,11 @@
                 StateHasChanged();
             }
         });
+    }
+    
+    public void Dispose()
+    {
+        _source.Cancel();
+        _source.Dispose();
     }
 }
