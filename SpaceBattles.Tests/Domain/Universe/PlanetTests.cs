@@ -294,7 +294,7 @@ public class PlanetTests
     [Theory]
     [InlineData(666, 10)]
     [InlineData(11, 500)]
-    public void TransferSpaceshipToFleet_InvalidId(short id, short quantity)
+    public void TransferSpaceshipToFleet_Invalid(short id, short quantity)
     {
         // Arrange
         Planet planet = new Planet();
