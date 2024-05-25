@@ -187,13 +187,13 @@ public sealed class Planet : IPosition, IBattleUnitProvider
         TimeSpan elapsedTime = now - LastUpdated;
         int elapsedSeconds = (int)elapsedTime.TotalSeconds;
 
-        const double secondsToMinuteFraction = 1d / 60d;
+        const double secondsToHourFraction = 1d / 3600d;
 
         Span<Resource> resources = Enum.GetValues<Resource>();
         for (int i = 0; i < resources.Length; i++)
         {
             Resource loopResource = resources[i];
-            double resourceProduced = ResourceProduction(loopResource) * secondsToMinuteFraction * elapsedSeconds;
+            double resourceProduced = ResourceProduction(loopResource) * secondsToHourFraction * elapsedSeconds;
             int resourceProducedRounded = (int)Math.Floor(resourceProduced);
             double resourceLeftover = resourceProduced - resourceProducedRounded;
 
@@ -225,7 +225,7 @@ public sealed class Planet : IPosition, IBattleUnitProvider
     };
 
     /// <summary>
-    /// Gets the resource production per minute of the resource on this current planet.
+    /// Gets the resource production per hour of the resource on this current planet.
     /// </summary>
     public int ResourceProduction(Resource resource) => resource switch
     {

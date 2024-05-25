@@ -61,7 +61,7 @@ public class ShipyardConstructionTests
         Planet planet = new Planet();
         planet.Init();
         Array.ForEach(planet.Buildings, b => b.Level = 1);
-        planet.LastUpdated -= TimeSpan.FromDays(1);
+        planet.LastUpdated -= TimeSpan.FromDays(10);
         planet.ResourcesUpdate(DateTime.Now, stackalloc long[3]);
         long titaniumBefore = planet.Titanium;
 
@@ -84,7 +84,7 @@ public class ShipyardConstructionTests
         Planet planet = new Planet();
         planet.Init();
         Array.ForEach(planet.Buildings, b => b.Level = 10);
-        planet.LastUpdated -= TimeSpan.FromDays(1);
+        planet.LastUpdated -= TimeSpan.FromDays(10);
         planet.ResourcesUpdate(DateTime.Now, stackalloc long[3]);
         long titaniumBefore = planet.Titanium;
 
@@ -141,7 +141,7 @@ public class ShipyardConstructionTests
         Planet planet = new Planet();
         planet.Init();
         Array.ForEach(planet.Buildings, b => b.Level = 10);
-        planet.LastUpdated -= TimeSpan.FromDays(1);
+        planet.LastUpdated -= TimeSpan.FromDays(10);
         planet.ResourcesUpdate(DateTime.Now, stackalloc long[3]);
         planet.TryConstructShipyard(1, 10);
 

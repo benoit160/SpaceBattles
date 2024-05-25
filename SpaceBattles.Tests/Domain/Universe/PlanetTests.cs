@@ -99,7 +99,7 @@ public class PlanetTests
         Span<long> totals = [0, 0, 0];
         
         // Act
-        planet.ResourcesUpdate(DateTime.Now + TimeSpan.FromDays(10), totals);
+        planet.ResourcesUpdate(DateTime.Now + TimeSpan.FromDays(100), totals);
         
         // Assert
         Assert.Equal(20_000, planet[Resource.Titanium]);
@@ -169,15 +169,15 @@ public class PlanetTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        DateTime advancedTime = DateTime.Now + TimeSpan.FromSeconds(5);
+        DateTime advancedTime = DateTime.Now + TimeSpan.FromHours(1);
         Span<long> totals = [0, 0, 0];
 
         // Act
         planet.ResourcesUpdate(advancedTime, totals);
         
         // Assert
-        Assert.Equal(152, planet[Resource.Titanium]);
-        Assert.Equal(76, planet[Resource.Silicon]);
+        Assert.Equal(180, planet[Resource.Titanium]);
+        Assert.Equal(90, planet[Resource.Silicon]);
         Assert.Equal(0, planet[Resource.Helium]);
         
         advancedTime += TimeSpan.FromSeconds(5);

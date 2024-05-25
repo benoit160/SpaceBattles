@@ -47,11 +47,11 @@ public class StatisticServiceTests
         PlanetService planetService = new PlanetService(state, service, _notificationService);
 
         // Act
-        planetService.UpdateCurrentPlanet(timeBeforeUpdated + TimeSpan.FromMinutes(10));
+        planetService.UpdateCurrentPlanet(timeBeforeUpdated + TimeSpan.FromHours(1));
 
         // Assert
-        Assert.Equal(300, statistics.TotalTitaniumProduced);
-        Assert.Equal(150, statistics.TotalSiliconProduced);
+        Assert.Equal(30, statistics.TotalTitaniumProduced);
+        Assert.Equal(15, statistics.TotalSiliconProduced);
         Assert.Equal(0, statistics.TotalHeliumProduced);
     }
     
@@ -70,7 +70,7 @@ public class StatisticServiceTests
         PlanetService planetService = new PlanetService(state, service, _notificationService);
 
         // Act
-        planetService.UpdateCurrentPlanet(timeBeforeUpdated + TimeSpan.FromDays(10));
+        planetService.UpdateCurrentPlanet(timeBeforeUpdated + TimeSpan.FromDays(100));
 
         // Assert
         Assert.True(statistics.TotalTitaniumProduced > 10_000);
