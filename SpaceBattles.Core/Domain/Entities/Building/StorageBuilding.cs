@@ -16,7 +16,7 @@ public sealed class StorageBuilding : Building
         return 5_000 * Convert.ToInt64(Math.Floor(2.5d * Math.Pow(Math.E, 20d / 33d * level)));
     }
 
-    public (double[] Data, string[] Labels) GetProductionChartData(int level)
+    public (double[] Data, string[] Labels) GetStorageChartData(int level)
     {
         int lowerBound = Math.Max(0, level - 4);
 

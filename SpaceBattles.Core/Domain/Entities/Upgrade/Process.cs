@@ -18,5 +18,5 @@ public abstract class Process
 
     public bool IsFinished => RemainingWork <= 0;
 
-    public double PercentFinished => 100 * (WorkDone / WorkNeeded);
+    public double PercentFinished => 100 * (WorkDone / (double)WorkNeeded);
 }

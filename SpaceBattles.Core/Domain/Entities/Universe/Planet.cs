@@ -250,7 +250,7 @@ public sealed class Planet : IPosition, IBattleUnitProvider
 
     public BuildingLevel? ProcessUpgrades(DateTime now)
     {
-        if (BuildingUpgrade is not null && BuildingUpgrade.End <= now)
+        if (BuildingUpgrade?.End <= now)
         {
             BuildingLevel upgradedBuilding = Buildings.Single(x => x.BuildingId == BuildingUpgrade.BuildingId);
             upgradedBuilding.Level++;
@@ -263,7 +263,7 @@ public sealed class Planet : IPosition, IBattleUnitProvider
 
     public bool ProcessShipyard(DateTime now)
     {
-        if (ShipyardConstruction is not null && ShipyardConstruction.End <= now)
+        if (ShipyardConstruction?.End <= now)
         {
             CombatEntityInventory construction = BattleUnits.Single(x => x.CombatEntityId == ShipyardConstruction.CombatEntityId);
             construction.Quantity += ShipyardConstruction.Quantity;
