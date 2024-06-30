@@ -1,22 +1,21 @@
-﻿@using System.Diagnostics
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
 @inject SaveService SaveService
 @inject BotService BotService
 
-<MudThemeProvider Theme="@MainLayout.SpaceBattlesTheme"/>
+<MudThemeProvider IsDarkMode="true" Theme="@MainLayout.SpaceBattlesTheme"/>
 <MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Color="Color.Dark" Fixed>
         <MudText Typo="Typo.h4" Color="Color.Info" Style="font-family:TitleFont;font-style:italic;">SpaceBattles</MudText>
 
-        <MudButton Href="/Overview" Size="Size.Small" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" DisableRipple>Overview</MudButton>
-        <MudButton Href="/Buildings" Size="Size.Small" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Buildings</MudButton>
-        <MudButton Href="/Shipyard" Size="Size.Small" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Shipyard</MudButton>
-        <MudButton Href="/Defenses" Size="Size.Small" Variant="_page == CurrentPage.Defenses ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Defenses</MudButton>
-        <MudButton Href="/Universe" Size="Size.Small" Variant="_page == CurrentPage.Universe ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" DisableRipple>Universe</MudButton>
+        <MudButton Href="/Overview" Size="Size.Small" Variant="_page == CurrentPage.Overview ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="ml-8 mr-2" Ripple="false">Overview</MudButton>
+        <MudButton Href="/Buildings" Size="Size.Small" Variant="_page == CurrentPage.Buildings ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" Ripple="false">Buildings</MudButton>
+        <MudButton Href="/Shipyard" Size="Size.Small" Variant="_page == CurrentPage.Shipyard ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" Ripple="false">Shipyard</MudButton>
+        <MudButton Href="/Defenses" Size="Size.Small" Variant="_page == CurrentPage.Defenses ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" Ripple="false">Defenses</MudButton>
+        <MudButton Href="/Universe" Size="Size.Small" Variant="_page == CurrentPage.Universe ? Variant.Filled : Variant.Outlined" Color="Color.Info" Class="mx-2" Ripple="false">Universe</MudButton>
 
         <MudSpacer />
         
