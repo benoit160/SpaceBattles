@@ -9,7 +9,7 @@ public class TotalCostDisplayTests : TestContext
     public TotalCostDisplayTests()
     {
         Services.AddMudServices();
-        JSInterop.SetupVoid("mudPopover.initialize", "mudblazor-main-content", 0);
+        JSInterop.Mode = JSRuntimeMode.Loose;
     }
     
     [Fact]
