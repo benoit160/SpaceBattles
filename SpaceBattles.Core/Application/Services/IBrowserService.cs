@@ -1,10 +1,10 @@
-namespace SpaceBattles.Core.Application.Services;
+﻿namespace SpaceBattles.Core.Application.Services;
 
 public interface IBrowserService
 {
-    Task<string?> ReadLocalStorage(string key);
+    public string? ReadLocalStorage(string key);
 
-    Task WriteToLocalStorage(string key, string value);
+    public void WriteToLocalStorage(string key, string value);
 
-    Task SetBadge(int? number = null);
+    public void SetBadge(int? number = null);
 }

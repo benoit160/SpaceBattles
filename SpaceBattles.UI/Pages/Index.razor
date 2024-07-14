@@ -1,0 +1,47 @@
+﻿@using SpaceBattles.Core.Domain.Models
+@using SpaceBattles.UI.Layouts
+
+@page "/"
+
+@layout MainLayout
+
+@inject NavigationManager NavigationManager
+@inject GameState GameState
+@inject SaveService SaveService
+
+<PageTitle>Welcome to SpaceBattles</PageTitle>
+
+<div class=@(_showCreationScreen? "d-none" : string.Empty)>
+    <MudStack AlignItems="AlignItems.Center">
+        <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
+        
+        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Info" Size="Size.Large">
+            <MudText Typo="Typo.h5" Style="font-family:TitleFont;">Play</MudText>
+        </MudButton>
+    </MudStack>
+</div>
+
+<div class=@(_showCreationScreen? string.Empty : "d-none")>
+    <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
+</div>
+
+@code {
+    private UniverseCreationWaiter? _universeCreationWaiter;
+
+    private bool _showCreationScreen;
+
+    private async Task StartGame()
+    {
+        _showCreationScreen = true;
+        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
+
+        if (!SaveService.LoadFromStorage())
+        {
+            GameState.Initialize(new UniverseCreationModel());
+        }
+
+        await waitingScreen;
+
+        NavigationManager.NavigateTo("/Overview");
+    }
+}

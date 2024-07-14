@@ -60,7 +60,7 @@ public class ShipyardConstructionTests
         // Arrange
         Planet planet = new Planet();
         planet.Init();
-        Array.ForEach(planet.Buildings, b => b.Level = 10);
+        Array.ForEach(planet.Buildings, b => b.Level = 1);
         planet.LastUpdated -= TimeSpan.FromDays(1);
         planet.ResourcesUpdate(DateTime.Now, stackalloc long[3]);
         long titaniumBefore = planet.Titanium;
@@ -73,7 +73,7 @@ public class ShipyardConstructionTests
         Assert.NotNull(planet.ShipyardConstruction);
         Assert.Equal(1, planet.ShipyardConstruction.Quantity);
         Assert.Equal(1, planet.ShipyardConstruction.CombatEntityId);
-        Assert.Equal(0.8d, planet.ShipyardConstruction.Duration.TotalHours);
+        Assert.Equal(0.4d, planet.ShipyardConstruction.Duration.TotalHours);
         Assert.Equal(titaniumBefore - 2000, planet.Titanium);
     }
     
@@ -92,11 +92,12 @@ public class ShipyardConstructionTests
         bool result = planet.TryConstructShipyard(1, 10);
 
         // Assert
-        Assert.True(result); 
+        double expected = 20_000 / (2500d * 11);
+        Assert.True(result);
         Assert.NotNull(planet.ShipyardConstruction);
         Assert.Equal(10, planet.ShipyardConstruction.Quantity);
         Assert.Equal(1, planet.ShipyardConstruction.CombatEntityId);
-        Assert.Equal(8d, planet.ShipyardConstruction.Duration.TotalHours);
+        Assert.Equal(expected, planet.ShipyardConstruction.Duration.TotalHours, 5);
         Assert.Equal(titaniumBefore - 20000, planet.Titanium);
     }
 

@@ -1,0 +1,30 @@
+﻿@using SpaceBattles.Core.Domain.Entities.Upgrade
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="pb-3">
+    <MudPaper Class="pa-2 rounded-lg">
+        <MudStack Row>
+            <MudImage Src="@Image" Width="96" Class="rounded-lg" />
+            <MudStack Class="flex-grow-1" Spacing="1">
+                <MudText Typo="Typo.body1">@Display</MudText>
+                <MudSpacer />
+                <MudText Typo="Typo.body2">@DisplaySecondary</MudText>
+                <MudProgressLinear Color="Color.Info" Rounded Striped Size="Size.Large" Value="Process.PercentFinished" />
+                <MudText Typo="Typo.body2">@Process.RemainingTime.ToString(@"hh\:mm\:ss") remaining</MudText>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [Parameter, EditorRequired]
+    public required string Display { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string DisplaySecondary { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Image { get; set; }
+
+    [Parameter, EditorRequired]
+    public required Upgrade Process { get; set; }
+}

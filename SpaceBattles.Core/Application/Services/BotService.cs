@@ -22,6 +22,8 @@ public sealed class BotService : IDisposable
         _botsPlanets = _gameState.CurrentUniverse.Planets
             .Where(planet => planet.Owner?.IsBot ?? false);
 
+        _source = new CancellationTokenSource();
+
         // no bots
         if (!_botsPlanets.Any()) return false;
 
@@ -41,8 +43,8 @@ public sealed class BotService : IDisposable
 
     public void Dispose()
     {
-        _source.Cancel();
-        _source.Dispose();
+        _source?.Cancel();
+        _source?.Dispose();
     }
 
     private void DoAction(Planet planet)

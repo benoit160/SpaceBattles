@@ -10,37 +10,53 @@ public sealed class SaveService
     private const string Key = "SaveData";
 
     private readonly GameState _gameState;
+    private readonly StatisticService _statistics;
     private readonly IBrowserService _browserService;
 
-    public SaveService(GameState gameState, IBrowserService browserService)
+    private readonly JsonSerializerOptions _options;
+
+    public SaveService(GameState gameState, StatisticService statisticService, IBrowserService browserService)
     {
         _gameState = gameState;
+        _statistics = statisticService;
         _browserService = browserService;
-    }
-
-    public async Task SaveToStorage()
-    {
-        JsonSerializerOptions options = new JsonSerializerOptions()
+        _options = new JsonSerializerOptions
         {
             IgnoreReadOnlyProperties = true,
             IgnoreReadOnlyFields = true,
         };
-        string json = JsonSerializer.Serialize(_gameState.CurrentUniverse, options);
-        await _browserService.WriteToLocalStorage(Key, json);
     }
 
-    public async Task<bool> LoadFromStorage()
+    public void SaveToStorage()
     {
-        string? data = await _browserService.ReadLocalStorage(Key);
+        string game = JsonSerializer.Serialize(_gameState.CurrentUniverse, _options);
+
+        _browserService.WriteToLocalStorage(Key, game);
+    }
+
+    public bool LoadFromStorage()
+    {
+        string? data = _browserService.ReadLocalStorage(Key);
 
         if (data is null) return false;
 
-        Universe? universe = JsonSerializer.Deserialize<Universe>(data);
+        Universe? universe;
+
+        try
+        {
+            universe = JsonSerializer.Deserialize<Universe>(data);
+        }
+        catch
+        {
+            return false;
+        }
 
         if (universe is null) return false;
 
         RebuildEntityGraph(universe);
         _gameState.SetState(universe);
+        _statistics[_gameState.CurrentPlanet.Id] = universe.Statistics;
+
         return true;
     }
 

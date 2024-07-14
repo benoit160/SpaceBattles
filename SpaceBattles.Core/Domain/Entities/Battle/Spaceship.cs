@@ -22,7 +22,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 11,
                 Name = "Light fighter",
                 ImageName = "light_fighter.webp",
-                Description = "This is the first fighting ship all emperors will build. The light fighter is an agile ship, but vulnerable when it is on its own. In mass numbers, they can become a great threat to any empire. They are the first to accompany small and large cargoes to hostile planets with minor defences.",
+                Description = "This is the first fighting ship all emperors will build. The light fighter is an agile ship, but vulnerable when it is on its own. In mass numbers, they can become a great threat to any empire.\nThey are the first to accompany small and large cargoes to hostile planets with minor defences.",
 
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Fighters,
 
@@ -39,7 +39,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             },
             new Spaceship
@@ -47,7 +47,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 12,
                 Name = "Light cargo",
                 ImageName = "small_cargo.webp",
-                Description = "This is the first fighting ship all emperors will build. The light fighter is an agile ship, but vulnerable when it is on its own. In mass numbers, they can become a great threat to any empire. They are the first to accompany small and large cargoes to hostile planets with minor defences.",
+                Description = "This is the first fighting ship all emperors will build. The light fighter is an agile ship, but vulnerable when it is on its own. In mass numbers, they can become a great threat to any empire.\nThey are the first to accompany small and large cargoes to hostile planets with minor defences.",
 
                 Characteristics = SpaceshipsCharacteristics.Combustion | SpaceshipsCharacteristics.Utility,
 
@@ -64,7 +64,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 2),
+                    new BuildingRequirement(9, 2),
                 ],
             },
             new Spaceship
@@ -89,7 +89,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 4),
+                    new BuildingRequirement(9, 4),
                 ],
             },
             new Spaceship
@@ -97,7 +97,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 14,
                 Name = "Heavy fighter",
                 ImageName = "heavy_fighter.webp",
-                Description = "In developing the heavy fighter, researchers reached a point at which conventional drives no longer provided sufficient performance. In order to move the ship optimally, the impulse drive was used for the first time. This increased the costs, but also opened new possibilities. By using this drive, there was more energy left for weapons and shields; in addition, high-quality materials were used for this new family of fighters. With these changes, the heavy fighter represents a new era in ship technology and is the basis for cruiser technology.",
+                Description = "In developing the heavy fighter, researchers reached a point at which conventional drives no longer provided sufficient performance. In order to move the ship optimally, the impulse drive was used for the first time. This increased the costs, but also opened new possibilities.\nBy using this drive, there was more energy left for weapons and shields; in addition, high-quality materials were used for this new family of fighters. With these changes, the heavy fighter represents a new era in ship technology and is the basis for cruiser technology.",
 
                 Characteristics = SpaceshipsCharacteristics.Impulse | SpaceshipsCharacteristics.Fighters,
 
@@ -114,7 +114,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 3),
+                    new BuildingRequirement(9, 3),
                 ],
             },
             new Spaceship
@@ -122,7 +122,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 15,
                 Name = "Cruiser",
                 ImageName = "cruiser.webp",
-                Description = "With the development of the heavy laser and the ion cannon, light and heavy fighters encountered an alarmingly high number of defeats that increased with each raid. Despite many modifications, weapons strength and armour changes, it could not be increased fast enough to effectively counter these new defensive measures. Therefore, it was decided to build a new class of ship that combined more armor and more firepower. As a result of years of research and development, the Cruiser was born.\r\n\r\nCruisers are armored almost three times of that of the heavy fighters, and possess more than twice the firepower of any combat ship in existence. They also possess speeds that far surpassed any spacecraft ever made. For almost a century, cruisers dominated the universe. However, with the development of Gauss cannons and plasma turrets, their predominance ended. They are still used today against fighter groups, but not as predominantly as before.",
+                Description = "With the development of the heavy laser and the ion cannon, light and heavy fighters encountered an alarmingly high number of defeats that increased with each raid. Despite many modifications, weapons strength and armour changes, it could not be increased fast enough to effectively counter these new defensive measures.\nTherefore, it was decided to build a new class of ship that combined more armor and more firepower. As a result of years of research and development, the Cruiser was born.\r\n\r\nCruisers are armored almost three times of that of the heavy fighters, and possess more than twice the firepower of any combat ship in existence. They also possess speeds that far surpassed any spacecraft ever made. For almost a century, cruisers dominated the universe. However, with the development of Gauss cannons and plasma turrets, their predominance ended. They are still used today against fighter groups, but not as predominantly as before.",
 
                 Characteristics = SpaceshipsCharacteristics.Impulse | SpaceshipsCharacteristics.Fighters,
 
@@ -140,7 +140,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 5),
+                    new BuildingRequirement(9, 5),
                 ],
             },
             new Spaceship
@@ -148,7 +148,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 16,
                 Name = "Battleship",
                 ImageName = "battleship.webp",
-                Description = "Once it became apparent that the cruiser was losing ground to the increasing number of defense structures it was facing, and with the loss of ships on missions at unacceptable levels, it was decided to build a ship that could face those same type of defense structures with as little loss as possible. After extensive development, the Battleship was born. Built to withstand the largest of battles, the Battleship features large cargo spaces, heavy cannons, and high hyperdrive speed. Once developed, it eventually turned out to be the backbone of every raiding Emperors fleet.",
+                Description = "Once it became apparent that the cruiser was losing ground to the increasing number of defense structures it was facing, and with the loss of ships on missions at unacceptable levels, it was decided to build a ship that could face those same type of defense structures with as little loss as possible.\nAfter extensive development, the Battleship was born. Built to withstand the largest of battles, the Battleship features large cargo spaces, heavy cannons, and high hyperdrive speed. Once developed, it eventually turned out to be the backbone of every raiding Emperors fleet.",
 
                 Characteristics = SpaceshipsCharacteristics.Hyperspace | SpaceshipsCharacteristics.Warships,
 
@@ -165,7 +165,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 7),
+                    new BuildingRequirement(9, 7),
                 ],
             },
             new Spaceship
@@ -173,7 +173,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 17,
                 Name = "Battlecruiser",
                 ImageName = "battlecruiser.webp",
-                Description = "This ship is one of the most advanced fighting ships ever to be developed, and is particularly deadly when it comes to destroying attacking fleets. With its improved laser cannons on board and advanced Hyperspace engine, the Battlecruiser is a serious force to be dealt with in any attack. Due to the ships design and its large weapons system, the cargo holds had to be cut, but this is compensated for by the lowered fuel consumption.",
+                Description = "This ship is one of the most advanced fighting ships ever to be developed, and is particularly deadly when it comes to destroying attacking fleets. With its improved laser cannons on board and advanced Hyperspace engine, the Battlecruiser is a serious force to be dealt with in any attack.\nDue to the ships design and its large weapons system, the cargo holds had to be cut, but this is compensated for by the lowered fuel consumption.",
 
                 Characteristics = SpaceshipsCharacteristics.Hyperspace | SpaceshipsCharacteristics.Warships,
 
@@ -191,7 +191,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 8),
+                    new BuildingRequirement(9, 8),
                 ],
             },
             new Spaceship
@@ -199,7 +199,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 18,
                 Name = "Bomber",
                 ImageName = "bomber.webp",
-                Description = "Over the centuries, as defenses were starting to get larger and more sophisticated, fleets were starting to be destroyed at an alarming rate. It was decided that a new ship was needed to break defenses to ensure maximum results. After years of research and development, the Bomber was created.\r\n\r\nUsing laser-guided targeting equipment and Plasma Bombs, the Bomber seeks out and destroys any defense mechanism it can find. As soon as the hyperspace drive is developed to Level 8, the Bomber is retrofitted with the hyperspace engine and can fly at higher speeds.",
+                Description = "Over the centuries, as defenses were starting to get larger and more sophisticated, fleets were starting to be destroyed at an alarming rate. It was decided that a new ship was needed to break defenses to ensure maximum results. After years of research and development, the Bomber was created.\nUsing laser-guided targeting equipment and Plasma Bombs, the Bomber seeks out and destroys any defense mechanism it can find. As soon as the hyperspace drive is developed to Level 8, the Bomber is retrofitted with the hyperspace engine and can fly at higher speeds.",
 
                 Characteristics = SpaceshipsCharacteristics.Impulse | SpaceshipsCharacteristics.Warships,
 
@@ -217,7 +217,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 8),
+                    new BuildingRequirement(9, 8),
                 ],
             },
             new Spaceship
@@ -225,7 +225,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 19,
                 Name = "Destroyer",
                 ImageName = "destroyer.webp",
-                Description = "The Destroyer is the result of years of work and development. With the development of Deathstars, it was decided that a class of ship was needed to defend against such a massive weapon.Thanks to its improved homing sensors, multi-phalanx Ion cannons, Gauss Cannons and Plasma Turrets, the Destroyer turned out to be one of the most fearsome ships created.\r\n\r\nBecause the destroyer is very large, its maneuverability is severely limited, which makes it more of a battle station than a fighting ship. The lack of maneuverability is made up for by its sheer firepower, but it also costs significant amounts of deuterium to build and operate.",
+                Description = "The Destroyer is the result of years of work and development. With the development of Deathstars, it was decided that a class of ship was needed to defend against such a massive weapon.Thanks to its improved homing sensors, multi-phalanx Ion cannons, Gauss Cannons and Plasma Turrets, the Destroyer turned out to be one of the most fearsome ships created.\nBecause the destroyer is very large, its maneuverability is severely limited, which makes it more of a battle station than a fighting ship. The lack of maneuverability is made up for by its sheer firepower, but it also costs significant amounts of deuterium to build and operate.",
 
                 Characteristics = SpaceshipsCharacteristics.Hyperspace | SpaceshipsCharacteristics.Warships,
 
@@ -243,7 +243,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 9),
+                    new BuildingRequirement(9, 9),
                 ],
             },
             new Spaceship
@@ -251,7 +251,7 @@ public sealed class Spaceship : CombatEntity
                 Id = 20,
                 Name = "Deathstar",
                 ImageName = "deathstar.webp",
-                Description = "The Deathstar is the most powerful ship ever created. This moon sized ship is the only ship that can be seen with the naked eye on the ground. By the time you spot it, unfortunately, it is too late to do anything. Armed with a gigantic graviton cannon, the most advanced weapons system ever created in the Universe, this massive ship has not only the capability of destroying entire fleets and defences, but also has the capability of destroying entire moons. Only the most advanced empires have the capability to build a ship of this mammoth size.",
+                Description = "The Deathstar is the most powerful ship ever created. This moon sized ship is the only ship that can be seen with the naked eye on the ground. By the time you spot it, unfortunately, it is too late to do anything. Armed with a gigantic graviton cannon, the most advanced weapons system ever created in the Universe, this massive ship has not only the capability of destroying entire fleets and defences, but also has the capability of destroying entire moons.\nOnly the most advanced empires have the capability to build a ship of this mammoth size.",
 
                 Characteristics = SpaceshipsCharacteristics.Hyperspace | SpaceshipsCharacteristics.Warships,
 
@@ -269,7 +269,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 12),
+                    new BuildingRequirement(9, 12),
                 ],
             },
             new Spaceship
@@ -295,7 +295,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 4),
+                    new BuildingRequirement(9, 4),
                 ],
             },
             new Spaceship
@@ -319,7 +319,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 3),
+                    new BuildingRequirement(9, 3),
                 ],
             },
             new Spaceship
@@ -344,7 +344,7 @@ public sealed class Spaceship : CombatEntity
 
                 BuildingRequirements =
                 [
-                    new BuildingRequirement(8, 1),
+                    new BuildingRequirement(9, 1),
                 ],
             },
         ];

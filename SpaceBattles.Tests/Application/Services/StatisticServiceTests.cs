@@ -18,13 +18,13 @@ public class StatisticServiceTests
     {
         // Arrange
         UniverseCreationModel model = new UniverseCreationModel();
-        GameState state = new GameState();
+        StatisticService service = new StatisticService();
+        GameState state = new GameState(service);
         state.Initialize(model);
-        
-        StatisticService service = new StatisticService(state);
+
 
         // Act
-        PlanetStatistics statistics = service[state.CurrentPlanet];
+        PlanetStatistics statistics = service[state.CurrentPlanet.Id];
 
         // Assert
         Assert.Equal(0, statistics.TotalTitaniumProduced);
@@ -37,11 +37,11 @@ public class StatisticServiceTests
     {
         // Arrange
         UniverseCreationModel model = new UniverseCreationModel();
-        GameState state = new GameState();
+        StatisticService service = new StatisticService();
+        GameState state = new GameState(service);
         state.Initialize(model);
         
-        StatisticService service = new StatisticService(state);
-        PlanetStatistics statistics = service[state.CurrentPlanet];
+        PlanetStatistics statistics = service[state.CurrentPlanet.Id];
         DateTime timeBeforeUpdated = state.CurrentPlanet.LastUpdated;
 
         PlanetService planetService = new PlanetService(state, service, _notificationService);
@@ -60,11 +60,11 @@ public class StatisticServiceTests
     {
         // Arrange
         UniverseCreationModel model = new UniverseCreationModel();
-        GameState state = new GameState();
+        StatisticService service = new StatisticService();
+        GameState state = new GameState(service);
         state.Initialize(model);
         
-        StatisticService service = new StatisticService(state);
-        PlanetStatistics statistics = service[state.CurrentPlanet];
+        PlanetStatistics statistics = service[state.CurrentPlanet.Id];
         DateTime timeBeforeUpdated = state.CurrentPlanet.LastUpdated;
 
         PlanetService planetService = new PlanetService(state, service, _notificationService);

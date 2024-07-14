@@ -1,6 +1,7 @@
 ﻿namespace SpaceBattles.Core.Domain.Entities.Universe;
 
 using System.Text.Json.Serialization;
+using SpaceBattles.Core.Application.Extensions;
 using SpaceBattles.Core.Domain.Entities.Battle;
 using SpaceBattles.Core.Domain.Entities.Building;
 using SpaceBattles.Core.Domain.Entities.Upgrade;
@@ -8,7 +9,7 @@ using SpaceBattles.Core.Domain.Enums;
 using SpaceBattles.Core.Domain.Interfaces;
 using SpaceBattles.Core.Domain.Records;
 
-public sealed class Planet : IPosition
+public sealed class Planet : IPosition, IBattleUnitProvider
 {
     // stores fractional leftover value of resources
     private readonly double[] _decimalResourcesLeft = new double[3];
@@ -27,6 +28,8 @@ public sealed class Planet : IPosition
     }
 
     public event Action? OnBlackOut;
+
+    public int Id => Slot | SolarSystem << 8 | Galaxy << 16;
 
     [JsonIgnore]
     public Player.Player? Owner { get; set; }
@@ -60,10 +63,10 @@ public sealed class Planet : IPosition
     public long Helium { get; set; }
 
     public BuildingLevel[] Buildings { get; set; }
-        = Array.Empty<BuildingLevel>();
+        = [];
 
     public CombatEntityInventory[] BattleUnits { get; set; }
-        = Array.Empty<CombatEntityInventory>();
+        = [];
 
     [JsonIgnore]
     public ReadOnlyMemory<CombatEntityInventory> Defenses { get; set; }
@@ -92,7 +95,7 @@ public sealed class Planet : IPosition
 
         set
         {
-            long max = Math.Min(value, ResourceCapacity(resource));
+            long max = Math.Min(Math.Abs(value), ResourceCapacity(resource));
 
             switch (resource)
             {
@@ -186,7 +189,7 @@ public sealed class Planet : IPosition
 
         const double secondsToMinuteFraction = 1d / 60d;
 
-        var resources = Enum.GetValues<Resource>();
+        Span<Resource> resources = Enum.GetValues<Resource>();
         for (int i = 0; i < resources.Length; i++)
         {
             Resource loopResource = resources[i];
@@ -299,7 +302,7 @@ public sealed class Planet : IPosition
         {
             BuildingId = buildingId,
             Start = DateTime.Now,
-            Duration = level.Duration,
+            Duration = level.Duration(Buildings.First(b => b.BuildingId == 8).Level),
         };
 
         BuildingUpgrade = upgrade;
@@ -326,10 +329,67 @@ public sealed class Planet : IPosition
             Start = DateTime.Now,
             CombatEntityId = combatEntityId,
             Quantity = quantity,
-            Duration = (entity as IRequirements).Duration * quantity,
+            Duration = (entity as IRequirements).Duration(Buildings.First(b => b.BuildingId == 9).Level) * quantity,
         };
 
         ShipyardConstruction = construction;
+
+        return true;
+    }
+
+    public long MaximumAffordableQuantity(IRequirements requirements)
+        => requirements.NonZeroCosts.Min(x => this[x.Resource] / x.RequiredQuantity);
+
+    public bool TransferAllSpaceshipToFleet(Fleet fleet)
+    {
+        if (fleet.Position.Galaxy != Galaxy
+            || fleet.Position.SolarSystem != SolarSystem
+            || fleet.Position.Slot != Slot) return false;
+
+        ReadOnlySpan<CombatEntityInventory> planetUnits = Spaceships.Span;
+
+        for (int i = 0; i < planetUnits.Length; i++)
+        {
+            fleet.Spaceships.Add(new CombatEntityInventory
+            {
+                CombatEntityId = planetUnits[i].CombatEntityId,
+                CombatEntity = planetUnits[i].CombatEntity,
+                Quantity = planetUnits[i].Quantity,
+            });
+
+            planetUnits[i].Quantity = 0;
+        }
+
+        return true;
+    }
+
+    public bool TransferSpaceshipToFleet(Fleet fleet, short spaceshipId, short quantity)
+    {
+        if (fleet.Position.Galaxy != Galaxy
+            || fleet.Position.SolarSystem != SolarSystem
+            || fleet.Position.Slot != Slot) return false;
+
+        CombatEntityInventory? inventory = Spaceships.Span.Find(ce => ce.CombatEntityId == spaceshipId);
+
+        if (inventory is null || inventory.Quantity < quantity) return false;
+
+        CombatEntityInventory? fleetInventory = fleet.Spaceships.Find(ce => ce.CombatEntityId == spaceshipId);
+
+        if (fleetInventory is null)
+        {
+            fleet.Spaceships.Add(new CombatEntityInventory
+            {
+                CombatEntityId = spaceshipId,
+                CombatEntity = inventory.CombatEntity,
+                Quantity = quantity,
+            });
+        }
+        else
+        {
+            fleetInventory.Quantity += quantity;
+        }
+
+        inventory.Quantity -= quantity;
 
         return true;
     }

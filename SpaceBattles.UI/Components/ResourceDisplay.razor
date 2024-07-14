@@ -1,0 +1,40 @@
+﻿@using SpaceBattles.Core.Domain.Records
+@using SpaceBattles.Core.Domain.Entities.Universe
+
+<MudStack Row>
+    <MudTooltip Text="@_resourceInfo.Name" Color="Color.Info" Placement="Placement.Bottom" Arrow>
+        <MudImage Src="@_resourceInfo.ImagePath" Width="48" Height="48" />
+    </MudTooltip>
+    <MudText Class="align-self-center" Color="@_color">@CurrentQuantity.ToString("#,##0") / @((Cost.RequiredQuantity * Multiplier).ToString("#,##0"))</MudText>
+</MudStack>
+
+@code {
+    [Parameter, EditorRequired]
+    public ResourceCost Cost { get; set; }
+
+    [Parameter, EditorRequired]
+    public long CurrentQuantity { get; set; }
+
+    [Parameter, EditorRequired]
+    public int Multiplier { get; set; }
+
+    private Color _color;
+    private ResourceInfo _resourceInfo;
+
+    protected override void OnInitialized()
+    {
+        _resourceInfo = Resources.ResourceInfos[(int)Cost.Resource - 1];
+        _color = CurrentQuantity < Cost.RequiredQuantity ? Color.Error : Color.Success;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Color newColor = CurrentQuantity < Cost.RequiredQuantity * Multiplier ? Color.Error : Color.Success;
+
+        if (newColor != _color) 
+        {
+            _color = newColor;
+            StateHasChanged();
+        }
+    }
+}

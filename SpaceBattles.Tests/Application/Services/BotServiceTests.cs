@@ -7,10 +7,13 @@ namespace SpaceBattles.Tests.Application.Services;
 public class BotServiceTests
 {
     private readonly TestTimeProvider _timeProvider;
+    private readonly GameState _gameState;
 
     public BotServiceTests()
     {
         _timeProvider = new TestTimeProvider(60, 100000);
+        StatisticService statisticService = new StatisticService();
+        _gameState = new GameState(statisticService);
     }
 
     [Fact]
@@ -21,9 +24,8 @@ public class BotServiceTests
         {
             IncludeBots = false,
         };
-        GameState gameState = new GameState();
-        gameState.Initialize(model);
-        BotService service = new BotService(gameState, _timeProvider);
+        _gameState.Initialize(model);
+        BotService service = new BotService(_gameState, _timeProvider);
 
         // Act
         bool result = service.StartService();
@@ -40,8 +42,7 @@ public class BotServiceTests
         {
             IncludeBots = true,
         };
-        GameState gameState = new GameState();
-        gameState.Initialize(model);
+        _gameState.Initialize(model);
         BotService service = new BotService(gameState, _timeProvider);
 
         // Act

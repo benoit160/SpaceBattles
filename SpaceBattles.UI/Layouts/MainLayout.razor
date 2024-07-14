@@ -1,0 +1,48 @@
+﻿@using MudBlazor.Utilities
+
+@inherits LayoutComponentBase
+
+<MudThemeProvider IsDarkMode="true" Theme="@SpaceBattlesTheme" />
+
+<MudDialogProvider 
+    FullWidth="true"
+    MaxWidth="MaxWidth.Small"
+    BackdropClick="true" />
+
+<MudPopoverProvider/>
+<MudSnackbarProvider/>
+
+<MudStack Justify="Justify.Center" Style="height:100vh; padding-bottom:100px">
+    <MudContainer MaxWidth="MaxWidth.Large">
+        @Body
+    </MudContainer>
+</MudStack>
+
+<style>
+    body {
+        background: url("images/background.avif") no-repeat;
+        background-size: cover;
+        height: 100vh;
+    }
+
+    .mud-paper {
+        backdrop-filter: blur(6px);
+    }
+
+    .mud-typography, .mud-image {
+        pointer-events: none;
+        user-select: none;
+    }
+</style>
+
+@code {
+
+    public static readonly MudTheme SpaceBattlesTheme = new()
+    {
+        PaletteDark = new PaletteDark()
+        {
+            Surface = new MudColor(55, 55, 64, 0.6),
+            OverlayDark = "rgba(33,33,33,0.9)"
+        },
+    };
+}
