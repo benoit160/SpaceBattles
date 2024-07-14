@@ -43,7 +43,7 @@ public class BotServiceTests
             IncludeBots = true,
         };
         _gameState.Initialize(model);
-        BotService service = new BotService(gameState, _timeProvider);
+        BotService service = new BotService(_gameState, _timeProvider);
 
         // Act
         bool result = service.StartService();
@@ -60,9 +60,8 @@ public class BotServiceTests
         {
             IncludeBots = true,
         };
-        GameState gameState = new GameState();
-        gameState.Initialize(model);
-        BotService service = new BotService(gameState, _timeProvider);
+        _gameState.Initialize(model);
+        BotService service = new BotService(_gameState, _timeProvider);
 
         // Act
         service.StartService();
@@ -72,6 +71,6 @@ public class BotServiceTests
         }
 
         // Assert
-        Assert.Contains(gameState.CurrentUniverse.Planets, p => p.Buildings.Any(b => b.Level > 10));
+        Assert.Contains(_gameState.CurrentUniverse.Planets, p => p.Buildings.Any(b => b.Level > 10));
     }
 }

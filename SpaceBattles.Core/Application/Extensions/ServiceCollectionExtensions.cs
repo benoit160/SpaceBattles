@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<StatisticService>();
         services.AddScoped<SaveService>();
         services.AddScoped<BotService>();
+        services.AddScoped<ITimeProvider, TimeProvider>(_ => new TimeProvider(secondsInterval: 1));
         services.AddScoped<IBrowserService, BrowserService>();
     }
 }
