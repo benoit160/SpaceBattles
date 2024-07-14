@@ -2,56 +2,6 @@
 
 using SpaceBattles.Core.Domain.Entities.Universe;
 
-public interface ITimeProvider
-{
-    public DateTime Now { get; }
-
-    public ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken);
-}
-
-public sealed class TimeProvider : ITimeProvider
-{
-    private readonly PeriodicTimer _timer;
-
-    public TimeProvider(int secondsInterval)
-    {
-        _timer = new(TimeSpan.FromSeconds(secondsInterval));
-    }
-
-    public DateTime Now => DateTime.Now;
-
-    public ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken)
-        => _timer.WaitForNextTickAsync(cancellationToken);
-}
-
-public sealed class TestTimeProvider : ITimeProvider
-{
-    private readonly int _secondIncrement;
-    private DateTime _datetime;
-    private int _cyclesLeft;
-
-    public TestTimeProvider(int secondsInterval, int cyclesToSimulate)
-    {
-        _secondIncrement = secondsInterval;
-        _cyclesLeft = cyclesToSimulate;
-        _datetime = DateTime.Now;
-    }
-
-    public DateTime Now
-    {
-        get
-        {
-            _datetime += TimeSpan.FromSeconds(_secondIncrement);
-            return _datetime;
-        }
-    }
-
-    public bool IsFinished => _cyclesLeft == 0;
-
-    public ValueTask<bool> WaitForNextTickAsync(CancellationToken cancellationToken)
-        => ValueTask.FromResult(_cyclesLeft-- > 0);
-}
-
 public sealed class BotService : IDisposable
 {
     private readonly ITimeProvider _timeProvider;
