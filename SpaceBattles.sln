@@ -26,6 +26,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.UI", "SpaceBat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattles.UI.Tests", "SpaceBattles.UI.Tests\SpaceBattles.UI.Tests.csproj", "{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analyzers", "Analyzers\Analyzers\Analyzers\Analyzers.csproj", "{C3671308-8D6D-41FA-9982-89AB32259A77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analyzers.Sample", "Analyzers\Analyzers\Analyzers.Sample\Analyzers.Sample.csproj", "{0EA31472-FAA6-4933-903B-EAEE442A535E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analyzers.Tests", "Analyzers\Analyzers\Analyzers.Tests\Analyzers.Tests.csproj", "{0625C751-520B-4ECA-8B12-CCECF04EAB43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +62,18 @@ Global
 		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5E113A2-EE70-48D6-80F5-3CAB5FF81387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3671308-8D6D-41FA-9982-89AB32259A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3671308-8D6D-41FA-9982-89AB32259A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3671308-8D6D-41FA-9982-89AB32259A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3671308-8D6D-41FA-9982-89AB32259A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA31472-FAA6-4933-903B-EAEE442A535E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA31472-FAA6-4933-903B-EAEE442A535E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA31472-FAA6-4933-903B-EAEE442A535E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA31472-FAA6-4933-903B-EAEE442A535E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0625C751-520B-4ECA-8B12-CCECF04EAB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0625C751-520B-4ECA-8B12-CCECF04EAB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0625C751-520B-4ECA-8B12-CCECF04EAB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0625C751-520B-4ECA-8B12-CCECF04EAB43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
