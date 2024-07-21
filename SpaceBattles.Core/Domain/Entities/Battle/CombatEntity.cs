@@ -22,10 +22,10 @@ public abstract class CombatEntity : IBuildingRequirements, IRequirements
     public int BaseWeaponPower { get; init; }
 
     public RapidFireAgainst[] RapidFires { get; init; }
-        = Array.Empty<RapidFireAgainst>();
+        = [];
 
-    public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
-        = Enumerable.Empty<BuildingRequirement>();
+    public BuildingRequirement[] BuildingRequirements { get; init; }
+        = [];
 
     public long TitaniumCost { get; init; }
 

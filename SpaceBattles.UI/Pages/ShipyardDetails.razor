@@ -8,6 +8,8 @@
 @inject GameState GameState
 @inject PlanetService PlanetService
 
+@implements IDisposable
+
 @if (GameState.CurrentPlanet.ShipyardConstruction is not null)
 {
     ShipyardConstruction construction = GameState.CurrentPlanet.ShipyardConstruction;
@@ -125,5 +127,11 @@
                     <MudText Typo="Typo.body1" Style="@(localI == paragraphs.Length - 1 ? string.Empty : "margin-bottom: 0.5em")">@paragraphs[localI]</MudText>
                 }
             </div>;
+    }
+
+    public void Dispose()
+    {
+        _source.Cancel();
+        _source.Dispose();
     }
 }

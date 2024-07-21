@@ -31,8 +31,8 @@ public class Building : IBuildingRequirements
 
     public int BaseEnergy { get; set; }
 
-    public IEnumerable<BuildingRequirement> BuildingRequirements { get; init; }
-        = Enumerable.Empty<BuildingRequirement>();
+    public BuildingRequirement[] BuildingRequirements { get; init; }
+        = [];
 
     /// <summary>
     /// Contains the initial buildings list.

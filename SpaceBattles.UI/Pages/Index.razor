@@ -14,13 +14,15 @@
 <div class=@(_showCreationScreen? "d-none" : string.Empty)>
     <MudStack AlignItems="AlignItems.Center">
         <MudImage Fluid Src="images/logo.avif" Alt="SpaceBattles logo" />
-
-        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.VideogameAsset">Play</MudButton>
+        
+        <MudButton OnClick="@StartGame" Variant="Variant.Filled" Color="Color.Info" Size="Size.Large">
+            <MudText Typo="Typo.h5" Style="font-family:TitleFont;">Play</MudText>
+        </MudButton>
     </MudStack>
 </div>
 
 <div class=@(_showCreationScreen? string.Empty : "d-none")>
-    <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
+    <UniverseCreationWaiter @ref="@_universeCreationWaiter"/>
 </div>
 
 @code {
@@ -31,14 +33,18 @@
     private async Task StartGame()
     {
         _showCreationScreen = true;
-        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
+        string? saveData = SaveService.GetLoadData();
 
-        if (!await SaveService.LoadFromStorage())
+        if (saveData is not null)
+        {
+            SaveService.LoadFromStorage(saveData);
+        }
+        else
         {
             GameState.Initialize(new UniverseCreationModel());
         }
 
-        await waitingScreen;
+        await (_universeCreationWaiter?.ShowWaitingScreen(saveData is null) ?? Task.CompletedTask);
 
         NavigationManager.NavigateTo("/Overview");
     }

@@ -4,5 +4,5 @@ using SpaceBattles.Core.Domain.Records;
 
 public interface IBuildingRequirements
 {
-    IEnumerable<BuildingRequirement> BuildingRequirements { get; }
+    BuildingRequirement[] BuildingRequirements { get; }
 }
