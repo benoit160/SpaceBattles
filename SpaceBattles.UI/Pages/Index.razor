@@ -1,5 +1,4 @@
-﻿@using Microsoft.JSInterop
-@using SpaceBattles.Core.Domain.Models
+﻿@using SpaceBattles.Core.Domain.Models
 @using SpaceBattles.UI.Layouts
 
 @page "/"
@@ -32,28 +31,21 @@
 
     private bool _showCreationScreen;
 
-    private Task<string?> CheckSaveDataTask = Task.FromResult<string?>(null);
-
-    protected override void OnInitialized()
-    {
-        CheckSaveDataTask = BrowserService.ReadLocalStorage("SaveData");
-    }
-
     private async Task StartGame()
     {
-        string? saveData = await CheckSaveDataTask;
+        string? saveData = BrowserService.ReadLocalStorage("SaveData");
+        
         if (saveData is not null)
         {
-            bool success = SaveService.LoadFromStorage(saveData);
+            SaveService.LoadFromStorage(saveData);
+        }
+        else
+        {
+            GameState.Initialize(new UniverseCreationModel());
         }
 
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter.ShowWaitingScreen();
-
-        if (!SaveService.LoadFromStorage())
-        {
-            GameState.Initialize(new UniverseCreationModel());
-        }
 
         await waitingScreen;
 

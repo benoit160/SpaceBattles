@@ -61,7 +61,7 @@ public class SaveServiceTests
         Universe uni = _gameState.CurrentUniverse;
         
         // Act
-        bool result = service.LoadFromStorage();
+        bool result = service.LoadFromStorage("");
 
         // Assert
         Universe uni2 = _gameState.CurrentUniverse;
@@ -97,7 +97,7 @@ public class SaveServiceTests
             .Returns(null as string);
 
         // Act
-        bool result = service.LoadFromStorage();
+        bool result = service.LoadFromStorage("potato");
 
         // Assert
         Assert.False(result);
