@@ -27,14 +27,15 @@ public sealed class SaveService
         };
     }
 
-    // public bool
-
     public void SaveToStorage()
     {
         string game = JsonSerializer.Serialize(_gameState.CurrentUniverse, _options);
 
         _browserService.WriteToLocalStorage(Key, game);
     }
+
+    public string? GetLoadData()
+        => _browserService.ReadLocalStorage(Key);
 
     public bool LoadFromStorage(string data)
     {

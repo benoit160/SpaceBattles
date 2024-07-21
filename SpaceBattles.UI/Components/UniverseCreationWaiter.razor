@@ -6,15 +6,16 @@
 </MudContainer>
 
 @code {
-    private string _waitingText = "Creating universe..";
+    private string _waitingText = "...";
 
     public async Task ShowWaitingScreen(bool creating)
     {
-        await Task.Delay(1500);
-
-        _waitingText = "Choosing the best starting planet for you..";
+        _waitingText = creating 
+            ? "Creating universe..."
+            : "Loading your save data...";
+        
         StateHasChanged();
 
-        await Task.Delay(1500);
+        await Task.Delay(3000);
     }
 }

@@ -8,7 +8,6 @@
 @inject NavigationManager NavigationManager
 @inject GameState GameState
 @inject SaveService SaveService
-@inject IBrowserService BrowserService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -27,13 +26,13 @@
 </div>
 
 @code {
-    private UniverseCreationWaiter _universeCreationWaiter = default!;
+    private UniverseCreationWaiter? _universeCreationWaiter;
 
     private bool _showCreationScreen;
 
     private async Task StartGame()
     {
-        string? saveData = BrowserService.ReadLocalStorage("SaveData");
+        string? saveData = SaveService.GetLoadData();
         
         if (saveData is not null)
         {
@@ -45,10 +44,8 @@
         }
 
         _showCreationScreen = true;
-        // Task waitingScreen = _universeCreationWaiter.ShowWaitingScreen();
-
-        // await waitingScreen;
-
+        await (_universeCreationWaiter?.ShowWaitingScreen(saveData is null) ?? Task.CompletedTask);
+        
         NavigationManager.NavigateTo("/Overview");
     }
 }

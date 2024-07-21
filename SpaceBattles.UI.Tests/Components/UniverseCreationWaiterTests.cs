@@ -16,21 +16,23 @@ public class UniverseCreationWaiterTests  : TestContext
         IRenderedComponent<UniverseCreationWaiter> cut = RenderComponent<UniverseCreationWaiter>();
         
         // Assert
-        Assert.Contains("Creating universe..", cut.Markup);
+        Assert.Contains("...", cut.Markup);
     }
     
-    [Fact]
-    public async Task ShowWaitingScreen()
+    [Theory]
+    [InlineData(true, "Creating universe...")]
+    [InlineData(false, "Loading your save data...")]
+    public async Task ShowWaitingScreen(bool creation, string expectedMarkup)
     {
         // Arrange
         
         // Act
         IRenderedComponent<UniverseCreationWaiter> cut = RenderComponent<UniverseCreationWaiter>();
 
-        await cut.InvokeAsync(() => cut.Instance.ShowWaitingScreen(true));
+        await cut.InvokeAsync(() => cut.Instance.ShowWaitingScreen(creation));
         
         // Assert
         Assert.Equal(2, cut.RenderCount);
-        Assert.Contains("Choosing the best starting planet for you..", cut.Markup);
+        Assert.Contains(expectedMarkup, cut.Markup);
     }
 }
