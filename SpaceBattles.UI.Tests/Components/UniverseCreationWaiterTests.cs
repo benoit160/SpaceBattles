@@ -27,7 +27,7 @@ public class UniverseCreationWaiterTests  : TestContext
         // Act
         IRenderedComponent<UniverseCreationWaiter> cut = RenderComponent<UniverseCreationWaiter>();
 
-        await cut.InvokeAsync(() => cut.Instance.ShowWaitingScreen());
+        await cut.InvokeAsync(() => cut.Instance.ShowWaitingScreen(true));
         
         // Assert
         Assert.Equal(2, cut.RenderCount);

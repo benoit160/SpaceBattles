@@ -8,7 +8,7 @@
 @code {
     private string _waitingText = "Creating universe..";
 
-    public async Task ShowWaitingScreen()
+    public async Task ShowWaitingScreen(bool creating)
     {
         await Task.Delay(1500);
 

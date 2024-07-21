@@ -27,6 +27,8 @@ public sealed class SaveService
         };
     }
 
+    // public bool
+
     public void SaveToStorage()
     {
         string game = JsonSerializer.Serialize(_gameState.CurrentUniverse, _options);
@@ -34,12 +36,8 @@ public sealed class SaveService
         _browserService.WriteToLocalStorage(Key, game);
     }
 
-    public bool LoadFromStorage()
+    public bool LoadFromStorage(string data)
     {
-        string? data = _browserService.ReadLocalStorage(Key);
-
-        if (data is null) return false;
-
         Universe? universe;
 
         try
