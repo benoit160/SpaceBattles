@@ -4,11 +4,6 @@
         <SupportedPlatform Include="browser"/>
     </ItemGroup>
 
-<!--    <PropertyGroup>-->
-<!--        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
-<!--        <CompilerGeneratedFilesOutputPath>.</CompilerGeneratedFilesOutputPath>-->
-<!--    </PropertyGroup>-->
-
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.6" />
         <PackageReference Include="MudBlazor" Version="7.0.0" />
