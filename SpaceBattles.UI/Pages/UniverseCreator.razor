@@ -52,15 +52,12 @@
     private async Task OnValidSubmit()
     {
         _showCreationScreen = true;
-        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
-        
-        if (!SaveService.LoadFromStorage())
-        {
-            GameState.Initialize(new UniverseCreationModel());
-        }
-        
+        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen(true);
+
+        GameState.Initialize(_model);
+
         BotService.StartService();
-        
+
         await waitingScreen;
 
         NavigationManager.NavigateTo("/Overview");
