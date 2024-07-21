@@ -32,8 +32,9 @@
 
     private async Task StartGame()
     {
+        _showCreationScreen = true;
         string? saveData = SaveService.GetLoadData();
-        
+
         if (saveData is not null)
         {
             SaveService.LoadFromStorage(saveData);
@@ -43,7 +44,6 @@
             GameState.Initialize(new UniverseCreationModel());
         }
 
-        _showCreationScreen = true;
         await (_universeCreationWaiter?.ShowWaitingScreen(saveData is null) ?? Task.CompletedTask);
         
         NavigationManager.NavigateTo("/Overview");
