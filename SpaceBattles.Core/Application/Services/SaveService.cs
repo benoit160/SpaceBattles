@@ -27,16 +27,16 @@ public sealed class SaveService
         };
     }
 
-    public async Task SaveToStorage()
+    public void SaveToStorage()
     {
         string game = JsonSerializer.Serialize(_gameState.CurrentUniverse, _options);
 
-        await _browserService.WriteToLocalStorage(Key, game);
+        _browserService.WriteToLocalStorage(Key, game);
     }
 
-    public async ValueTask<bool> ReadAndLoadFromStorage(string? data = null)
+    public bool ReadAndLoadFromStorage(string? data = null)
     {
-        data ??= await _browserService.ReadLocalStorage(Key);
+        data ??= _browserService.ReadLocalStorage(Key);
 
         if (data is null) return false;
 
