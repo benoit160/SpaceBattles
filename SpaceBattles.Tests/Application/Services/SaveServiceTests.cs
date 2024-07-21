@@ -61,7 +61,7 @@ public class SaveServiceTests
         Universe uni = _gameState.CurrentUniverse;
         
         // Act
-        bool result = service.LoadFromStorage("");
+        bool result = service.LoadFromStorage(returnedJson);
 
         // Assert
         Universe uni2 = _gameState.CurrentUniverse;
