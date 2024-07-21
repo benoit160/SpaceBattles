@@ -22,7 +22,7 @@
 </div>
 
 <div class=@(_showCreationScreen? string.Empty : "d-none")>
-    <UniverseCreationWaiter @ref="_universeCreationWaiter"/>
+    <UniverseCreationWaiter @ref="@_universeCreationWaiter"/>
 </div>
 
 @code {
@@ -33,14 +33,18 @@
     private async Task StartGame()
     {
         _showCreationScreen = true;
-        Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen();
+        string? saveData = SaveService.GetLoadData();
 
-        if (!await SaveService.LoadFromStorage())
+        if (saveData is not null)
+        {
+            SaveService.LoadFromStorage(saveData);
+        }
+        else
         {
             GameState.Initialize(new UniverseCreationModel());
         }
 
-        await waitingScreen;
+        await (_universeCreationWaiter?.ShowWaitingScreen(saveData is null) ?? Task.CompletedTask);
 
         NavigationManager.NavigateTo("/Overview");
     }

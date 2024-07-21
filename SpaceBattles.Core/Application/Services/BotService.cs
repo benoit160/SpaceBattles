@@ -4,16 +4,17 @@ using SpaceBattles.Core.Domain.Entities.Universe;
 
 public sealed class BotService : IDisposable
 {
+    private readonly ITimeProvider _timeProvider;
     private readonly GameState _gameState;
-    private readonly PeriodicTimer _timer = new(TimeSpan.FromSeconds(3));
-    private CancellationTokenSource? _source;
+    private readonly CancellationTokenSource _source = new();
 
     private IEnumerable<Planet> _botsPlanets;
 
-    public BotService(GameState gameState)
+    public BotService(GameState gameState, ITimeProvider timeProvider)
     {
         _botsPlanets = Enumerable.Empty<Planet>();
         _gameState = gameState;
+        _timeProvider = timeProvider;
     }
 
     public bool StartService()
@@ -21,14 +22,12 @@ public sealed class BotService : IDisposable
         _botsPlanets = _gameState.CurrentUniverse.Planets
             .Where(planet => planet.Owner?.IsBot ?? false);
 
-        _source = new CancellationTokenSource();
-
         // no bots
         if (!_botsPlanets.Any()) return false;
 
         Task.Run(async () =>
         {
-            while (await _timer.WaitForNextTickAsync(_source.Token))
+            while (await _timeProvider.WaitForNextTickAsync(_source.Token))
             {
                 foreach (Planet planet in _botsPlanets)
                 {
@@ -46,10 +45,10 @@ public sealed class BotService : IDisposable
         _source?.Dispose();
     }
 
-    private static void DoAction(Planet planet)
+    private void DoAction(Planet planet)
     {
-        planet.ProcessUpgrades(DateTime.Now);
-        planet.ResourcesUpdate(DateTime.Now, stackalloc long[3]);
+        planet.ProcessUpgrades(_timeProvider.Now);
+        planet.ResourcesUpdate(_timeProvider.Now, stackalloc long[3]);
 
         Span<byte> indexes = stackalloc byte[12];
         for (byte i = 0; i < indexes.Length; i++)
