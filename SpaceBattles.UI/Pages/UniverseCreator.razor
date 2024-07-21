@@ -53,11 +53,11 @@
     {
         _showCreationScreen = true;
         Task waitingScreen = _universeCreationWaiter!.ShowWaitingScreen(true);
-        
+
         GameState.Initialize(_model);
-        
+
         BotService.StartService();
-        
+
         await waitingScreen;
 
         NavigationManager.NavigateTo("/Overview");
