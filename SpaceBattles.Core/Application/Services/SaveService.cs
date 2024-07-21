@@ -34,8 +34,12 @@ public sealed class SaveService
         _browserService.WriteToLocalStorage(Key, game);
     }
 
-    public bool LoadFromStorage(string data)
+    public bool LoadFromStorage()
     {
+        string? data = _browserService.ReadLocalStorage(Key);
+
+        if (data is null) return false;
+
         Universe? universe;
 
         try
