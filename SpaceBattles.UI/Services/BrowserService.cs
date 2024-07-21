@@ -1,6 +1,7 @@
-namespace SpaceBattles.Core.Application.Services;
-
 using Microsoft.JSInterop;
+using SpaceBattles.Core.Application.Services;
+
+namespace SpaceBattles.UI.Services;
 
 public sealed class BrowserService : IBrowserService
 {

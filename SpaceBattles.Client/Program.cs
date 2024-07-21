@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
 using MudBlazor.Services;
+using SpaceBattles.Client.DependencyInjection;
 using SpaceBattles.UI.Services;
 using SpaceBattles.Core.Application.Extensions;
 using SpaceBattles.Core.Application.Services;

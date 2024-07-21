@@ -1,7 +1,7 @@
-﻿namespace SpaceBattles.Core.Application.Extensions;
+﻿using SpaceBattles.Core.Application.Services;
+using SpaceBattles.UI.Services;
 
-using Microsoft.Extensions.DependencyInjection;
-using SpaceBattles.Core.Application.Services;
+namespace SpaceBattles.Client.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<StatisticService>();
         services.AddScoped<SaveService>();
         services.AddScoped<BotService>();
-        services.AddScoped<ITimeProvider, TimeProvider>(_ => new TimeProvider(secondsInterval: 1));
+        services.AddScoped<ITimeProvider, Core.Application.Services.TimeProvider>(_ => new Core.Application.Services.TimeProvider(secondsInterval: 1));
         services.AddScoped<IBrowserService, BrowserService>();
     }
 }
