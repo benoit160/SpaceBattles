@@ -6,9 +6,12 @@ public abstract class Process
 
     public int WorkNeeded { get; init; }
 
-    public int WorkDone { get; set; }
+    public int WorkDone { get; private set; }
 
     public int RemainingWork => WorkNeeded - WorkDone;
+
+    public void Work(int quantity)
+        => WorkDone += quantity;
 
     public TimeSpan EstimatedDuration(double production)
         => TimeSpan.FromSeconds(RemainingWork / production);
