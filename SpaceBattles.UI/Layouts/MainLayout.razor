@@ -2,13 +2,14 @@
 
 @inherits LayoutComponentBase
 
-<MudThemeProvider Theme="@SpaceBattlesTheme" />
+<MudThemeProvider IsDarkMode="true" Theme="@SpaceBattlesTheme" />
 
 <MudDialogProvider 
     FullWidth="true"
     MaxWidth="MaxWidth.Small"
-    DisableBackdropClick="false" />
+    BackdropClick="true" />
 
+<MudPopoverProvider/>
 <MudSnackbarProvider/>
 
 <MudStack Justify="Justify.Center" Style="height:100vh; padding-bottom:100px">
@@ -38,10 +39,10 @@
 
     public static readonly MudTheme SpaceBattlesTheme = new()
     {
-        Palette = new PaletteDark()
+        PaletteDark = new PaletteDark()
         {
             Surface = new MudColor(55, 55, 64, 0.6),
             OverlayDark = "rgba(33,33,33,0.9)"
-        }
+        },
     };
 }

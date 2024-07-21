@@ -7,7 +7,7 @@ public class MainLayoutTests : TestContext
     public MainLayoutTests()
     {
         Services.AddMudServices();
-        JSInterop.SetupVoid("mudPopover.initialize", _ => true);
+        JSInterop.Mode = JSRuntimeMode.Loose;
     }
     
     [Fact]
