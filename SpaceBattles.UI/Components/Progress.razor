@@ -27,4 +27,9 @@
 
     [Parameter, EditorRequired]
     public required Upgrade Process { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Span<int> span = stackalloc int[10];
+    }
 }

@@ -10,15 +10,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Analyzers\Analyzers\Analyzers\Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
       <ProjectReference Include="..\SpaceBattles.Core\SpaceBattles.Core.csproj" />
     </ItemGroup>
     
     <PropertyGroup>
         <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Analyzers\Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-    </ItemGroup>
 
 </Project>

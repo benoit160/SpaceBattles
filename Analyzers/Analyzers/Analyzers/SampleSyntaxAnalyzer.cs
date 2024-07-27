@@ -52,7 +52,6 @@ public class SampleSyntaxAnalyzer : DiagnosticAnalyzer
         // Subscribe to the Syntax Node with the appropriate 'SyntaxKind' (ClassDeclaration) action.
         // To figure out which Syntax Nodes you should choose, consider installing the Roslyn syntax tree viewer plugin Rossynt: https://plugins.jetbrains.com/plugin/16902-rossynt/
         context.RegisterSyntaxNodeAction(AnalyzeSyntax, SyntaxKind.ClassDeclaration);
-
         // Check other 'context.Register...' methods that might be helpful for your purposes.
     }
 

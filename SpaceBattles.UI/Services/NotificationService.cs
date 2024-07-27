@@ -15,5 +15,6 @@ public sealed class NotificationService  : INotificationService
     public void NotifyInfo(string text)
     {
         _snackbar.Add(text, Severity.Info);
+        Span<int> span = stackalloc int[10];
     }
 }
