@@ -57,18 +57,18 @@
             <table>
                 <tr>
                     <th>Resource</th>
-                    <th>per minute</th>
                     <th>per hour</th>
                     <th>per day</th>
+                    <th>per week</th>
                 </tr>
                 
                 @foreach (ResourceInfo display in Resources.ResourceInfos)
                 {
                     <tr>
                         <td>@display.Name</td>
-                        <td>@planet.ResourceProduction(display.Resource).ToString("#,##0")</td>
-                        <td>@((planet.ResourceProduction(display.Resource) * 60).ToString("#,##0"))</td>
-                        <td>@((planet.ResourceProduction(display.Resource) * 60 * 24).ToString("#,##0"))</td>
+                        <td>@((planet.ResourceProduction(display.Resource)).ToString("#,##0"))</td>
+                        <td>@((planet.ResourceProduction(display.Resource) * 24).ToString("#,##0"))</td>
+                        <td>@((planet.ResourceProduction(display.Resource) * 24 * 7).ToString("#,##0"))</td>
                     </tr>
                 }
             </table>
