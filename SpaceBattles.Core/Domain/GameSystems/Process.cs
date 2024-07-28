@@ -1,8 +1,14 @@
 ﻿namespace SpaceBattles.Core.Domain.GameSystems;
 
-public abstract class Process
+public class Process
 {
-    public DateTime Start { get; init; }
+    public Process(int workNeeded)
+    {
+        WorkNeeded = workNeeded;
+        Start = default;
+    }
+
+    public DateTime Start { get; set; }
 
     public int WorkNeeded { get; init; }
 
@@ -10,7 +16,7 @@ public abstract class Process
 
     public int RemainingWork => WorkNeeded - WorkDone;
 
-    public void Work(int quantity)
+    public void AddWork(int quantity)
         => WorkDone += quantity;
 
     public TimeSpan EstimatedDuration(double production)
