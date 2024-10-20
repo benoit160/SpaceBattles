@@ -8,7 +8,10 @@ public class ResourceDisplayTests : TestContext
 {
     public ResourceDisplayTests()
     {
-        Services.AddMudServices();
+        Services.AddMudServices(options =>
+        {
+            options.PopoverOptions.CheckForPopoverProvider = false;
+        });
         JSInterop.SetupVoid("mudPopover.initialize", "mudblazor-main-content", 0);
     }
     

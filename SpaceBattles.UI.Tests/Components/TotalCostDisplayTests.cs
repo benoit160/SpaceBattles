@@ -8,7 +8,10 @@ public class TotalCostDisplayTests : TestContext
 {
     public TotalCostDisplayTests()
     {
-        Services.AddMudServices();
+        Services.AddMudServices(options =>
+        {
+            options.PopoverOptions.CheckForPopoverProvider = false;
+        });
         JSInterop.Mode = JSRuntimeMode.Loose;
     }
     
