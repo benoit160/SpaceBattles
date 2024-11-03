@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace SpaceBattles.Server
@@ -30,7 +31,7 @@ namespace SpaceBattles.Server
             app.UseBlazorFrameworkFiles();
 
             FileExtensionContentTypeProvider provider = new FileExtensionContentTypeProvider();
-            provider.Mappings.Add(".avif", "image/avif");
+            provider.Mappings.Add(".avif", MediaTypeNames.Image.Avif);
             app.UseStaticFiles(new StaticFileOptions()
             {
                 ContentTypeProvider = provider,
