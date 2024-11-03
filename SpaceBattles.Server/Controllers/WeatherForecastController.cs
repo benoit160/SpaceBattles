@@ -6,8 +6,6 @@ namespace SpaceBattles.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Produces(MediaTypeNames.Application.Json)]
-[Consumes(MediaTypeNames.Application.Json)]
 public sealed class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries =
