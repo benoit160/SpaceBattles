@@ -1,5 +1,8 @@
+using System.Configuration;
 using System.Net.Mime;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
+using SpaceBattles.Server.Infrastructure;
 
 namespace SpaceBattles.Server
 {
@@ -7,7 +10,12 @@ namespace SpaceBattles.Server
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            
+            builder.Configuration.AddJsonFile(
+                "appsettings.secrets.json",
+                optional: true,
+                reloadOnChange: true);
 
             // Add services to the container.
 
@@ -15,6 +23,17 @@ namespace SpaceBattles.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            CosmosDbSettings cosmosDbConfig = builder.Configuration
+                .GetSection("CosmosDB")
+                .Get<CosmosDbSettings>()
+                ?? throw new ApplicationException("Missing CosmosDb Settings");
+            
+            builder.Services.AddDbContext<SpaceBattlesDbContext>(options =>
+                options.UseCosmos(
+                    accountEndpoint: cosmosDbConfig.EndpointUrl,
+                    accountKey: cosmosDbConfig.AccountKey,
+                    databaseName: cosmosDbConfig.DatabaseName));
 
             var app = builder.Build();
 
@@ -45,4 +64,13 @@ namespace SpaceBattles.Server
             app.Run();
         }
     }
+}
+
+public sealed class CosmosDbSettings
+{
+    public string EndpointUrl { get; set; }
+
+    public string AccountKey { get; set; }
+
+    public string DatabaseName { get; set; }
 }

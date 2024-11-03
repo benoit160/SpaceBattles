@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using SpaceBattles.Core.Domain;
 
@@ -5,7 +6,9 @@ namespace SpaceBattles.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class WeatherForecastController : ControllerBase
+[Produces(MediaTypeNames.Application.Json)]
+[Consumes(MediaTypeNames.Application.Json)]
+public sealed class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries =
     [
