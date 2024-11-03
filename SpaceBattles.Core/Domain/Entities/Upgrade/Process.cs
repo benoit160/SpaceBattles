@@ -10,6 +10,10 @@ public abstract class Process
 
     public int RemainingWork => WorkNeeded - WorkDone;
 
+    public bool IsFinished => RemainingWork <= 0;
+
+    public double PercentFinished => 100 * (WorkDone / (double)WorkNeeded);
+
     public void Work(int quantity)
         => WorkDone += quantity;
 
@@ -18,8 +22,4 @@ public abstract class Process
 
     public DateTime EstimatedEnd(double production)
         => Start + EstimatedDuration(production);
-
-    public bool IsFinished => RemainingWork <= 0;
-
-    public double PercentFinished => 100 * (WorkDone / (double)WorkNeeded);
 }
