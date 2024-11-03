@@ -1,4 +1,3 @@
-using System.Configuration;
 using System.Net.Mime;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;

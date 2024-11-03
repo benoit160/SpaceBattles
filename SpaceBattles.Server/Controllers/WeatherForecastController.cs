@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using SpaceBattles.Core.Domain;
 
