@@ -64,12 +64,3 @@ namespace SpaceBattles.Server
         }
     }
 }
-
-public sealed class CosmosDbSettings
-{
-    public string EndpointUrl { get; set; }
-
-    public string AccountKey { get; set; }
-
-    public string DatabaseName { get; set; }
-}
