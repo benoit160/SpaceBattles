@@ -32,7 +32,7 @@
 
     private bool _showCreationScreen;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
         const string key = "telemetry-ping";
         

@@ -23,7 +23,7 @@
         <MudButton Href="/Statistics" 
                    Variant="_page == CurrentPage.Statistics ? Variant.Filled : Variant.Outlined" StartIcon="@Icons.Material.Filled.QueryStats" 
                    IconColor="_page == CurrentPage.Statistics ? Color.Warning : Color.Info" Color="Color.Info" Size="Size.Small" Class="mx-2">Statistics</MudButton>
-        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" OnClick="@SaveGame" Class="mx-2">Save</MudButton>
+        <MudButton Href="CloudSave" Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Save" IconColor="Color.Success" Color="Color.Success" Size="Size.Small" Class="mx-2">Save</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@Logout">Log out</MudButton>
     </MudAppBar>
     
@@ -109,9 +109,10 @@
         NavigationManager.LocationChanged += _locationEvent;
     }
 
-    private void SaveGame()
+    private async Task SaveGame()
     {
         SaveService.SaveToStorage();
+        await SaveService.SaveToCloud();
     }
 
     private void Logout()
