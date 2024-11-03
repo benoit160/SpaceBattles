@@ -10,6 +10,11 @@ public class IndexTests : TestContext
     {
         Services.AddMudServices();
         Services.AddCoreSpaceBattlesServices();
+        
+        JSInterop.Setup<string?>("localStorage.getItem", "telemetry-ping")
+            .SetResult(DateTime.Now.ToLongDateString());
+
+        JSInterop.Setup<string>("localStorage.setItem", _ => true);
     }
     
     [Fact]
@@ -30,7 +35,7 @@ public class IndexTests : TestContext
     public async Task StartGame_EmptyOrInvalidSaveData(string? getItemResult)
     {
         // Arrange
-        JSInterop.Mode = JSRuntimeMode.Loose;
+        JSInterop.Mode = JSRuntimeMode.Strict;
 
         JSInterop.Setup<string?>("localStorage.getItem", "SaveData")
             .SetResult(getItemResult);
