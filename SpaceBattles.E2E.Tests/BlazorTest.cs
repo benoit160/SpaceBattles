@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Playwright;
+﻿using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 using NUnit.Framework;
-using Program = SpaceBattles.Server.Program;
 
 namespace SpaceBattles.E2E.Tests;
 
@@ -10,7 +8,7 @@ public class BlazorTest : PageTest
 {
     protected static readonly Uri RootUri = new("http://127.0.0.1");
 
-    private readonly WebApplicationFactory<Program> _webApplicationFactory = new();
+    private readonly BlazorServerAppFactory<SpaceBattles.Server.Program> _webApplicationFactory = new();
 
     private HttpClient? _httpClient;
 

@@ -22,6 +22,6 @@ public class Tests : BlazorTest
         // Expect a title "to contain" a substring.
         await Expect(Page).ToHaveTitleAsync("Welcome to SpaceBattles");
 
-        Assert.IsNotEmpty(requests.Where(r => r.Url.Contains("/api/telemetry") && r.Method == "POST"));
+        Assert.IsNotEmpty(requests.Where(r => r.Url.Contains("/api/telemetry") && r.Method == "post"));
     }
 }
