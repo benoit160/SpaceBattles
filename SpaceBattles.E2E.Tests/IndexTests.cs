@@ -8,7 +8,8 @@ namespace SpaceBattles.E2E.Tests;
 public class Tests : BlazorTest
 {
     // dotnet test -- Playwright.LaunchOptions.Channel=chrome Playwright.LaunchOptions.Headless=false
-    
+    // https://www.youtube.com/watch?v=lJa3YlUliEs&list=WL&index=2
+
     [Test]
     public async Task HomePage()
     {
@@ -22,7 +23,5 @@ public class Tests : BlazorTest
         await Expect(Page).ToHaveTitleAsync("Welcome to SpaceBattles");
 
         Assert.IsNotEmpty(requests.Where(r => r.Url.Contains("/api/telemetry") && r.Method == "POST"));
-
-        await Page.PauseAsync();
     }
 }
