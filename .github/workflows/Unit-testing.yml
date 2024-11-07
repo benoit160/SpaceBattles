@@ -20,5 +20,8 @@ jobs:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
       - name: Restore
         run: dotnet restore
+      - name: Install browsers for playwright
+        shell: pwsh
+        run: bin/Debug/netX/playwright.ps1 install
       - name: Test
         run: dotnet test
