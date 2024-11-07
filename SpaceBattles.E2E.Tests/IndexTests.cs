@@ -8,7 +8,6 @@ namespace SpaceBattles.E2E.Tests;
 public class Tests : BlazorTest
 {
     // dotnet test -- Playwright.LaunchOptions.Channel=chrome Playwright.LaunchOptions.Headless=false
-    // https://www.youtube.com/watch?v=lJa3YlUliEs&list=WL&index=2
 
     [Test]
     public async Task HomePage()
