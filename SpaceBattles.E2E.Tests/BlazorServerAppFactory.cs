@@ -13,9 +13,9 @@ public class BlazorServerAppFactory<TProgram>
         {
             Dictionary<string, string> settings = new Dictionary<string, string>
             {
-                ["CosmosDB:EndpointUrl"]  = "https://localhost:8081",
-                ["CosmosDB:AccountKey"]  = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
-                ["CosmosDB:DatabaseName"]  = "SpaceBattles.E2E",
+                ["CosmosDB__EndpointUrl"]  = "https://localhost:8081",
+                ["CosmosDB__AccountKey"]  = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+                ["CosmosDB__DatabaseName"]  = "SpaceBattles.E2E",
             };
             config.AddInMemoryCollection(settings);
         });
