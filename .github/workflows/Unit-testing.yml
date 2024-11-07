@@ -22,6 +22,8 @@ jobs:
         run: dotnet restore
       - name: Ensure browsers are installed
         shell: pwsh
-        run: bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: |
+          cd bin/Debug/net8.0
+          ls
       - name: Test
         run: dotnet test
