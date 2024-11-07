@@ -20,12 +20,5 @@ jobs:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
       - name: Restore
         run: dotnet restore
-      - name: Build
-        run: dotnet build -c debug
-      - name: Ensure browsers are installed
-        shell: pwsh
-        run: |
-          cd bin/Debug/net8.0
-          ls
       - name: Test
         run: dotnet test

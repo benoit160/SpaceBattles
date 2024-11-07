@@ -3,6 +3,7 @@
     <PropertyGroup>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <RunSettingsFilePath>$(MSBuildProjectDirectory)\local.runsettings</RunSettingsFilePath>
     </PropertyGroup>
 
     <ItemGroup>
