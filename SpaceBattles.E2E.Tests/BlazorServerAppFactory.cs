@@ -18,7 +18,6 @@ public class BlazorServerAppFactory<TProgram>
                 ["CosmosDB__DatabaseName"]  = "SpaceBattles.E2E",
             };
             config.AddInMemoryCollection(settings);
-            config.Build();
         });
 
         builder.UseEnvironment("Development");
