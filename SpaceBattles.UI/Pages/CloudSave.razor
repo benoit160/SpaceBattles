@@ -1,4 +1,8 @@
 ﻿@page "/CloudSave"
+@using System.Net.Http.Json
+
+@inject HttpClient HttpClient
+@inject SaveService SaveService
 
 <MudContainer MaxWidth="MaxWidth.Small">
     <MudPaper Class="pa-4 rounded-xl align-self-center">
@@ -17,5 +21,12 @@
 </MudContainer>
 
 @code {
-    
+    private async Task SaveToCloud()
+    {
+        PostDataRequest request = new PostDataRequest(null, SaveService.GetCompressedSaveFile());
+        await HttpClient.PostAsJsonAsync("api/save", request);
+    }
+
+    public record PostDataRequest(Guid? SaveId, string SaveData);
+
 }

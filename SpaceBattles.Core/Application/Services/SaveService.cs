@@ -13,16 +13,14 @@ public sealed class SaveService
 {
     private const string Key = "SaveData";
 
-    private readonly HttpClient _httpClient;
     private readonly GameState _gameState;
     private readonly StatisticService _statistics;
     private readonly IBrowserService _browserService;
 
     private readonly JsonSerializerOptions _options;
 
-    public SaveService(HttpClient httpClient, GameState gameState, StatisticService statisticService, IBrowserService browserService)
+    public SaveService(GameState gameState, StatisticService statisticService, IBrowserService browserService)
     {
-        _httpClient = httpClient;
         _gameState = gameState;
         _statistics = statisticService;
         _browserService = browserService;
@@ -32,14 +30,6 @@ public sealed class SaveService
             IgnoreReadOnlyFields = true,
         };
     }
-
-    public async Task SaveToCloud()
-    {
-        PostDataRequest request = new PostDataRequest(null, GetCompressedSaveFile());
-        await _httpClient.PostAsJsonAsync("api/save", request);
-    }
-
-    public record PostDataRequest(Guid? SaveId, string SaveData);
 
     public void SaveToStorage()
     {

@@ -109,10 +109,10 @@
         NavigationManager.LocationChanged += _locationEvent;
     }
 
-    private async Task SaveGame()
+    [Obsolete]
+    private void SaveGame()
     {
         SaveService.SaveToStorage();
-        await SaveService.SaveToCloud();
     }
 
     private void Logout()

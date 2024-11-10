@@ -30,6 +30,19 @@ public class SaveServiceTests
     }
 
     [Fact]
+    public void GetCompressedSaveFile()
+    {
+        // Arrange
+        SaveService service = new SaveService(_gameState, _statisticService,_browserService.Object);
+
+        // Act
+        string zip = service.GetCompressedSaveFile();
+
+        // Assert
+        Assert.NotNull(zip);
+    }
+    
+    [Fact]
     public void SaveToStorage()
     {
         // Arrange
