@@ -23,6 +23,6 @@ jobs:
       - name: Build
         run: dotnet build
       - name: Ensure browsers are installed
-        run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: npx playwright install --with-deps
       - name: Test
         run: dotnet test
