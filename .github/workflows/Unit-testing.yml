@@ -14,6 +14,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Start Azure Cosmos DB emulator
+        shell: pwsh
         run: |
           Write-Host "Launching Cosmos DB Emulator"
           Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
