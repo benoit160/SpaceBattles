@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using SpaceBattles.Server.Infrastructure;
+
 
 namespace SpaceBattles.E2E.Tests;
 
@@ -13,10 +12,10 @@ public class BlazorServerAppFactory<TProgram>
     {
         builder.ConfigureServices(services =>
         {
-            ServiceDescriptor dbContext = services.Single(d => d.ServiceType == typeof(SpaceBattlesDbContext));
-            services.Remove(dbContext);
-
-            services.AddScoped<SpaceBattlesDbContext>();
+            //  Inject new services or replace exsting ones here
+            // ServiceDescriptor dbContext = services.Single(d => d.ServiceType == typeof(SpaceBattlesDbContext));
+            // services.Remove(dbContext);
+            // services.AddScoped<SpaceBattlesDbContext>();
         });
         
         builder.ConfigureAppConfiguration((_, config) =>
