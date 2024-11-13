@@ -41,7 +41,7 @@
         // Ping telemetry if first visit ever
         if (value is null)
         {
-            _ = HttpClient.PostAsync("/api/telemetry", content:null);
+            // _ = HttpClient.PostAsync("/api/telemetry", content:null);
             BrowserService.WriteToLocalStorage(key, DateTime.Now.ToLongDateString());
         }
         
@@ -52,7 +52,7 @@
 
             if (time.Date != DateTime.Today)
             {
-                _ = HttpClient.PostAsync("/api/telemetry", content:null);
+                // _ = HttpClient.PostAsync("/api/telemetry", content:null);
                 BrowserService.WriteToLocalStorage(key, DateTime.Now.ToLongDateString());
             }
         }
