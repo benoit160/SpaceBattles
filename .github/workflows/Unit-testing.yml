@@ -16,9 +16,11 @@ jobs:
       - name: Start Azure Cosmos DB emulator
         shell: pwsh
         run: |
-          Write-Host "Launching Cosmos DB Emulator"
-          Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
           Start-CosmosDbEmulator
+
+#          Write-Host "Launching Cosmos DB Emulator"
+#          Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
+#          Start-CosmosDbEmulator
       - uses: actions/checkout@v4
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
