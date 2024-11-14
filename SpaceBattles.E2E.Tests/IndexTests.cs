@@ -10,10 +10,10 @@ public class Tests : BlazorTest
     [Test]
     public async Task HomePage()
     {
-        // List<IRequest> requests = [];
+        List<IRequest> requests = [];
         List<IResponse> responses = [];
         
-        // Page.Request += (_, request) => requests.Add(request);
+        Page.Request += (_, request) => requests.Add(request);
         Page.Response += (_, response) => responses.Add(response);
         
         await Page.GotoAsync(RootUri.AbsoluteUri);
@@ -21,7 +21,7 @@ public class Tests : BlazorTest
         // Expect a title "to contain" a substring.
         await Expect(Page).ToHaveTitleAsync("Welcome to SpaceBattles");
 
-        // Assert.IsNotEmpty(requests.Where(r => r.Url.Contains("/api/telemetry") && r.Method == "POST" && r.ResponseAsync().Result.Ok));
+        Assert.IsNotEmpty(requests.Where(r => r.Url.Contains("/api/telemetry") && r.Method == "POST" && r.ResponseAsync().Result.Ok));
         Assert.IsEmpty(responses.Where(r => !r.Ok));
     }
     
