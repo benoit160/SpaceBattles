@@ -15,10 +15,10 @@ public class BlazorServerAppFactory<TProgram>
     {
         builder.ConfigureServices(services =>
         {
-            //  Inject new services or replace exsting ones here
+            //  Inject new services or replace existing ones here
             ServiceDescriptor dbContext = services.Single(d => d.ServiceType == typeof(SpaceBattlesDbContext));
             services.Remove(dbContext);
-            services.AddScoped<SpaceBattlesDbContext>(_ => SpaceBattlesInMemoryDbContext.CreateContext());
+            services.AddScoped<SpaceBattlesDbContext>(_ => CreateContext());
         });
         
         builder.ConfigureAppConfiguration((_, config) =>
@@ -34,30 +34,17 @@ public class BlazorServerAppFactory<TProgram>
 
         builder.UseEnvironment("Development");
     }
-}
-
-public class SpaceBattlesInMemoryDbContext : SpaceBattlesDbContext
-{
-    public SpaceBattlesInMemoryDbContext(DbContextOptions<SpaceBattlesDbContext> options)
-        : base(options)
-    {
-    }
     
-    public SpaceBattlesInMemoryDbContext(DbContextOptions options)
-        : base(options)
-    {
-    }
-    
-    public static SpaceBattlesInMemoryDbContext CreateContext()
+    public static SpaceBattlesDbContext CreateContext()
     {
         SqliteConnection connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
 
-        DbContextOptions<SpaceBattlesInMemoryDbContext> options = new DbContextOptionsBuilder<SpaceBattlesInMemoryDbContext>()
+        DbContextOptions<SpaceBattlesDbContext> options = new DbContextOptionsBuilder<SpaceBattlesDbContext>()
             .UseSqlite(connection)
             .Options;
 
-        SpaceBattlesInMemoryDbContext context = new(options);
+        SpaceBattlesDbContext context = new(options);
 
         context.Database.EnsureCreated();
 
