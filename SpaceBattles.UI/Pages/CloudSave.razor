@@ -1,0 +1,45 @@
+﻿@page "/CloudSave"
+@using System.Net.Http.Json
+
+@inject HttpClient HttpClient
+@inject SaveService SaveService
+@inject IBrowserService BrowserService
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall">
+    <MudPaper Class="pa-4 rounded-xl align-self-center">
+        <MudStack>
+            <MudStack Row Spacing="0">
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+                <MudText Typo="Typo.body1" Color="Color.Info" Style="font-family:TitleFont">Cloud save</MudText>
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center" />
+            </MudStack>
+            <MudStack Row Spacing="0" Justify="Justify.SpaceAround">
+                <MudButton OnClick="@SaveToCloud" Variant="Variant.Filled" Color="Color.Info" Style="font-family:TitleFont">Save</MudButton>
+                <MudButton OnClick="@RestoreFromCloud" Variant="Variant.Filled" Color="Color.Info" Style="font-family:TitleFont">Restore</MudButton>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+
+    private const string SaveKey = nameof(SaveKey);
+    
+    private async Task SaveToCloud()
+    {
+        string? saveId = BrowserService.ReadLocalStorage(SaveKey);
+        Guid? guid = saveId is null ? null : Guid.Parse(saveId);
+        PostDataRequest request = new PostDataRequest(guid, SaveService.GetCompressedSaveFile());
+        await HttpClient.PostAsJsonAsync("api/save", request);
+    }
+    
+    private async Task RestoreFromCloud()
+    {
+        string? saveId = BrowserService.ReadLocalStorage(SaveKey);
+        Guid? guid = saveId is null ? null : Guid.Parse(saveId);
+        await HttpClient.GetFromJsonAsync<SaveDataResponse>($"api/save?saveId={guid}");
+    }
+
+    record PostDataRequest(Guid? SaveId, string SaveData);
+    record SaveDataResponse(DateTime LastUpdate, string Base64Binary);
+}
