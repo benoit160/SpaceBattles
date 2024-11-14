@@ -25,7 +25,7 @@ public class Tests : BlazorTest
         await Expect(Page).ToHaveTitleAsync("Welcome to SpaceBattles");
 
         // Assert.IsNotEmpty(requests.Where(r => r.Url.Contains("/api/telemetry") && r.Method == "POST" && r.ResponseAsync().Result.Ok));
-        Assert.IsNotEmpty(responses.Where(r => !r.Ok));
+        Assert.IsEmpty(responses.Where(r => !r.Ok));
     }
     
     [Test]
