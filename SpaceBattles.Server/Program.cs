@@ -22,17 +22,16 @@ namespace SpaceBattles.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            CosmosDbSettings cosmosDbConfig = builder.Configuration
-                .GetSection("CosmosDB")
-                .Get<CosmosDbSettings>()
-                ?? throw new ApplicationException("Missing CosmosDb Settings");
             
             builder.Services.AddDbContext<SpaceBattlesDbContext>(options =>
+            {
+                CosmosDbSettings cosmosDbConfig = builder.Configuration.GetSection("CosmosDB").Get<CosmosDbSettings>()
+                                                  ?? throw new ApplicationException("Missing CosmosDb Settings");
                 options.UseCosmos(
                     accountEndpoint: cosmosDbConfig.EndpointUrl,
                     accountKey: cosmosDbConfig.AccountKey,
-                    databaseName: cosmosDbConfig.DatabaseName));
+                    databaseName: cosmosDbConfig.DatabaseName);
+            });
 
             var app = builder.Build();
 
