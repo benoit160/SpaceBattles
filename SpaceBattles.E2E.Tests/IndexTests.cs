@@ -7,9 +7,6 @@ namespace SpaceBattles.E2E.Tests;
 [TestFixture]
 public class Tests : BlazorTest
 {
-    // dotnet test -- Playwright.LaunchOptions.Channel=chrome Playwright.LaunchOptions.Headless=false
-    // dotnet test -s .\spaceBattles.E2E.Tests\local.runsettings
-
     [Test]
     public async Task HomePage()
     {

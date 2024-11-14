@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.Extensions.DependencyInjection;
+using SpaceBattles.Server.Infrastructure;
 
 namespace SpaceBattles.E2E.Tests;
 
@@ -13,9 +16,9 @@ public class BlazorServerAppFactory<TProgram>
         builder.ConfigureServices(services =>
         {
             //  Inject new services or replace exsting ones here
-            // ServiceDescriptor dbContext = services.Single(d => d.ServiceType == typeof(SpaceBattlesDbContext));
-            // services.Remove(dbContext);
-            // services.AddScoped<SpaceBattlesDbContext>();
+            ServiceDescriptor dbContext = services.Single(d => d.ServiceType == typeof(SpaceBattlesDbContext));
+            services.Remove(dbContext);
+            services.AddScoped<SpaceBattlesDbContext>(_ => SpaceBattlesInMemoryDbContext.CreateContext());
         });
         
         builder.ConfigureAppConfiguration((_, config) =>
@@ -30,5 +33,34 @@ public class BlazorServerAppFactory<TProgram>
         });
 
         builder.UseEnvironment("Development");
+    }
+}
+
+public class SpaceBattlesInMemoryDbContext : SpaceBattlesDbContext
+{
+    public SpaceBattlesInMemoryDbContext(DbContextOptions<SpaceBattlesDbContext> options)
+        : base(options)
+    {
+    }
+    
+    public SpaceBattlesInMemoryDbContext(DbContextOptions options)
+        : base(options)
+    {
+    }
+    
+    public static SpaceBattlesInMemoryDbContext CreateContext()
+    {
+        SqliteConnection connection = new SqliteConnection("Filename=:memory:");
+        connection.Open();
+
+        DbContextOptions<SpaceBattlesInMemoryDbContext> options = new DbContextOptionsBuilder<SpaceBattlesInMemoryDbContext>()
+            .UseSqlite(connection)
+            .Options;
+
+        SpaceBattlesInMemoryDbContext context = new(options);
+
+        context.Database.EnsureCreated();
+
+        return context;
     }
 }
