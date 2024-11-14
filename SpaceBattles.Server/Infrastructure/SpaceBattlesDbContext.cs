@@ -4,9 +4,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace SpaceBattles.Server.Infrastructure;
 
-public sealed class SpaceBattlesDbContext : DbContext
+public class SpaceBattlesDbContext : DbContext
 {
     public SpaceBattlesDbContext(DbContextOptions<SpaceBattlesDbContext> options)
+        : base(options)
+    {
+    }
+    
+    public SpaceBattlesDbContext(DbContextOptions options)
         : base(options)
     {
     }
@@ -89,9 +94,9 @@ public sealed class DayStatistics : CosmosEntity
 
     public int Logins { get; set; }
 
-    public HashSet<Guid> NewPlayers { get; init; } = [];
+    public IList<Guid> NewPlayers { get; init; } = [];
     
-    public HashSet<Guid> RecurringPlayers { get; init; } = [];
+    public IList<Guid> RecurringPlayers { get; init; } = [];
 }
 
 public sealed class SaveData : CosmosEntity
