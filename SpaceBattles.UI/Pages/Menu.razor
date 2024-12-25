@@ -1,0 +1,32 @@
+﻿@page "/Menu"
+
+@inject NavigationManager NavigationManager
+@inject SaveService SaveService
+@inject BotService BotService
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall">
+    <MudPaper Class="pa-4 rounded-xl align-self-center">
+        <MudStack>
+            <MudStack Row Spacing="0">
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center"/>
+                <MudText Typo="Typo.body1" Color="Color.Info" Style="font-family:TitleFont">Menu</MudText>
+                <MudDivider DividerType="DividerType.Middle" Class="flex-grow-1 align-self-center" />
+            </MudStack>
+            <MudButton Variant="Variant.Filled" Color="Color.Info" Style="font-family:TitleFont">Save</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@Logout">Log out</MudButton>
+
+            @* <MudStack Row Spacing="0" Justify="Justify.SpaceAround"> *@
+            @*     <MudButton Variant="Variant.Filled" Color="Color.Info" Style="font-family:TitleFont">Save</MudButton> *@
+            @* </MudStack> *@
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+   
+    private void Logout()
+    {
+        BotService.Dispose();
+        NavigationManager.NavigateTo("/");
+    }
+}

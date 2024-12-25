@@ -6,11 +6,6 @@ namespace SpaceBattles.Server.Infrastructure;
 
 public class SpaceBattlesDbContext : DbContext
 {
-    public SpaceBattlesDbContext(DbContextOptions<SpaceBattlesDbContext> options)
-        : base(options)
-    {
-    }
-    
     public SpaceBattlesDbContext(DbContextOptions options)
         : base(options)
     {
