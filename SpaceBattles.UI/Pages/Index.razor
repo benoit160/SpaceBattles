@@ -8,6 +8,8 @@
 @inject NavigationManager NavigationManager
 @inject GameState GameState
 @inject SaveService SaveService
+@inject HttpClient HttpClient
+@inject IBrowserService BrowserService
 
 <PageTitle>Welcome to SpaceBattles</PageTitle>
 
@@ -29,6 +31,32 @@
     private UniverseCreationWaiter? _universeCreationWaiter;
 
     private bool _showCreationScreen;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        const string key = "telemetry-ping";
+        
+        string? value = BrowserService.ReadLocalStorage(key);
+
+        // Ping telemetry if first visit ever
+        if (value is null)
+        {
+            _ = HttpClient.PostAsync("/api/telemetry", content:null);
+            BrowserService.WriteToLocalStorage(key, DateTime.Now.ToLongDateString());
+        }
+        
+        // Or ping if first visit today
+        else
+        {
+            DateTime time = DateTime.Parse(value);
+
+            if (time.Date != DateTime.Today)
+            {
+                _ = HttpClient.PostAsync("/api/telemetry", content:null);
+                BrowserService.WriteToLocalStorage(key, DateTime.Now.ToLongDateString());
+            }
+        }
+    }
 
     private async Task StartGame()
     {
