@@ -62,3 +62,58 @@ resource "azurerm_windows_web_app" "app" {
     
   }
 }
+
+resource "azurerm_cosmosdb_account" "cosmos-account" {
+  name                = "test-cosno"
+  location            = "${var.region}"
+  resource_group_name = azurerm_resource_group.rg.name
+  offer_type          = "Standard"
+  kind                = "GlobalDocumentDB"
+
+  automatic_failover_enabled = false
+
+  consistency_policy {
+    consistency_level       = "Eventual"
+  }
+
+  geo_location {
+    location          = "eastus"
+    failover_priority = 0
+  }
+}
+
+resource "azurerm_cosmosdb_sql_database" "cosmos-db" {
+  name                = "spacebattles"
+  resource_group_name = azurerm_ressourcegroup.rg.name
+  account_name        = azurerm_cosmosdb_account.cosmos-account.name
+}
+
+resource "azurerm_cosmosdb_sql_container" "example" {
+  name                  = "example-container"
+  resource_group_name   = data.azurerm_cosmosdb_account.example.resource_group_name
+  account_name          = data.azurerm_cosmosdb_account.example.name
+  database_name         = azurerm_cosmosdb_sql_database.example.name
+  partition_key_paths   = ["/definition/id"]
+  partition_key_version = 1
+  throughput            = 400
+
+  indexing_policy {
+    indexing_mode = "consistent"
+
+    included_path {
+      path = "/*"
+    }
+
+    included_path {
+      path = "/included/?"
+    }
+
+    excluded_path {
+      path = "/excluded/?"
+    }
+  }
+
+  unique_key {
+    paths = ["/definition/idlong", "/definition/idshort"]
+  }
+}
