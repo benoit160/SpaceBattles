@@ -63,7 +63,7 @@ resource "azurerm_windows_web_app" "app" {
   }
 }
 
-resource "azurerm_cosmosdb_account" "cosmos-account" {
+resource "azurerm_cosmosdb_account" "cosmos" {
   name                = "test-cosno"
   location            = "${var.region}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -82,17 +82,17 @@ resource "azurerm_cosmosdb_account" "cosmos-account" {
   }
 }
 
-resource "azurerm_cosmosdb_sql_database" "cosmos-db" {
+resource "azurerm_cosmosdb_sql_database" "cosmos" {
   name                = "spacebattles"
-  resource_group_name = azurerm_ressourcegroup.rg.name
-  account_name        = azurerm_cosmosdb_account.cosmos-account.name
+  resource_group_name = azurerm_resource_group.rg.name
+  account_name        = azurerm_cosmosdb_account.cosmos.name
 }
 
 resource "azurerm_cosmosdb_sql_container" "example" {
   name                  = "example-container"
-  resource_group_name   = data.azurerm_cosmosdb_account.example.resource_group_name
-  account_name          = data.azurerm_cosmosdb_account.example.name
-  database_name         = azurerm_cosmosdb_sql_database.example.name
+  resource_group_name   = azurerm_cosmosdb_account.cosmos.resource_group_name
+  account_name          = azurerm_cosmosdb_account.cosmos.name
+  database_name         = azurerm_cosmosdb_sql_database.cosmos.name
   partition_key_paths   = ["/definition/id"]
   partition_key_version = 1
   throughput            = 400
