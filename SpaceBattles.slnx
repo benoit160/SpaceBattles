@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Folder Name="/Solution Items/Workflows/">
+    <File Path=".github/workflows/SpaceBattles.yml" />
+    <File Path=".github/workflows/Unit-testing.yml" />
+  </Folder>
+  <Project Path="SpaceBattles.Client/SpaceBattles.Client.csproj" />
+  <Project Path="SpaceBattles.Core/SpaceBattles.Core.csproj" />
+  <Project Path="SpaceBattles.E2E.Tests/SpaceBattles.E2E.Tests.csproj" />
+  <Project Path="SpaceBattles.Server/SpaceBattles.Server.csproj" />
+  <Project Path="SpaceBattles.Tests/SpaceBattles.Tests.csproj" />
+  <Project Path="SpaceBattles.UI.Tests/SpaceBattles.UI.Tests.csproj" />
+  <Project Path="SpaceBattles.UI/SpaceBattles.UI.csproj" />
+</Solution>
