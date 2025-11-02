@@ -16,10 +16,6 @@ public sealed class SpaceBattlesInMemoryDbContext : SpaceBattlesDbContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-    }
-
     public static SpaceBattlesInMemoryDbContext CreateContext()
     {
         SqliteConnection connection = new SqliteConnection("Filename=:memory:");
