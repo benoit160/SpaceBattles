@@ -61,8 +61,5 @@ resource "azurerm_windows_web_app" "app" {
     always_on           = false
     http2_enabled       = true
     minimum_tls_version = "1.3"
-
-    ip_restriction_default_action = "Allow"
-    scm_ip_restriction_default_action = "Allow"
   }
 }
