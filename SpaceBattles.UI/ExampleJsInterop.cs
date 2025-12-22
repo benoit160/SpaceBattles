@@ -12,7 +12,7 @@ namespace SpaceBattles.UI;
 public class ExampleJsInterop(IJSRuntime jsRuntime) : IAsyncDisposable
 {
     private readonly Lazy<Task<IJSObjectReference>> moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-        "import", "./_content/SpaceBattles.UI/exampleJsInterop.js").AsTask());
+        "import", "/exampleJsInterop.js").AsTask());
 
     public async ValueTask<string> Prompt(string message)
     {

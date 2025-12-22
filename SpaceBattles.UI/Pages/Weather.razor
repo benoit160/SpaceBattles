@@ -1,6 +1,8 @@
 ﻿@page "/weather"
 @using System.Net.Http.Json
+@using Microsoft.JSInterop
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Weather</PageTitle>
 
@@ -45,6 +47,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("/weatherforecast");
+        await new ExampleJsInterop(JSRuntime).Prompt("Hey");
     }
 
     public class WeatherForecast
