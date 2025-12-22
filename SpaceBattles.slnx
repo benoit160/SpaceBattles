@@ -4,6 +4,7 @@
     <File Path="Directory.Build.props" />
   </Folder>
   <Project Path="SpaceBattles.Client/SpaceBattles.Client.csproj" />
+  <Project Path="SpaceBattles.Core/SpaceBattles.Core.csproj" />
   <Project Path="SpaceBattles.Server/SpaceBattles.Server.csproj" />
   <Project Path="SpaceBattles.UI/SpaceBattles.UI.csproj" />
 </Solution>
