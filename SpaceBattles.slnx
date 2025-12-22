@@ -2,5 +2,6 @@
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />
   </Folder>
+  <Project Path="SpaceBattles.Client/SpaceBattles.Client.csproj" />
   <Project Path="SpaceBattles.Server/SpaceBattles.Server.csproj" />
 </Solution>
