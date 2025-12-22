@@ -4,4 +4,5 @@
   </Folder>
   <Project Path="SpaceBattles.Client/SpaceBattles.Client.csproj" />
   <Project Path="SpaceBattles.Server/SpaceBattles.Server.csproj" />
+  <Project Path="SpaceBattles.UI/SpaceBattles.UI.csproj" />
 </Solution>
