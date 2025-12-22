@@ -14,4 +14,8 @@
         <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SpaceBattles.UI\SpaceBattles.UI.csproj" />
+    </ItemGroup>
+
 </Project>
