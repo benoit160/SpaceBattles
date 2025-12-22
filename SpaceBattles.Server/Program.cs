@@ -17,8 +17,11 @@ public class Program
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
+            app.UseWebAssemblyDebugging();
             app.MapOpenApi();
         }
+        
+        app.MapStaticAssets();
 
         app.UseHttpsRedirection();
 
@@ -42,6 +45,8 @@ public class Program
                 return forecast;
             })
             .WithName("GetWeatherForecast");
+        
+        app.MapFallbackToFile("index.html");
 
         app.Run();
     }

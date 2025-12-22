@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\SpaceBattles.Client\SpaceBattles.Client.csproj" />
     </ItemGroup>
 </Project>
