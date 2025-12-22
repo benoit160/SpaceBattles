@@ -11,7 +11,7 @@ public class SpaceBattlesDbContext : DbContext
     {
     }
     
-    public SpaceBattlesDbContext(DbContextOptions options)
+    protected SpaceBattlesDbContext(DbContextOptions options)
         : base(options)
     {
     }
@@ -51,24 +51,6 @@ public class SpaceBattlesDbContext : DbContext
             .HasPartitionKey(x => x.PartitionKey)
             .HasQueryFilter(b => b.PartitionKey == CosmosEntity.ApplicationPartitionKey)
             .ToContainer(nameof(Statistics));
-
-        modelBuilder.Entity<DayStatistics>()
-            .Property(ds => ds.NewPlayers)
-            .HasConversion<HashSetConverter>();
-        
-        modelBuilder.Entity<DayStatistics>()
-            .Property(ds => ds.RecurringPlayers)
-            .HasConversion<HashSetConverter>();
-    }
-}
-
-public sealed class HashSetConverter : ValueConverter<HashSet<Guid>, List<string>>
-{
-    public HashSetConverter()
-        : base(
-            guids => guids.Select(x => x.ToString()).ToList(),
-            strings => strings.Select(Guid.Parse).ToHashSet())
-    {
     }
 }
 
@@ -93,10 +75,6 @@ public sealed class DayStatistics : CosmosEntity
     public DateOnly Date { get; init; }
 
     public int Logins { get; set; }
-
-    public IList<Guid> NewPlayers { get; init; } = [];
-    
-    public IList<Guid> RecurringPlayers { get; init; } = [];
 }
 
 public sealed class SaveData : CosmosEntity
