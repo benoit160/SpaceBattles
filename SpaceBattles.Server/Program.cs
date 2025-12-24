@@ -20,7 +20,7 @@ public class Program
             app.UseWebAssemblyDebugging();
             app.MapOpenApi();
         }
-        
+
         app.MapStaticAssets();
 
         app.UseHttpsRedirection();
@@ -45,7 +45,7 @@ public class Program
                 return forecast;
             })
             .WithName("GetWeatherForecast");
-        
+
         app.MapFallbackToFile("index.html");
 
         app.Run();
