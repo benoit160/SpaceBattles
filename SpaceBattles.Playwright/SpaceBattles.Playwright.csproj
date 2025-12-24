@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <ItemGroup>
+    <PackageReference Include="Blazor.Playwright" Version="1.0.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceBattles.Server\SpaceBattles.Server.csproj" />
+  </ItemGroup>
+  
+</Project>
