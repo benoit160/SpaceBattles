@@ -4,4 +4,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+  
+  <Target Name="Apply formatting on clean" AfterTargets="Clean">
+    <Exec Command="dotnet format --severity warn" />
+  </Target>
 </Project>
