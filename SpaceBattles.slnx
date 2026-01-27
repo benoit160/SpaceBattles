@@ -7,5 +7,6 @@
   <Project Path="SpaceBattles.Client/SpaceBattles.Client.csproj" />
   <Project Path="SpaceBattles.Playwright/SpaceBattles.Playwright.csproj" />
   <Project Path="SpaceBattles.Server/SpaceBattles.Server.csproj" />
+  <Project Path="SpaceBattles.Terraform/SpaceBattles.Terraform.csproj" />
   <Project Path="SpaceBattles.UI/SpaceBattles.UI.csproj" />
 </Solution>

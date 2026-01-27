@@ -1,0 +1,3 @@
+variable "Location" {
+  type = string
+}
